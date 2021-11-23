@@ -2,6 +2,8 @@ import 'package:crayon/datamodels/question.dart';
 
 import 'package:crayon/providers/quiz/question_right.dart';
 import 'package:crayon/providers/quiz/quiz_indicator.dart';
+
+import 'package:crayon/providers/quiz/time_provider.dart';
 import 'package:crayon/state/enum.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,12 +20,21 @@ class Option extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var quizIndicator = Provider.of<QuizIndicator>(context, listen: false);
+
+    var time = Provider.of<TimeProvider>(context, listen: false);
     return Consumer<QuestionRight>(
         builder: (_, questionRight, __) => InkWell(
               onTap: () {
                 questionRight.setNotifierState(
                     NotifierState.buttonPressed, response);
-                Provider.of<QuizIndicator>(context, listen: false).increament();
+                quizIndicator.increament();
+                time.addTimeTakenForQuestion(response.isResponseRight);
+
+                if (quizIndicator.isQuizFinished) {
+                  Navigator.pushNamed(context, 'score',
+                      arguments: time.getAverageTimeTakenForQuiz());
+                }
               },
               child: Container(
                 margin: const EdgeInsets.only(top: 10),

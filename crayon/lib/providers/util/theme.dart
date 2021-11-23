@@ -8,16 +8,16 @@ class ThemeProvider extends ChangeNotifier {
       fontFamily: 'Poppins',
       primaryColor: Colors.blueAccent,
       iconTheme: const IconThemeData(color: Colors.black),
-      dialogBackgroundColor: const Color(0xFFFEFEFE),
+      dialogBackgroundColor: Colors.indigo,
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all<Color>(Colors.blueAccent),
       )),
-      backgroundColor: const Color(0xFFFFFFFF),
+      backgroundColor: Colors.indigo,
       brightness: Brightness.light,
-      scaffoldBackgroundColor: const Color(0xFFFEFEFE),
+      scaffoldBackgroundColor: Colors.indigo,
       canvasColor: Colors.white,
-      cardColor: const Color(0xFFF2F2F2),
+      cardColor: Colors.white,
       textTheme: const TextTheme(
           headline1: TextStyle(
               fontFamily: 'Poppins',

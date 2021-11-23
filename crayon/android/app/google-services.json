@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "376955828415",
+    "project_id": "crayon-33cdc",
+    "storage_bucket": "crayon-33cdc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:376955828415:android:e28005873d2f485ea3ae0a",
+        "android_client_info": {
+          "package_name": "com.example.crayon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "376955828415-sdfonfi308ifec2tlckm13mj890dp576.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkw3BlGAjSzIxMLXBXrp7XJoYHs2lXcaA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "376955828415-sdfonfi308ifec2tlckm13mj890dp576.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
