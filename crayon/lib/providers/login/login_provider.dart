@@ -23,9 +23,10 @@ class LoginProvider extends ChangeNotifier {
 
   void changeLoadingState(
       BuildContext context, ErrorProvider errorProvider) async {
+    Navigator.of(context).pushNamed('dashboard');
     if (_isValid) {
       setState(LoadingState.yes);
-
+      errorProvider.setErrorState('Help');
       setState(LoadingState.no);
     }
   }
@@ -66,5 +67,5 @@ class LoginProvider extends ChangeNotifier {
     setIsValid();
   }
 
-  Color getColor() => _isValid ? Colors.blueAccent : Colors.grey[500]!;
+  Color getColor() => _isValid ? Colors.blueAccent : Colors.grey;
 }

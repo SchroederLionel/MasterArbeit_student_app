@@ -7,7 +7,7 @@ class ThemeProvider extends ChangeNotifier {
   ThemeData light = ThemeData(
       fontFamily: 'Poppins',
       primaryColor: Colors.blueAccent,
-      iconTheme: const IconThemeData(color: Colors.black),
+      iconTheme: const IconThemeData(color: Colors.white),
       dialogBackgroundColor: Colors.indigo,
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
@@ -15,7 +15,7 @@ class ThemeProvider extends ChangeNotifier {
       )),
       backgroundColor: Colors.indigo,
       brightness: Brightness.light,
-      scaffoldBackgroundColor: Colors.indigo,
+      scaffoldBackgroundColor: Colors.white,
       canvasColor: Colors.white,
       cardColor: Colors.white,
       textTheme: const TextTheme(

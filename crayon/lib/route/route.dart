@@ -3,6 +3,7 @@ import 'package:crayon/providers/quiz/quiz_indicator.dart';
 import 'package:crayon/providers/quiz/scrore.dart' as provider_score;
 import 'package:crayon/providers/quiz/time_provider.dart';
 import 'package:crayon/providers/util/error_provider.dart';
+import 'package:crayon/screens/dashboard/dashboard.dart';
 import 'package:crayon/screens/login/login.dart';
 import 'package:crayon/screens/quiz/quiz_screen.dart';
 import 'package:crayon/screens/quiz/quiz_screen_components.dart/score.dart';
@@ -38,7 +39,8 @@ Route<dynamic> controller(RouteSettings routerSettings) {
                 ],
                 child: const QuizScreen(),
               ));
-
+    case dashboard:
+      return MaterialPageRoute(builder: (context) => const Dashboard());
     case score:
       var arg = routerSettings.arguments as double;
       return MaterialPageRoute(builder: (context) => Score(score: arg));

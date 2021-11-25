@@ -46,6 +46,7 @@
     "saturday":"Samedi",
     "sunday":"Dimanche",
     "lecture":"Cours",
+
     "exercise":"Exercice",
     "other":"Autre",
     "starts":"Starts",
@@ -73,6 +74,25 @@
     "a-question-requires-at-least-two-responses":"Une question nécessite au moins deux réponses!",
     "a-question-requires-a-question-title":"Une question nécessite un titre de question!",
     "quiz-requires-a-title":"Un quiz nécessite un titre!",
-    "response-requires-at-least-two-chars":"La réponse nécessite au moins deux caractères !"
+    "response-requires-at-least-two-chars":"La réponse nécessite au moins deux caractères !",
+    "1-day":"Lundi",
+    "2-day":"Mardi",
+    "3-day":"Mercredi",
+    "4-day":"Jeudi",
+    "5-day":"Vendredi",
+    "6-day":"Samedi",
+    "7-day":"Dimanche",
+    "1-month":"Janvier",
+    "2-month":"Février ",
+    "3-month":"Mars",
+    "4-month":"Avril",
+    "5-month":"Mai",
+    "6-month":"Juin",
+    "7-month":"Juillet ",
+    "8-month":"Août",
+    "9-month":"Septembre",
+    "10-month":"Octobre",
+    "11-month":"Novembre",
+    "12-month":"Décembre"
     
 }

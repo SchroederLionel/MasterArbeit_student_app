@@ -16,8 +16,9 @@ class LanguageWidget extends StatelessWidget {
     return DropdownButton(
       value: localeProvider.getLocal,
       icon: Container(
-        child: const Icon(
+        child: Icon(
           Icons.arrow_drop_down,
+          color: Theme.of(context).cardColor,
         ),
         margin: const EdgeInsets.only(left: 5),
       ),
