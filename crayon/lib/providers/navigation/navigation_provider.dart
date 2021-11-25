@@ -20,7 +20,7 @@ class NavigationProvider extends ChangeNotifier {
     if (_day == pageNumber) {
       return Colors.orangeAccent;
     } else {
-      return const Color(0xff222429);
+      return const Color(0xff1a1c26);
     }
   }
 }

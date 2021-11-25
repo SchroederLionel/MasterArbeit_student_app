@@ -26,7 +26,7 @@ class DayTime extends StatelessWidget {
             ),
           ),
           Text(
-            '${getStringSize3(appTranslation.translate('${now.month}-month') ?? '${now.month}')} ${now.day}',
+            '${getStringSize3(appTranslation.translate('${now.month}-month') ?? '${now.month}')} ${getStringSize2(now.year.toString())}',
             style: const TextStyle(
               color: Colors.grey,
               fontSize: 14,
@@ -36,12 +36,8 @@ class DayTime extends StatelessWidget {
         ]),
         const SizedBox(width: 5),
         Text(
-          getStringSize2(now.year.toString()),
-          style: const TextStyle(
-              fontSize: 42,
-              fontFamily: 'Poppins',
-              color: Colors.black,
-              fontWeight: FontWeight.bold),
+          getStringSize2(now.day.toString()),
+          style: Theme.of(context).textTheme.headline1,
         )
       ],
     );

@@ -6,12 +6,12 @@ class ThemeProvider extends ChangeNotifier {
 
   ThemeData light = ThemeData(
       fontFamily: 'Poppins',
-      primaryColor: Colors.blueAccent,
+      primaryColor: Colors.orangeAccent,
       iconTheme: const IconThemeData(color: Colors.white),
       dialogBackgroundColor: Colors.indigo,
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(Colors.blueAccent),
+        backgroundColor: MaterialStateProperty.all<Color>(Colors.orangeAccent),
       )),
       backgroundColor: Colors.indigo,
       brightness: Brightness.light,
@@ -21,14 +21,14 @@ class ThemeProvider extends ChangeNotifier {
       textTheme: const TextTheme(
           headline1: TextStyle(
               fontFamily: 'Poppins',
-              fontSize: 28,
-              fontWeight: FontWeight.w700,
+              fontSize: 42,
+              fontWeight: FontWeight.bold,
               color: Colors.black),
           headline2: TextStyle(
               fontFamily: 'Poppins',
-              fontSize: 21,
-              fontWeight: FontWeight.w600,
-              color: Colors.black54),
+              fontSize: 31,
+              fontWeight: FontWeight.bold,
+              color: Colors.black),
           subtitle1: TextStyle(
               fontFamily: 'Poppins',
               fontSize: 21,
@@ -41,9 +41,9 @@ class ThemeProvider extends ChangeNotifier {
               color: Colors.black),
           bodyText2: TextStyle(
               fontFamily: 'Poppins',
-              fontSize: 18,
-              fontWeight: FontWeight.w400,
-              color: Colors.white),
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+              color: Colors.black),
           headline6: TextStyle(
               fontFamily: 'Poppins',
               fontSize: 18,
@@ -57,12 +57,12 @@ class ThemeProvider extends ChangeNotifier {
 
   ThemeData dark = ThemeData(
       fontFamily: 'Poppins',
-      primaryColor: Colors.blueAccent,
+      primaryColor: Colors.orangeAccent,
       dialogBackgroundColor: const Color(0xFF212332),
-      iconTheme: const IconThemeData(color: Colors.white54),
+      iconTheme: const IconThemeData(color: Colors.white70),
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(Colors.blueAccent),
+        backgroundColor: MaterialStateProperty.all<Color>(Colors.orangeAccent),
       )),
       backgroundColor: const Color(0xFF212332),
       brightness: Brightness.dark,
@@ -72,14 +72,14 @@ class ThemeProvider extends ChangeNotifier {
       textTheme: const TextTheme(
           headline1: TextStyle(
               fontFamily: 'Poppins',
-              fontSize: 28,
-              fontWeight: FontWeight.w700,
+              fontSize: 42,
+              fontWeight: FontWeight.bold,
               color: Colors.white),
           headline2: TextStyle(
               fontFamily: 'Poppins',
-              fontSize: 21,
-              fontWeight: FontWeight.w600,
-              color: Colors.white54),
+              fontSize: 31,
+              fontWeight: FontWeight.bold,
+              color: Colors.white),
           subtitle1: TextStyle(
               fontFamily: 'Poppins',
               fontSize: 21,
@@ -92,9 +92,9 @@ class ThemeProvider extends ChangeNotifier {
               color: Colors.white),
           bodyText2: TextStyle(
               fontFamily: 'Poppins',
-              fontSize: 18,
-              fontWeight: FontWeight.w400,
-              color: Colors.white54),
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+              color: Colors.white),
           headline6: TextStyle(
               fontFamily: 'Poppins',
               fontSize: 18,

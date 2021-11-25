@@ -1,4 +1,3 @@
-import 'package:crayon/datamodels/lecture/lecture.dart';
 import 'package:crayon/screens/dashboard/components/body.dart';
 import 'package:crayon/screens/dashboard/components/day_time.dart';
 import 'package:crayon/screens/dashboard/components/navigation.dart';
@@ -10,7 +9,6 @@ class Dashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Lecture> lectures = lecture_data;
     return Scaffold(
       body: Row(
         children: [

@@ -18,21 +18,17 @@ class LanguageWidget extends StatelessWidget {
       icon: Container(
         child: Icon(
           Icons.arrow_drop_down,
-          color: Theme.of(context).cardColor,
+          color: Theme.of(context).primaryColor,
         ),
         margin: const EdgeInsets.only(left: 5),
       ),
       iconSize: 24,
       elevation: 16,
-      style: const TextStyle(color: Colors.deepPurple),
       onChanged: (_) {},
-      underline: Container(
-        height: 2,
-        color: Theme.of(context).primaryColor,
-      ),
       items: AppLocalizations.languages.map((CustomLocale locale) {
         final String flag = L10n.getFlag(locale.languageCode);
         return DropdownMenuItem(
+          alignment: Alignment.center,
           value: locale,
           child: Text(
             flag,

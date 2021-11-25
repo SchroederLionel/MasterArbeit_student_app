@@ -15,14 +15,11 @@ class CourseTimes extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(startingTime,
-              style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700)),
+          Text(startingTime, style: Theme.of(context).textTheme.bodyText2),
           const SizedBox(height: 10),
           Text(endingTime,
               style: const TextStyle(
+                  fontFamily: 'Poppins',
                   color: Colors.grey,
                   fontSize: 14,
                   fontWeight: FontWeight.w700))
