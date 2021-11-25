@@ -6,51 +6,22 @@ class Navigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool _drawerOpened = false;
-    return Stack(
+    return Container(
+      width: 50,
+      color: const Color(0xff222429),
       alignment: Alignment.centerLeft,
-      children: [
-        Container(
-          width: 65,
-          color: const Color(0xff222429),
-          alignment: Alignment.centerLeft,
-          child: Expanded(
-            child: ListView(
-              shrinkWrap: true,
-              children: const [
-                NavigationTile(day: 'M'),
-                NavigationTile(day: 'T'),
-                NavigationTile(day: 'W'),
-                NavigationTile(day: 'T'),
-                NavigationTile(day: 'F'),
-                NavigationTile(day: 'S'),
-                NavigationTile(day: 'S'),
-              ],
-            ),
-          ),
-        ),
-        InkWell(
-          onTap: () {},
-          child: const RotatedBox(
-            quarterTurns: 3,
-            child: Card(
-              elevation: 0,
-              margin: EdgeInsets.only(top: 58),
-              color: Color(0xff222429),
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 4),
-                child: Text(
-                  'Menu',
-                  style: TextStyle(
-                      fontSize: 10,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
+      child: ListView(
+        shrinkWrap: true,
+        children: const [
+          NavigationTile(day: 'M', pageNumber: 0),
+          NavigationTile(day: 'T', pageNumber: 1),
+          NavigationTile(day: 'W', pageNumber: 2),
+          NavigationTile(day: 'T', pageNumber: 3),
+          NavigationTile(day: 'F', pageNumber: 4),
+          NavigationTile(day: 'S', pageNumber: 5),
+          NavigationTile(day: 'S', pageNumber: 6),
+        ],
+      ),
     );
   }
 }

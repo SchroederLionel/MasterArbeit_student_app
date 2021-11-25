@@ -1,4 +1,5 @@
 // Route Names
+import 'package:crayon/providers/navigation/navigation_provider.dart';
 import 'package:crayon/providers/quiz/quiz_indicator.dart';
 import 'package:crayon/providers/quiz/scrore.dart' as provider_score;
 import 'package:crayon/providers/quiz/time_provider.dart';
@@ -40,7 +41,14 @@ Route<dynamic> controller(RouteSettings routerSettings) {
                 child: const QuizScreen(),
               ));
     case dashboard:
-      return MaterialPageRoute(builder: (context) => const Dashboard());
+      return MaterialPageRoute(
+          builder: (context) => MultiProvider(
+                providers: [
+                  ChangeNotifierProvider<NavigationProvider>(
+                      create: (_) => NavigationProvider())
+                ],
+                child: const Dashboard(),
+              ));
     case score:
       var arg = routerSettings.arguments as double;
       return MaterialPageRoute(builder: (context) => Score(score: arg));

@@ -1,3 +1,4 @@
+import 'package:crayon/datamodels/lecture/lecture.dart';
 import 'package:crayon/screens/dashboard/components/body.dart';
 import 'package:crayon/screens/dashboard/components/day_time.dart';
 import 'package:crayon/screens/dashboard/components/navigation.dart';
@@ -9,32 +10,28 @@ class Dashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<Lecture> lectures = lecture_data;
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          physics: const NeverScrollableScrollPhysics(),
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              const Navigation(),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 14.0, vertical: 10.0),
-                  child: Column(
-                    children: const [
-                      DayTime(),
-                      SizedBox(height: 20),
-                      TitleDash(),
-                      Divider(color: Colors.grey),
-                      Body()
-                    ],
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
+      body: Row(
+        children: [
+          const Navigation(),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: const [
+                  DayTime(),
+                  SizedBox(height: 20),
+                  TitleDash(),
+                  Divider(color: Colors.grey),
+                  Body()
+                ],
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

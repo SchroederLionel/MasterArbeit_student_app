@@ -11,6 +11,7 @@ class DayTime extends StatelessWidget {
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisSize: MainAxisSize.max,
       children: [
         Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
           Text(

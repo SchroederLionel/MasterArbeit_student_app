@@ -1,12 +1,37 @@
 import 'package:crayon/datamodels/lecture/lecture.dart';
 import 'package:crayon/datamodels/lecture/lecture_date.dart';
 import 'package:crayon/datamodels/lecture/lecture_schedule.dart';
+import 'package:crayon/providers/navigation/navigation_provider.dart';
 import 'package:crayon/screens/dashboard/components/schedule.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:provider/provider.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
+
+  @override
+  State<Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  final PageController _controller = PageController(
+      initialPage:
+          DateTime.now().weekday == 0 ? 6 : DateTime.now().weekday - 1);
+
+  @override
+  initState() {
+    super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((_) =>
+        Provider.of<NavigationProvider>(context, listen: false)
+            .setPageController(_controller));
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +39,11 @@ class Body extends StatelessWidget {
 
     return Expanded(
       child: PageView.builder(
+          controller: _controller,
           scrollDirection: Axis.vertical,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: 7,
-          itemBuilder: (context, index) {
+          itemBuilder: (_, index) {
             List<LectureSchedule> schedules = getSchedules(lectures, index);
             if (schedules.isEmpty) {
               return const Center(
@@ -25,6 +51,7 @@ class Body extends StatelessWidget {
                       style: TextStyle(color: Colors.black)));
             }
             return ListView.builder(
+                shrinkWrap: true,
                 itemCount: schedules.length,
                 itemBuilder: (context, i) {
                   return Schedule(schedule: schedules[i]);

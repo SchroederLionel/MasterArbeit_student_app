@@ -10,7 +10,7 @@ class Schedule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 4.0),
       child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,7 +33,7 @@ class Schedule extends StatelessWidget {
                       title: Text(
                         schedule.title,
                         style: const TextStyle(
-                            fontSize: 21,
+                            fontSize: 17,
                             color: Colors.white,
                             fontWeight: FontWeight.w700),
                       ),
