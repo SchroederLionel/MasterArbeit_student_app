@@ -21,13 +21,13 @@ class Navigation extends StatelessWidget {
           ListView(
             shrinkWrap: true,
             children: const [
-              NavigationTile(day: 'M', pageNumber: 0),
-              NavigationTile(day: 'T', pageNumber: 1),
-              NavigationTile(day: 'W', pageNumber: 2),
-              NavigationTile(day: 'T', pageNumber: 3),
-              NavigationTile(day: 'F', pageNumber: 4),
-              NavigationTile(day: 'S', pageNumber: 5),
-              NavigationTile(day: 'S', pageNumber: 6),
+              NavigationTile(pageNumber: 0),
+              NavigationTile(pageNumber: 1),
+              NavigationTile(pageNumber: 2),
+              NavigationTile(pageNumber: 3),
+              NavigationTile(pageNumber: 4),
+              NavigationTile(pageNumber: 5),
+              NavigationTile(pageNumber: 6),
             ],
           ),
           ListView(

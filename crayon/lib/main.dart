@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
       title: 'Crayon',
       theme: themeProvider.getTheme,
       onGenerateRoute: route.controller,
-      initialRoute: route.dashboard,
+      initialRoute: route.login,
       locale: localeProvider.getLocal,
       localizationsDelegates: const [
         AppLocalizationsDelegate(),

@@ -1,3 +1,4 @@
+import 'package:crayon/l10n/app_localizations.dart';
 import 'package:crayon/providers/navigation/navigation_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -5,12 +6,12 @@ import 'package:provider/provider.dart';
 class NavigationTile extends StatelessWidget {
   final int pageNumber;
 
-  final String day;
-  const NavigationTile({Key? key, required this.day, required this.pageNumber})
-      : super(key: key);
+  const NavigationTile({Key? key, required this.pageNumber}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final appTranslation = AppLocalizations.of(context);
+    String day = appTranslation!.translate('${pageNumber + 1}-day') ?? '?';
     return Consumer<NavigationProvider>(builder: (_, provider, __) {
       return InkWell(
         onTap: () {
@@ -19,11 +20,13 @@ class NavigationTile extends StatelessWidget {
         child: Card(
           margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
           elevation: 10,
-          color: provider.getColor(pageNumber),
+          color: provider.getButtonColor(pageNumber),
           child: Text(
-            day,
+            day.substring(0, 1),
             textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 21, color: Colors.white),
+            style: TextStyle(
+                fontSize: 21,
+                color: provider.getTextColorColor(pageNumber, context)),
           ),
         ),
       );

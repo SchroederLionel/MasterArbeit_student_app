@@ -16,11 +16,19 @@ class NavigationProvider extends ChangeNotifier {
     }
   }
 
-  Color getColor(int pageNumber) {
+  Color getButtonColor(int pageNumber) {
     if (_day == pageNumber) {
       return Colors.orangeAccent;
     } else {
       return const Color(0xff1a1c26);
+    }
+  }
+
+  Color getTextColorColor(int pageNumber, BuildContext context) {
+    if (_day == pageNumber) {
+      return Colors.white;
+    } else {
+      return Colors.white70;
     }
   }
 }

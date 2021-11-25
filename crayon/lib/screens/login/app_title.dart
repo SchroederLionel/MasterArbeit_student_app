@@ -11,7 +11,7 @@ class AppTitle extends StatelessWidget {
       style: TextStyle(
           fontFamily: 'Comforter',
           fontSize: 48,
-          color: Colors.yellow,
+          color: Colors.orangeAccent,
           fontWeight: FontWeight.bold),
     );
   }

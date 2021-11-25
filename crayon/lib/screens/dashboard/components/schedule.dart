@@ -1,4 +1,5 @@
 import 'package:crayon/datamodels/lecture/lecture_schedule.dart';
+import 'package:crayon/l10n/app_localizations.dart';
 import 'package:crayon/screens/dashboard/components/course_times.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ class Schedule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appTranslation = AppLocalizations.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 4.0),
       child: Row(
@@ -38,7 +40,7 @@ class Schedule extends StatelessWidget {
                             fontWeight: FontWeight.w700),
                       ),
                       subtitle: Text(
-                        'Room: ${schedule.room}',
+                        '${appTranslation!.translate('room') ?? "Room"}: ${schedule.room}',
                         style: const TextStyle(
                             color: Colors.white,
                             fontSize: 16,

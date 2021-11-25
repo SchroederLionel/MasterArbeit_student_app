@@ -8,7 +8,6 @@ class DayTime extends StatelessWidget {
   Widget build(BuildContext context) {
     final appTranslation = AppLocalizations.of(context);
     var now = DateTime.now();
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       mainAxisSize: MainAxisSize.max,
