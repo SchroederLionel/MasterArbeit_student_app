@@ -20,7 +20,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.indigo,
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,77 +51,62 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 height: 100,
               ),
               Expanded(
-                child: Container(
-                  padding: const EdgeInsets.all(20),
-                  decoration: const BoxDecoration(
-                    borderRadius:
-                        BorderRadius.only(topRight: Radius.circular(100)),
-                    color: Colors.white,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        child: TextField(
-                            controller: _userNameController,
-                            maxLength: 20,
-                            enableInteractiveSelection: false,
-                            decoration: InputDecoration(
-                              enabledBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.indigo),
-                              ),
-                              floatingLabelBehavior:
-                                  FloatingLabelBehavior.always,
-                              isCollapsed: false,
-                              enabled: true,
-                              fillColor: Colors.grey[200],
-                              filled: true,
-                              prefixIcon: const Icon(
-                                Icons.account_circle,
-                                color: Colors.indigo,
-                              ),
-                              labelText: 'Enter username',
-                              labelStyle: const TextStyle(
-                                color: Colors.indigo,
-                              ),
-                            )),
-                      ),
-                      const Spacer(),
-                      InkWell(
-                        onTap: () {
-                          if (_userNameController.text.length >= 2) {
-                            Navigator.of(context).pushNamed('quiz',
-                                arguments: _userNameController.text);
-                          }
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          color: Theme.of(context).primaryColor,
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.all(20 * 0.75),
-                          decoration: const BoxDecoration(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: TextField(
+                          controller: _userNameController,
+                          maxLength: 20,
+                          enableInteractiveSelection: false,
+                          decoration: InputDecoration(
+                            enabledBorder: const UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.indigo),
+                            ),
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            isCollapsed: false,
+                            enabled: true,
+                            prefixIcon: const Icon(
+                              Icons.account_circle,
                               color: Colors.indigo,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12))),
-                          child: Text(
-                            'Join Quiz',
-                            style: Theme.of(context)
-                                .textTheme
-                                .button!
-                                .copyWith(color: Colors.white),
-                          ),
+                            ),
+                            labelText: 'Enter username',
+                            labelStyle: const TextStyle(
+                              color: Colors.indigo,
+                            ),
+                          )),
+                    ),
+                    const Spacer(),
+                    InkWell(
+                      onTap: () {
+                        if (_userNameController.text.length >= 2) {
+                          Navigator.of(context).pushNamed('quiz',
+                              arguments: _userNameController.text);
+                        }
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.all(20 * 0.75),
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(12))),
+                        child: Text(
+                          'Join Quiz',
+                          style: Theme.of(context)
+                              .textTheme
+                              .button!
+                              .copyWith(color: Colors.white),
                         ),
                       ),
-                      const SizedBox(
-                        height: 20,
-                      )
-                    ],
-                  ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    )
+                  ],
                 ),
               ),
             ],

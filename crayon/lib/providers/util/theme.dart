@@ -9,7 +9,7 @@ class ThemeProvider extends ChangeNotifier {
       primaryColor: Colors.orange,
       primaryColorDark: Colors.orange,
       iconTheme: const IconThemeData(color: Colors.white),
-      dialogBackgroundColor: Colors.indigo,
+      dialogBackgroundColor: Colors.white,
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all<Color>(Colors.orangeAccent),

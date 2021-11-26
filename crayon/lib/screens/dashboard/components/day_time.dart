@@ -9,9 +9,18 @@ class DayTime extends StatelessWidget {
     final appTranslation = AppLocalizations.of(context);
     var now = DateTime.now();
     return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: [
+        Container(
+          margin: const EdgeInsets.only(left: 5),
+          height: 30,
+          width: 30,
+          child: CircularProgressIndicator(
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        const Spacer(),
         Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
           Text(
             getStringSize3(

@@ -1,6 +1,7 @@
 // Route Names
 import 'package:crayon/providers/navigation/navigation_provider.dart';
 import 'package:crayon/providers/quiz/quiz_indicator.dart';
+import 'package:crayon/providers/quiz/quiz_lobby_provider.dart';
 import 'package:crayon/providers/quiz/scrore.dart' as provider_score;
 import 'package:crayon/providers/quiz/time_provider.dart';
 import 'package:crayon/providers/util/error_provider.dart';
@@ -45,7 +46,9 @@ Route<dynamic> controller(RouteSettings routerSettings) {
           builder: (context) => MultiProvider(
                 providers: [
                   ChangeNotifierProvider<NavigationProvider>(
-                      create: (_) => NavigationProvider())
+                      create: (_) => NavigationProvider()),
+                  ChangeNotifierProvider<QuizLobbyProvider>(
+                      create: (_) => QuizLobbyProvider(context: context))
                 ],
                 child: const Dashboard(),
               ));

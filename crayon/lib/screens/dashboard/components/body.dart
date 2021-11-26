@@ -69,6 +69,7 @@ class _BodyState extends State<Body> {
         if (getDayIndex(dates[j].day) == day) {
           LectureSchedule schedule = LectureSchedule(
               title: lectures[i].title,
+              isLobbyOpen: lectures[i].isLobbyOpen,
               day: dates[j].day,
               room: dates[j].room,
               startingTime: dates[j].startingTime,

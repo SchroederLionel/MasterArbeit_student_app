@@ -12,6 +12,7 @@ class Dashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive, overlays: []);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Row(
         children: [
           const Navigation(),

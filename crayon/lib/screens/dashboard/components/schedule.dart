@@ -1,6 +1,8 @@
 import 'package:crayon/datamodels/lecture/lecture_schedule.dart';
 import 'package:crayon/l10n/app_localizations.dart';
 import 'package:crayon/screens/dashboard/components/course_times.dart';
+import 'package:crayon/screens/dashboard/components/question/question_dialog.dart';
+import 'package:crayon/screens/dashboard/components/quiz/quiz_login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:crayon/route/route.dart' as route;
@@ -16,7 +18,21 @@ class Schedule extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 4.0),
       child: InkWell(
         onTap: () {
-          Navigator.of(context).pushNamed(route.quizWelcome);
+          if (schedule.isLobbyOpen) {
+            showDialog(
+                barrierDismissible: false,
+                context: context,
+                builder: (BuildContext context) {
+                  return const QuizLogin();
+                });
+          } else {
+            showDialog(
+                barrierDismissible: false,
+                context: context,
+                builder: (BuildContext context) {
+                  return const QuestionDialog();
+                });
+          }
         },
         child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -29,7 +45,9 @@ class Schedule extends StatelessWidget {
               const SizedBox(width: 14),
               Expanded(
                 child: Card(
-                  color: Colors.orangeAccent,
+                  color: schedule.isLobbyOpen
+                      ? Colors.greenAccent
+                      : Theme.of(context).primaryColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15.0),
                   ),
