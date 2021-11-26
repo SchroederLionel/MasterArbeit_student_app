@@ -29,7 +29,13 @@ class _QuizLoginState extends State<QuizLogin> {
       ),
       actions: [
         const CancelButton(),
-        ElevatedButton(onPressed: () {}, child: const Text('Join'))
+        ElevatedButton(
+            onPressed: () {
+              if (_nameController.text.length > 1) {
+                Navigator.of(context).pop(_nameController.text);
+              }
+            },
+            child: const Text('Join'))
       ],
       title: Text(
         "Gameshow",

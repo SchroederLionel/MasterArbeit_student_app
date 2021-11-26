@@ -12,7 +12,7 @@ class QuestionDialog extends StatefulWidget {
 }
 
 class _QuestionDialogState extends State<QuestionDialog> {
-  TextEditingController _questionController = TextEditingController();
+  final TextEditingController _questionController = TextEditingController();
   @override
   void dispose() {
     _questionController.dispose();

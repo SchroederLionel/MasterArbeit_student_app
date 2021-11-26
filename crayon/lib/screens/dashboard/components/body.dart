@@ -68,6 +68,7 @@ class _BodyState extends State<Body> {
       for (int j = 0; j < dates.length; j++) {
         if (getDayIndex(dates[j].day) == day) {
           LectureSchedule schedule = LectureSchedule(
+              lectureId: lectures[i].id,
               title: lectures[i].title,
               isLobbyOpen: lectures[i].isLobbyOpen,
               day: dates[j].day,

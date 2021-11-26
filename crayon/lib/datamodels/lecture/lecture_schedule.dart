@@ -1,4 +1,5 @@
 class LectureSchedule {
+  final String lectureId;
   final String title;
   final String day;
   final String startingTime;
@@ -7,7 +8,8 @@ class LectureSchedule {
   final bool isLobbyOpen;
 
   LectureSchedule(
-      {required this.title,
+      {required this.lectureId,
+      required this.title,
       required this.day,
       required this.isLobbyOpen,
       required this.room,

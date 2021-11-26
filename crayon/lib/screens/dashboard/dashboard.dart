@@ -1,6 +1,7 @@
 import 'package:crayon/screens/dashboard/components/body.dart';
 import 'package:crayon/screens/dashboard/components/day_time.dart';
 import 'package:crayon/screens/dashboard/components/navigation.dart';
+import 'package:crayon/screens/dashboard/components/quiz/quiz_indicator.dart';
 import 'package:crayon/screens/dashboard/components/title_dash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -22,12 +23,20 @@ class Dashboard extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.end,
-                children: const [
-                  DayTime(),
-                  SizedBox(height: 20),
-                  TitleDash(),
-                  Divider(color: Colors.grey),
-                  Body()
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: const [
+                      QuizLobbyIndicator(),
+                      Spacer(),
+                      DayTime(),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  const TitleDash(),
+                  const Divider(color: Colors.grey),
+                  const Body()
                 ],
               ),
             ),

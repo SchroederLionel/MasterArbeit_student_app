@@ -1,5 +1,7 @@
 import 'package:crayon/l10n/app_localizations.dart';
+import 'package:crayon/providers/quiz/quiz_lobby_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DayTime extends StatelessWidget {
   const DayTime({Key? key}) : super(key: key);
@@ -12,15 +14,6 @@ class DayTime extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: [
-        Container(
-          margin: const EdgeInsets.only(left: 5),
-          height: 30,
-          width: 30,
-          child: CircularProgressIndicator(
-            color: Theme.of(context).primaryColor,
-          ),
-        ),
-        const Spacer(),
         Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
           Text(
             getStringSize3(
