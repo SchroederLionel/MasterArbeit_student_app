@@ -38,7 +38,10 @@ class Navigation extends StatelessWidget {
                       context: context, builder: (_) => const SettingsDialog()),
                   icon: const Icon(Icons.settings)),
               IconButton(
-                  onPressed: () {}, icon: const Icon(Icons.power_settings_new))
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon: const Icon(Icons.power_settings_new))
             ],
           ),
         ],

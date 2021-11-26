@@ -34,7 +34,12 @@ class CustomTextFormField extends StatelessWidget {
               icon,
               size: 18,
             ),
+            floatingLabelStyle:
+                TextStyle(color: Theme.of(context).primaryColor),
             border: const UnderlineInputBorder(),
+            focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Theme.of(context).primaryColor)),
+            focusColor: Theme.of(context).primaryColor,
             labelText: labelText),
       ),
     );

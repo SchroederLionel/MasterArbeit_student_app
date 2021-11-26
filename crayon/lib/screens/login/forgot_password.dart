@@ -35,7 +35,10 @@ class ForgotPassword extends StatelessWidget {
         child: const Text(
           'Forgot password?',
           style: TextStyle(
-              color: Colors.white, fontSize: 17, fontFamily: 'Poppins'),
+              color: Colors.orangeAccent,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Poppins',
+              decoration: TextDecoration.underline),
         ));
   }
 }

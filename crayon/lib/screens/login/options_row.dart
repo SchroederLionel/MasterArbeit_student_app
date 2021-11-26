@@ -15,6 +15,7 @@ class OptionsRow extends StatelessWidget {
         onPressed: () => themeProvider.swapTheme(),
         icon: const Icon(
           Icons.lightbulb,
+          color: Colors.orangeAccent,
         ),
       ),
     ]);

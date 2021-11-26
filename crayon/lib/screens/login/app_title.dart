@@ -5,14 +5,34 @@ class AppTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text(
-      'Crayon',
-      textAlign: TextAlign.center,
-      style: TextStyle(
-          fontFamily: 'Comforter',
-          fontSize: 48,
-          color: Colors.orangeAccent,
-          fontWeight: FontWeight.bold),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        Text('Hello',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 70.0,
+              fontWeight: FontWeight.bold,
+              height: 0.80,
+            )),
+        Row(
+          children: const [
+            Text('There',
+                style: TextStyle(
+                  fontSize: 70.0,
+                  fontWeight: FontWeight.w700,
+                  height: 0.80,
+                )),
+            Text('.',
+                style: TextStyle(
+                    fontSize: 70.0,
+                    height: 0.80,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.orangeAccent))
+          ],
+        )
+      ],
     );
   }
 }

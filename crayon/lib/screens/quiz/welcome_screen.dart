@@ -102,6 +102,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         },
                         child: Container(
                           width: double.infinity,
+                          color: Theme.of(context).primaryColor,
                           alignment: Alignment.center,
                           padding: const EdgeInsets.all(20 * 0.75),
                           decoration: const BoxDecoration(

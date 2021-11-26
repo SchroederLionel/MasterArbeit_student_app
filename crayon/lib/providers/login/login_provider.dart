@@ -67,5 +67,5 @@ class LoginProvider extends ChangeNotifier {
     setIsValid();
   }
 
-  Color getColor() => _isValid ? Colors.blueAccent : Colors.grey;
+  bool getColor() => _isValid ? true : false;
 }

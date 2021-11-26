@@ -3,12 +3,14 @@ import 'package:crayon/screens/dashboard/components/day_time.dart';
 import 'package:crayon/screens/dashboard/components/navigation.dart';
 import 'package:crayon/screens/dashboard/components/title_dash.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Dashboard extends StatelessWidget {
   const Dashboard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive, overlays: []);
     return Scaffold(
       body: Row(
         children: [

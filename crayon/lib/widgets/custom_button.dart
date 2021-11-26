@@ -15,14 +15,17 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton.icon(
-      onPressed: onPressed,
-      icon: Icon(icon),
-      label: Text(text),
-      style: TextButton.styleFrom(
-          backgroundColor: color,
-          padding:
-              const EdgeInsets.symmetric(horizontal: 14.0, vertical: 14.0)),
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton.icon(
+        onPressed: onPressed,
+        icon: Icon(icon),
+        label: Text(text),
+        style: TextButton.styleFrom(
+            backgroundColor: color,
+            padding:
+                const EdgeInsets.symmetric(horizontal: 14.0, vertical: 14.0)),
+      ),
     );
   }
 }

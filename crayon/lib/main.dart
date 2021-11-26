@@ -12,7 +12,7 @@ import 'route/route.dart' as route;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive, overlays: []);
   SharedPreferences prefs = await SharedPreferences.getInstance();
   runApp(MultiProvider(
     providers: [

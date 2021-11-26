@@ -6,7 +6,8 @@ class ThemeProvider extends ChangeNotifier {
 
   ThemeData light = ThemeData(
       fontFamily: 'Poppins',
-      primaryColor: Colors.orangeAccent,
+      primaryColor: Colors.orange,
+      primaryColorDark: Colors.orange,
       iconTheme: const IconThemeData(color: Colors.white),
       dialogBackgroundColor: Colors.indigo,
       elevatedButtonTheme: ElevatedButtonThemeData(
@@ -58,6 +59,7 @@ class ThemeProvider extends ChangeNotifier {
   ThemeData dark = ThemeData(
       fontFamily: 'Poppins',
       primaryColor: Colors.orangeAccent,
+      primaryColorDark: Colors.orangeAccent,
       dialogBackgroundColor: const Color(0xFF212332),
       iconTheme: const IconThemeData(color: Colors.white70),
       elevatedButtonTheme: ElevatedButtonThemeData(

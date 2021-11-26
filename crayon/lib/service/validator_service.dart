@@ -16,7 +16,6 @@ class ValidatorService {
   }
 
   static String? checkPassword(String? password, AppLocalizations? appLo) {
-    if(appLo == null)
     if (password != null) {
       if (password.trim().isEmpty) {
         return appLo!.translate('required') ?? 'Required';
