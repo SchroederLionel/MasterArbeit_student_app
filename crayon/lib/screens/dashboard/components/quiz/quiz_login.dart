@@ -3,6 +3,7 @@ import 'package:crayon/service/validator_service.dart';
 import 'package:crayon/widgets/cancel_button.dart';
 import 'package:crayon/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class QuizLogin extends StatefulWidget {
   const QuizLogin({Key? key}) : super(key: key);
@@ -23,6 +24,9 @@ class _QuizLoginState extends State<QuizLogin> {
   @override
   Widget build(BuildContext context) {
     final appTranslation = AppLocalizations.of(context);
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     return AlertDialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),

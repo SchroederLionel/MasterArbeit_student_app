@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class QuizLobbyProvider extends ChangeNotifier {
   final BuildContext context;
   LoadingState _state = LoadingState.no;
-
+  LoadingState get state => _state;
   QuizLobbyProvider({required this.context});
   late String _userName;
   String get userName => _userName;
@@ -14,13 +14,26 @@ class QuizLobbyProvider extends ChangeNotifier {
   String get lectureName => _lectureName;
   bool _isWaiting = false;
   bool get isWaiting => _isWaiting;
+
   set(String lectureId, bool isWaiting, String userName, String lectureName) {
     _lectureName = lectureName;
     _isWaiting = isWaiting;
     lectureId = lectureId;
     _userName = userName;
     showSnackBar('You entered the waiting room', false);
+    setState(LoadingState.yes);
+  }
+
+  void setState(LoadingState state) {
+    _state = state;
     notifyListeners();
+  }
+
+  void reset() {
+    _userName = '';
+    _lectureId = '';
+    _lectureName = '';
+    setState(LoadingState.no);
   }
 
   showSnackBar(String text, bool isError) {
