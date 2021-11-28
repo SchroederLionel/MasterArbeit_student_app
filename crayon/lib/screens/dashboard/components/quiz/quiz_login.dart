@@ -46,6 +46,7 @@ class _QuizLoginState extends State<QuizLogin> {
         style: Theme.of(context).textTheme.headline2,
       ),
       content: CustomTextFormField(
+        inputAction: TextInputAction.done,
         controller: _nameController,
         icon: Icons.account_circle,
         isPassword: false,

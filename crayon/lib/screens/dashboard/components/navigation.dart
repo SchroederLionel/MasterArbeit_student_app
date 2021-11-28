@@ -31,7 +31,7 @@ class Navigation extends StatelessWidget {
                           backgroundColor: Colors.greenAccent,
                           content: Text(
                             'Lecture added to your lectures',
-                            style: const TextStyle(color: Colors.white),
+                            style: TextStyle(color: Colors.white),
                           ));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     }

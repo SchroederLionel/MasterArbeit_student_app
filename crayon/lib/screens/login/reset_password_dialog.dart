@@ -24,9 +24,12 @@ class _ResetPasswordDailogState extends State<ResetPasswordDailog> {
   Widget build(BuildContext context) {
     var appTranslation = AppLocalizations.of(context);
     return AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
         title: Text(
           appTranslation!.translate('reset-password') ?? 'Reset password',
-          style: Theme.of(context).textTheme.subtitle1,
+          style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 24),
         ),
         actions: [
           const CancelButton(),
@@ -38,21 +41,15 @@ class _ResetPasswordDailogState extends State<ResetPasswordDailog> {
                 appTranslation.translate('send-request') ?? 'Send request'),
           )
         ],
-        content: SizedBox(
-          height: 90,
-          child: Column(
-            children: [
-              CustomTextFormField(
-                controller: _emailController,
-                icon: Icons.email,
-                isPassword: false,
-                labelText: appTranslation.translate('email') ?? 'Email',
-                validator: (String? text) =>
-                    ValidatorService.checkEmail(text, appTranslation),
-                onChanged: (text) {},
-              ),
-            ],
-          ),
+        content: CustomTextFormField(
+          inputAction: TextInputAction.done,
+          controller: _emailController,
+          icon: Icons.email,
+          isPassword: false,
+          labelText: appTranslation.translate('email') ?? 'Email',
+          validator: (String? text) =>
+              ValidatorService.checkEmail(text, appTranslation),
+          onChanged: (text) {},
         ));
   }
 }

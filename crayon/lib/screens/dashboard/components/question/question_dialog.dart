@@ -31,6 +31,7 @@ class _QuestionDialogState extends State<QuestionDialog> {
         style: Theme.of(context).textTheme.headline2,
       ),
       content: CustomTextFormField(
+          inputAction: TextInputAction.done,
           validator: (String? text) =>
               ValidatorService.isStringLengthAbove2(text, appTranslation),
           onChanged: (_) {},

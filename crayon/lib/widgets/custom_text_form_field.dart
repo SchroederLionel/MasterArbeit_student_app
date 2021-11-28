@@ -7,10 +7,11 @@ class CustomTextFormField extends StatelessWidget {
   final IconData icon;
   final String labelText;
   final bool isPassword;
-
+  final TextInputAction inputAction;
   const CustomTextFormField(
       {required this.validator,
       required this.onChanged,
+      required this.inputAction,
       required this.controller,
       required this.icon,
       required this.labelText,
@@ -26,13 +27,14 @@ class CustomTextFormField extends StatelessWidget {
         obscureText: isPassword,
         validator: validator,
         controller: controller,
-        textInputAction: TextInputAction.next,
+        textInputAction: inputAction,
         onChanged: onChanged,
         style: Theme.of(context).textTheme.bodyText1,
         decoration: InputDecoration(
             prefix: Icon(
               icon,
               size: 18,
+              color: Theme.of(context).primaryColor,
             ),
             floatingLabelStyle:
                 TextStyle(color: Theme.of(context).primaryColor),

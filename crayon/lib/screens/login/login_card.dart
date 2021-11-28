@@ -2,6 +2,7 @@ import 'package:crayon/datamodels/failure.dart';
 import 'package:crayon/l10n/app_localizations.dart';
 import 'package:crayon/providers/login/login_provider.dart';
 import 'package:crayon/providers/util/error_provider.dart';
+import 'package:crayon/screens/login/create_account.dart';
 import 'package:crayon/screens/login/forgot_password.dart';
 import 'package:crayon/service/validator_service.dart';
 import 'package:crayon/state/enum.dart';
@@ -40,6 +41,7 @@ class _LoginCardState extends State<LoginCard> {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             CustomTextFormField(
+                inputAction: TextInputAction.next,
                 validator: (email) =>
                     ValidatorService.checkEmail(email, appTranslation),
                 onChanged: (String email) => loginProvider.setEmail(email),
@@ -48,6 +50,7 @@ class _LoginCardState extends State<LoginCard> {
                 labelText: appTranslation!.translate('email') ?? 'Email',
                 isPassword: false),
             CustomTextFormField(
+                inputAction: TextInputAction.done,
                 validator: (password) =>
                     ValidatorService.checkPassword(password, appTranslation),
                 onChanged: (String password) =>
@@ -74,13 +77,20 @@ class _LoginCardState extends State<LoginCard> {
                     : const Center(
                         child: CircularProgressIndicator(),
                       )),
-            Consumer<ErrorProvider>(builder: (context, errorNotifier, child) {
-              if (errorNotifier.state == ErrorState.noError) {
-                return Container();
-              } else {
-                return ErrorText(error: errorNotifier.errorText);
-              }
-            }),
+            const SizedBox(
+              height: 18,
+            ),
+            const CreateAccount(),
+            Center(
+              child: Consumer<ErrorProvider>(
+                  builder: (context, errorNotifier, child) {
+                if (errorNotifier.state == ErrorState.noError) {
+                  return Container();
+                } else {
+                  return ErrorText(error: errorNotifier.errorText);
+                }
+              }),
+            ),
           ],
         ),
       ),
