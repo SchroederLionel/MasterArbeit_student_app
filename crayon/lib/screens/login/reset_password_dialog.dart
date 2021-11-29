@@ -8,7 +8,6 @@ import 'package:crayon/widgets/error_text.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:validators/validators.dart';
 
 class ResetPasswordDailog extends StatefulWidget {
   const ResetPasswordDailog({Key? key}) : super(key: key);
@@ -43,6 +42,7 @@ class _ResetPasswordDailogState extends State<ResetPasswordDailog> {
           const CancelButton(),
           ElevatedButton(
             onPressed: () async {
+              FocusScope.of(context).unfocus();
               provider
                   .resetPassword(_emailController.text)
                   .then((value) => value.fold((failure) {

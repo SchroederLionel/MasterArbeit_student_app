@@ -10,7 +10,7 @@ class TimeProvider extends ChangeNotifier {
   int _previousTime = 0;
   TimeProvider() : _watch = Stopwatch();
 
-  List<TimerScore> _timePerQuestionTaken = [];
+  final List<TimerScore> _timePerQuestionTaken = [];
 
   void start() {
     _watch.start();

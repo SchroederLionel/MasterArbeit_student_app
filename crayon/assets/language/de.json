@@ -67,6 +67,7 @@
     "bad-format":"Ungültige Anforderung",
     "weak-password":"Passwort ist zu schwach",
     "email-already-in-use":"E-Mail existiert bereits",
+    "email-already-exists":"E-Mail existiert bereits",
     "add-time-interval":"Zeitintervall hinzufügen",
     "failed-to-remove-file":"Folie konnte nicht entfernt werden",
     "quiz-requires-at-least-one-question":"Ein Quiz erfordert mindestens eine Frage!",

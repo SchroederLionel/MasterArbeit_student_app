@@ -66,6 +66,7 @@
     "not-found":"No object found",
     "weak-password":"Password is to weak",
     "email-already-in-use":"Email already exists",
+    "email-already-exists":"Email already exists",
     "add-time-interval":"Add time interval",
     "failed-to-remove-file":"Failed to remove Slide",
     "quiz-title":"Quiz title",

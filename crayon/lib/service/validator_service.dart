@@ -1,5 +1,4 @@
 import 'package:crayon/l10n/app_localizations.dart';
-
 import 'package:flutter/material.dart';
 import 'package:validators/validators.dart';
 
@@ -15,24 +14,17 @@ class ValidatorService {
     return null;
   }
 
-  static String? isValid(String? email, String? password,
-      String? verificationPassword, AppLocalizations? appLo) {
-    var _emailErr = checkEmail(email, appLo);
-    if (_emailErr != null) {
-      return _emailErr;
+  static String? isValid(
+      String email, String password, String? verificationPassword) {
+    if (verificationPassword != password) {
+      return 'passwordMatch';
+    } else if (!isEmail(email)) {
+      return 'invalidEmail';
+    } else if (password.length < 8) {
+      return 'passwordCheck';
+    } else {
+      return null;
     }
-
-    var _password = checkPassword(email, appLo);
-
-    if (_password != null) {
-      return _password;
-    }
-    var _verifyPass =
-        checkVerificationPassword(password, verificationPassword, appLo);
-    if (_verifyPass != null) {
-      return _verifyPass;
-    }
-    return null;
   }
 
   static String? checkPassword(String? password, AppLocalizations? appLo) {

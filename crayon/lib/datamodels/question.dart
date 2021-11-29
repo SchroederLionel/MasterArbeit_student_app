@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 class Question {
   final String question;
   final List<Response> responses;
@@ -35,6 +37,9 @@ class Response {
         other.response == response &&
         other.isResponseRight == isResponseRight;
   }
+
+  @override
+  int get hashCode => hashValues(response, isResponseRight);
 }
 
 const List sample_data = [

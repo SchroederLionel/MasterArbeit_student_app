@@ -1,9 +1,13 @@
+import 'package:crayon/datamodels/user/user_credentials.dart';
 import 'package:crayon/l10n/app_localizations.dart';
+import 'package:crayon/providers/login/login_provider.dart';
 import 'package:crayon/service/validator_service.dart';
 import 'package:crayon/widgets/cancel_button.dart';
 import 'package:crayon/widgets/custom_text_form_field.dart';
 import 'package:crayon/widgets/error_text.dart';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CreateAccountDialog extends StatefulWidget {
   const CreateAccountDialog({Key? key}) : super(key: key);
@@ -13,43 +17,60 @@ class CreateAccountDialog extends StatefulWidget {
 }
 
 class _CreateAccountDialogState extends State<CreateAccountDialog> {
-  final TextEditingController _email = TextEditingController();
-  final TextEditingController _password = TextEditingController();
-  final TextEditingController _verificationPassword = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _verificationPasswordController =
+      TextEditingController();
   String? _error;
+  bool isLoading = false;
   @override
   void dispose() {
-    _email.dispose();
-    _password.dispose();
-    _verificationPassword.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _verificationPasswordController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     var appTranslation = AppLocalizations.of(context);
+    final provider = Provider.of<LoginProvider>(context, listen: false);
     return AlertDialog(
       actions: [
         const CancelButton(),
-        ElevatedButton(
-            onPressed: () {
-              var hasError = ValidatorService.isValid(_email.text,
-                  _password.text, _verificationPassword.text, appTranslation);
-              if (hasError != null) {
-                setState(() {
-                  _error = hasError;
-                });
-              } else {
-                Navigator.of(context).pop();
-              }
-            },
-            child: Text(appTranslation!.translate('create') ?? 'Create'))
+        isLoading
+            ? CircularProgressIndicator(color: Theme.of(context).primaryColor)
+            : ElevatedButton(
+                onPressed: () async {
+                  FocusScope.of(context).unfocus();
+                  setState(() {
+                    isLoading = true;
+                  });
+                  provider
+                      .createAccount(
+                          UserBasics(
+                              email: _emailController.text,
+                              password: _passwordController.text),
+                          _verificationPasswordController.text)
+                      .then((value) => value.fold((failure) {
+                            setState(() {
+                              _error = failure.code;
+                              isLoading = false;
+                            });
+                          }, (userCredential) {
+                            Navigator.of(context).pop();
+                            WidgetsBinding.instance!.addPostFrameCallback((_) {
+                              Navigator.of(context).pushNamed('dashboard');
+                            });
+                          }));
+                },
+                child: Text(appTranslation!.translate('create') ?? 'Create'))
       ],
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
       title: Text(
-          appTranslation.translate('create-account') ?? 'Create Account',
+          appTranslation!.translate('create-account') ?? 'Create Account',
           style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 24)),
       content: SingleChildScrollView(
         child: ListView(
@@ -57,7 +78,7 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
           children: [
             CustomTextFormField(
               inputAction: TextInputAction.next,
-              controller: _email,
+              controller: _emailController,
               icon: Icons.email,
               isPassword: false,
               labelText: appTranslation.translate('email') ?? 'Email',
@@ -67,7 +88,7 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
             ),
             CustomTextFormField(
               inputAction: TextInputAction.next,
-              controller: _password,
+              controller: _passwordController,
               icon: Icons.password,
               isPassword: true,
               labelText: appTranslation.translate('password') ?? 'Password',
@@ -77,16 +98,17 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
             ),
             CustomTextFormField(
               inputAction: TextInputAction.done,
-              controller: _verificationPassword,
+              controller: _verificationPasswordController,
               icon: Icons.password,
               isPassword: true,
               labelText: appTranslation.translate('newVerificationPass') ??
                   'Verification password',
               validator: (String? text) =>
                   ValidatorService.checkVerificationPassword(
-                      _password.text, text, appTranslation),
+                      _passwordController.text, text, appTranslation),
               onChanged: (text) {},
             ),
+            const SizedBox(height: 10),
             _error == null
                 ? Container()
                 : Center(child: ErrorText(error: _error as String)),

@@ -9,7 +9,6 @@ import 'package:crayon/screens/dashboard/dashboard.dart';
 import 'package:crayon/screens/login/login.dart';
 import 'package:crayon/screens/quiz/quiz_screen.dart';
 import 'package:crayon/screens/quiz/quiz_screen_components.dart/score.dart';
-import 'package:crayon/screens/quiz/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,8 +25,6 @@ Route<dynamic> controller(RouteSettings routerSettings) {
                 ChangeNotifierProvider<ErrorProvider>(
                     create: (_) => ErrorProvider())
               ], child: const Login()));
-    case quizWelcome:
-      return MaterialPageRoute(builder: (context) => const WelcomeScreen());
     case quiz:
       return MaterialPageRoute(
           builder: (context) => MultiProvider(
@@ -57,5 +54,5 @@ Route<dynamic> controller(RouteSettings routerSettings) {
       return MaterialPageRoute(builder: (context) => Score(score: arg));
   }
 
-  return MaterialPageRoute(builder: (context) => const WelcomeScreen());
+  return MaterialPageRoute(builder: (context) => const Login());
 }

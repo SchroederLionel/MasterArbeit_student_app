@@ -4,7 +4,7 @@ import 'package:crayon/providers/quiz/question_right.dart';
 import 'package:crayon/providers/quiz/quiz_indicator.dart';
 
 import 'package:crayon/providers/quiz/time_provider.dart';
-import 'package:crayon/state/enum.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

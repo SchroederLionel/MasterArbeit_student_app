@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crayon/datamodels/failure.dart';
 import 'package:crayon/datamodels/user/user.dart' as myuser;
 import 'package:crayon/datamodels/user/user_credentials.dart';
+import 'package:crayon/service/validator_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:validators/validators.dart';
@@ -11,8 +12,15 @@ import 'package:validators/validators.dart';
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<myuser.User> registerWithEmailPassword(UserBasics user) async {
+  Future<UserCredential> registerWithEmailPassword(
+      UserBasics user, String verificationPassword) async {
+    String? isValid = ValidatorService.isValid(
+        user.email, user.password, verificationPassword);
+
     try {
+      if (isValid != null) {
+        throw Failure(code: isValid);
+      }
       UserCredential userCredential =
           await _auth.createUserWithEmailAndPassword(
         email: user.email,
@@ -29,7 +37,7 @@ class AuthService {
           .doc(userCredential.user!.uid)
           .set(newUser.toJson());
 
-      return newUser;
+      return await signInWithEmailPassword(user.email, user.password);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         throw Failure(code: 'weak-password');
