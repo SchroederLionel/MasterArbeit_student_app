@@ -1,71 +1,39 @@
 import 'package:crayon/datamodels/failure.dart';
-import 'package:crayon/providers/util/error_provider.dart';
+import 'package:crayon/datamodels/user/user_credentials.dart';
+import 'package:crayon/service/auth_service.dart';
 import 'package:crayon/state/enum.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
-import 'package:validators/validators.dart';
 
 class LoginProvider extends ChangeNotifier {
-  LoadingState _state = LoadingState.no;
-  LoadingState get state => _state;
-  bool _isValid = false;
-  bool _isEmailValid = false;
-  bool _isPasswordValid = false;
-  String _email = '';
-  String _password = '';
+  NotifierState _state = NotifierState.initial;
+  NotifierState get state => _state;
 
-  void setState(LoadingState state) {
+  late Either<Failure, UserCredential> _userCredential;
+  Either<Failure, UserCredential> get userCredential => _userCredential;
+
+  setState(NotifierState state) {
     _state = state;
     notifyListeners();
   }
 
-  void changeLoadingState(
-      BuildContext context, ErrorProvider errorProvider) async {
-    Navigator.of(context).pushNamed('dashboard');
-    if (_isValid) {
-      setState(LoadingState.yes);
-      errorProvider.setErrorState('Help');
-      setState(LoadingState.no);
-    }
+  void signUserIn(UserBasics user) async {
+    setState(NotifierState.loading);
+    AuthService service = AuthService();
+    _userCredential = await Task(
+            () => service.signInWithEmailPassword(user.email, user.password))
+        .attempt()
+        .map(
+          (either) => either.leftMap((obj) {
+            try {
+              return obj as Failure;
+            } catch (e) {
+              throw obj;
+            }
+          }),
+        )
+        .run();
+    setState(NotifierState.loaded);
   }
-
-  setIsValid() {
-    if (_isEmailValid && _isPasswordValid) {
-      if (_isValid == false) {
-        _isValid = true;
-        notifyListeners();
-      }
-    } else {
-      if (_isValid == true) {
-        _isValid = false;
-        notifyListeners();
-      }
-    }
-  }
-
-  setEmail(String email) {
-    _email = email;
-    if (isEmail(_email)) {
-      _isEmailValid = true;
-    } else {
-      _isEmailValid = false;
-    }
-    setIsValid();
-  }
-
-  setPassword(String password) {
-    _password = password;
-    if (_password.trim().isEmpty) {
-      _isPasswordValid = false;
-    } else if (_password.trim().length < 8) {
-      _isPasswordValid = false;
-    } else {
-      _isPasswordValid = true;
-    }
-    setIsValid();
-  }
-
-  bool getColor() => _isValid ? true : false;
 }

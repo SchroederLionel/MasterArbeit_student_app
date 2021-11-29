@@ -26,8 +26,8 @@ class Option extends StatelessWidget {
     return Consumer<QuestionRight>(
         builder: (_, questionRight, __) => InkWell(
               onTap: () {
-                questionRight.setNotifierState(
-                    NotifierState.buttonPressed, response);
+                /* questionRight.setNotifierState(
+                    NotifierState.buttonPressed, response);*/
                 quizIndicator.increament();
                 time.addTimeTakenForQuestion(response.isResponseRight);
 

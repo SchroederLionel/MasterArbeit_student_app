@@ -1,6 +1,7 @@
 import 'package:crayon/screens/dashboard/components/navigation/navigation_tile.dart';
 import 'package:crayon/screens/dashboard/components/navigation/settings_dialog.dart';
 import 'package:crayon/screens/dashboard/components/qrcode/qrcode.dart';
+import 'package:crayon/service/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
@@ -56,6 +57,7 @@ class Navigation extends StatelessWidget {
                   icon: const Icon(Icons.settings)),
               IconButton(
                   onPressed: () {
+                    AuthService().signOut();
                     Navigator.of(context).pop();
                   },
                   icon: const Icon(Icons.power_settings_new)),

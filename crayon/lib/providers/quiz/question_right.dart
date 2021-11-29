@@ -25,15 +25,17 @@ class QuestionRight extends ChangeNotifier {
       return _default;
     } else {
       if (response != _responsePressed) {
-        if (response.isResponseRight)
+        if (response.isResponseRight) {
           return _right;
-        else
+        } else {
           return _default;
+        }
       } else {
-        if (response.isResponseRight)
+        if (response.isResponseRight) {
           return _right;
-        else
+        } else {
           return _wrong;
+        }
       }
     }
   }

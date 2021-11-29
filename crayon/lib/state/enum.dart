@@ -1,3 +1,3 @@
-enum NotifierState { initial, buttonPressed }
+enum NotifierState { initial, loading, loaded }
 enum ErrorState { error, noError }
 enum LoadingState { yes, no }

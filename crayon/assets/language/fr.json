@@ -93,6 +93,15 @@
     "9-month":"Septembre",
     "10-month":"Octobre",
     "11-month":"Novembre",
-    "12-month":"Décembre"
+    "12-month":"Décembre",
+    "forgot-password":"Mot de passe oublié?",
+    "create":"Créer",
+    "reset-password":"Réinitialiser le mot de passe",
+    "create-account":"Créer un compte",
+    "hello":"Salut",
+    "there":"L'ami",
+    "send":"Envoyer",
+    "reset-password-link-was-send-to-your-email":"Le lien de réinitialisation du mot de passe a été envoyé à votre adresse e-mail",
+    "complete-all-the-fields" :"Veuillez remplir tous les champs!"
     
 }

@@ -1,4 +1,6 @@
+import 'package:crayon/datamodels/custom_snackbar.dart';
 import 'package:crayon/datamodels/failure.dart';
+import 'package:crayon/datamodels/user/user_credentials.dart';
 import 'package:crayon/l10n/app_localizations.dart';
 import 'package:crayon/providers/login/login_provider.dart';
 import 'package:crayon/providers/util/error_provider.dart';
@@ -12,14 +14,14 @@ import 'package:crayon/widgets/error_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class LoginCard extends StatefulWidget {
-  const LoginCard({Key? key}) : super(key: key);
+class Body extends StatefulWidget {
+  const Body({Key? key}) : super(key: key);
 
   @override
-  _LoginCardState createState() => _LoginCardState();
+  _BodyState createState() => _BodyState();
 }
 
-class _LoginCardState extends State<LoginCard> {
+class _BodyState extends State<Body> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   @override
@@ -44,7 +46,7 @@ class _LoginCardState extends State<LoginCard> {
                 inputAction: TextInputAction.next,
                 validator: (email) =>
                     ValidatorService.checkEmail(email, appTranslation),
-                onChanged: (String email) => loginProvider.setEmail(email),
+                onChanged: (String email) => {},
                 controller: _emailController,
                 icon: Icons.email,
                 labelText: appTranslation!.translate('email') ?? 'Email',
@@ -53,8 +55,7 @@ class _LoginCardState extends State<LoginCard> {
                 inputAction: TextInputAction.done,
                 validator: (password) =>
                     ValidatorService.checkPassword(password, appTranslation),
-                onChanged: (String password) =>
-                    loginProvider.setPassword(password),
+                onChanged: (String password) => {},
                 controller: _passwordController,
                 icon: Icons.password,
                 labelText: appTranslation.translate('password') ?? 'Password',
@@ -64,33 +65,52 @@ class _LoginCardState extends State<LoginCard> {
               height: 18,
             ),
             Consumer<LoginProvider>(
-                builder: (context, loginButton, child) => loginButton.state ==
-                        LoadingState.no
-                    ? CustomButton(
-                        icon: Icons.login,
-                        color: loginButton.getColor()
-                            ? Theme.of(context).primaryColor
-                            : Colors.grey,
-                        text: appTranslation.translate('signIn') ?? 'Sign In',
-                        onPressed: () => loginButton.changeLoadingState(
-                            context, errorProvider))
-                    : const Center(
-                        child: CircularProgressIndicator(),
-                      )),
+                builder: (context, provider, child) {
+                  if (provider.state == NotifierState.initial) {
+                    return child as Widget;
+                  } else if (provider.state == NotifierState.loading) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    );
+                  } else {
+                    WidgetsBinding.instance!.addPostFrameCallback((_) {
+                      provider.userCredential.fold(
+                          (l) => ScaffoldMessenger.of(context).showSnackBar(
+                              CustomSnackbar(
+                                  text: appTranslation.translate(l.code) ??
+                                      l.code,
+                                  isError: true)),
+                          (r) => Navigator.of(context).pushNamed('dashboard'));
+                    });
+
+                    return child as Widget;
+                  }
+                },
+                child: CustomButton(
+                    icon: Icons.login,
+                    color: Theme.of(context).primaryColor,
+                    text: appTranslation.translate('signIn') ?? 'Sign In',
+                    onPressed: () {
+                      var userBasics = UserBasics(
+                          email: _emailController.text,
+                          password: _passwordController.text);
+                      if (userBasics.isValid()) {
+                        loginProvider.signUserIn(userBasics);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            CustomSnackbar(
+                                text: appTranslation
+                                        .translate('complete-all-the-fields') ??
+                                    'Fill in all the fields!',
+                                isError: true));
+                      }
+                    })),
             const SizedBox(
               height: 18,
             ),
             const CreateAccount(),
-            Center(
-              child: Consumer<ErrorProvider>(
-                  builder: (context, errorNotifier, child) {
-                if (errorNotifier.state == ErrorState.noError) {
-                  return Container();
-                } else {
-                  return ErrorText(error: errorNotifier.errorText);
-                }
-              }),
-            ),
           ],
         ),
       ),

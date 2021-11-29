@@ -3,6 +3,7 @@ import 'package:crayon/l10n/app_localizations_delegate.dart';
 import 'package:crayon/providers/login/login_provider.dart';
 import 'package:crayon/providers/util/locale_provider.dart';
 import 'package:crayon/providers/util/theme.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -12,6 +13,7 @@ import 'route/route.dart' as route;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive, overlays: []);
   SharedPreferences prefs = await SharedPreferences.getInstance();
   runApp(MultiProvider(

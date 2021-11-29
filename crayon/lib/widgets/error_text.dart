@@ -8,13 +8,15 @@ class ErrorText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appTranslation = AppLocalizations.of(context);
-    return Text(
-      appTranslation!.translate(error) ?? error,
-      style: const TextStyle(
-          fontSize: 19,
-          fontFamily: 'Poppins',
-          fontWeight: FontWeight.w400,
-          color: Colors.red),
+    return Center(
+      child: Text(
+        appTranslation!.translate(error) ?? error,
+        style: const TextStyle(
+            fontSize: 19,
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.w400,
+            color: Colors.red),
+      ),
     );
   }
 }

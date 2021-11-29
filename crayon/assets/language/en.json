@@ -92,5 +92,14 @@
     "9-month":"September",
     "10-month":"October",
     "11-month":"November",
-    "12-month":"December"
+    "12-month":"December",
+    "forgot-password":"Forgot password?",
+    "reset-password":"Reset password",
+    "create-account":"Create account",
+    "create":"Create",
+    "hello":"Hello",
+    "there":"There",
+    "send":"Send",
+    "reset-password-link-was-send-to-your-email":"Reset password link was sent to your email",
+    "complete-all-the-fields" :"Fill in all the fields!"
 }

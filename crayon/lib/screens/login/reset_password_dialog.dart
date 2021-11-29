@@ -37,8 +37,7 @@ class _ResetPasswordDailogState extends State<ResetPasswordDailog> {
             onPressed: () async {
               if (_emailController.text.isNotEmpty) {}
             },
-            child: Text(
-                appTranslation.translate('send-request') ?? 'Send request'),
+            child: Text(appTranslation.translate('send') ?? 'Send'),
           )
         ],
         content: CustomTextFormField(

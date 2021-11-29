@@ -15,6 +15,26 @@ class ValidatorService {
     return null;
   }
 
+  static String? isValid(String? email, String? password,
+      String? verificationPassword, AppLocalizations? appLo) {
+    var _emailErr = checkEmail(email, appLo);
+    if (_emailErr != null) {
+      return _emailErr;
+    }
+
+    var _password = checkPassword(email, appLo);
+
+    if (_password != null) {
+      return _password;
+    }
+    var _verifyPass =
+        checkVerificationPassword(password, verificationPassword, appLo);
+    if (_verifyPass != null) {
+      return _verifyPass;
+    }
+    return null;
+  }
+
   static String? checkPassword(String? password, AppLocalizations? appLo) {
     if (password != null) {
       if (password.trim().isEmpty) {
