@@ -1,5 +1,4 @@
 import 'package:crayon/datamodels/custom_snackbar.dart';
-import 'package:crayon/datamodels/failure.dart';
 import 'package:crayon/datamodels/user/user_credentials.dart';
 import 'package:crayon/l10n/app_localizations.dart';
 import 'package:crayon/providers/login/login_provider.dart';
@@ -10,7 +9,6 @@ import 'package:crayon/service/validator_service.dart';
 import 'package:crayon/state/enum.dart';
 import 'package:crayon/widgets/custom_button.dart';
 import 'package:crayon/widgets/custom_text_form_field.dart';
-import 'package:crayon/widgets/error_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -34,7 +32,6 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     var appTranslation = AppLocalizations.of(context);
-    final errorProvider = Provider.of<ErrorProvider>(context, listen: false);
     final loginProvider = Provider.of<LoginProvider>(context, listen: false);
     return Expanded(
       child: SingleChildScrollView(

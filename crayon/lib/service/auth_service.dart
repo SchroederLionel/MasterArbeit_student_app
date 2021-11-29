@@ -6,6 +6,7 @@ import 'package:crayon/datamodels/user/user.dart' as myuser;
 import 'package:crayon/datamodels/user/user_credentials.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:validators/validators.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -47,6 +48,9 @@ class AuthService {
 
   Future<bool> resetPassword(String email) async {
     try {
+      if (!isEmail(email)) {
+        throw Failure(code: 'invalidEmail');
+      }
       await _auth.sendPasswordResetEmail(email: email);
       return true;
     } on FirebaseAuthException catch (e) {

@@ -102,6 +102,7 @@
     "there":"L'ami",
     "send":"Envoyer",
     "reset-password-link-was-send-to-your-email":"Le lien de réinitialisation du mot de passe a été envoyé à votre adresse e-mail",
-    "complete-all-the-fields" :"Veuillez remplir tous les champs!"
+    "complete-all-the-fields" :"Veuillez remplir tous les champs!",
+    "user-not-found":"Aucun utilisateur trouvé sous cet e-mail"
     
 }

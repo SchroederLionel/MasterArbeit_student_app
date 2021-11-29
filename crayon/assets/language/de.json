@@ -101,5 +101,6 @@
     "there":"Freund",
     "send":"Senden",
     "reset-password-link-was-send-to-your-email":"Der Link zum Zurücksetzen des Passworts wurde an Ihre E-Mail gesendet",
-    "complete-all-the-fields" :"Füllen Sie alle Felder aus!"
+    "complete-all-the-fields" :"Füllen Sie alle Felder aus!",
+    "user-not-found":"Kein Benutzer unter dieser E-Mail gefunden"
 }

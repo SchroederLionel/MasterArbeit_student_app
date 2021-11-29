@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:crayon/datamodels/failure.dart';
 import 'package:crayon/datamodels/user/user_credentials.dart';
 import 'package:crayon/service/auth_service.dart';
@@ -5,6 +7,7 @@ import 'package:crayon/state/enum.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:validators/validators.dart';
 
 class LoginProvider extends ChangeNotifier {
   NotifierState _state = NotifierState.initial;
@@ -16,6 +19,21 @@ class LoginProvider extends ChangeNotifier {
   setState(NotifierState state) {
     _state = state;
     notifyListeners();
+  }
+
+  Future<Either<Failure, bool>> resetPassword(String email) async {
+    return await Task(() => AuthService().resetPassword(email))
+        .attempt()
+        .map(
+          (either) => either.leftMap((obj) {
+            try {
+              return obj as Failure;
+            } catch (e) {
+              throw obj;
+            }
+          }),
+        )
+        .run();
   }
 
   void signUserIn(UserBasics user) async {

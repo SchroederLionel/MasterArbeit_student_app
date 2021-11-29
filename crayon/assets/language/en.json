@@ -101,5 +101,6 @@
     "there":"There",
     "send":"Send",
     "reset-password-link-was-send-to-your-email":"Reset password link was sent to your email",
-    "complete-all-the-fields" :"Fill in all the fields!"
+    "complete-all-the-fields" :"Fill in all the fields!",
+    "user-not-found":"No user found under this email"
 }

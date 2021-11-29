@@ -1,7 +1,5 @@
 import 'package:crayon/l10n/app_localizations.dart';
-import 'package:crayon/providers/quiz/quiz_lobby_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class DayTime extends StatelessWidget {
   const DayTime({Key? key}) : super(key: key);
