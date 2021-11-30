@@ -10,7 +10,7 @@ class User {
     final uid = json!['uid'] as String;
     final email = json['email'] as String;
 
-    final myLecturesData = json['myLectures'] as List<dynamic>?;
+    final myLecturesData = json['enrolled-lectures'] as List<dynamic>?;
 
     final myLectures = myLecturesData != null
         ? myLecturesData.map((lectureId) => lectureId as String).toList()
@@ -20,5 +20,5 @@ class User {
   }
 
   Map<String, dynamic> toJson() =>
-      {'uid': uid, 'email': email, 'myLectures': jsonEncode(myLectures)};
+      {'uid': uid, 'email': email, 'enrolled-lectures': jsonEncode(myLectures)};
 }

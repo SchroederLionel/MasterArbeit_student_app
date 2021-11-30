@@ -11,7 +11,7 @@ import 'package:validators/validators.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
+  User? get currentUser => _auth.currentUser;
   Future<UserCredential> registerWithEmailPassword(
       UserBasics user, String verificationPassword) async {
     String? isValid = ValidatorService.isValid(

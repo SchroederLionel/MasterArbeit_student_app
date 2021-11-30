@@ -1,17 +1,17 @@
+import 'package:crayon/providers/user/user_provider.dart';
 import 'package:crayon/screens/dashboard/components/navigation/navigation_tile.dart';
 import 'package:crayon/screens/dashboard/components/navigation/settings_dialog.dart';
 import 'package:crayon/screens/dashboard/components/qrcode/qrcode.dart';
 import 'package:crayon/service/auth_service.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:provider/provider.dart';
 
 class Navigation extends StatelessWidget {
-  late Barcode? result;
-  late QRViewController? controller;
-  Navigation({Key? key}) : super(key: key);
-  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  const Navigation({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<UserProvider>(context, listen: false);
     return Container(
       width: 50,
       color: const Color(0xff1a1c26),
@@ -24,17 +24,11 @@ class Navigation extends StatelessWidget {
                 onPressed: () {
                   showDialog(
                       context: context,
-                      builder: (context) {
+                      builder: (_) {
                         return const QrCode();
-                      }).then((value) {
+                      }).then((value) async {
                     if (value is String) {
-                      const snackBar = SnackBar(
-                          backgroundColor: Colors.greenAccent,
-                          content: Text(
-                            'Lecture added to your lectures',
-                            style: TextStyle(color: Colors.white),
-                          ));
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      provider.addLecture(value);
                     }
                   });
                 },
@@ -66,13 +60,5 @@ class Navigation extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  void onQRViewCreated(QRViewController controller) {
-    this.controller = controller;
-
-    controller.scannedDataStream.listen((scanData) {
-      result = scanData;
-    });
   }
 }

@@ -47,12 +47,13 @@ class _QrCodeState extends State<QrCode> {
     controller!.resumeCamera();
   }
 
-  void _onQRViewCreated(QRViewController controller) {
+  void _onQRViewCreated(QRViewController controller, BuildContext context) {
     setState(() {
       this.controller = controller;
     });
     controller.scannedDataStream.listen((scanData) {
-      Navigator.of(context).pop(scanData.code);
+      controller.dispose();
+      Navigator.pop(context, scanData.code);
     });
   }
 
@@ -80,7 +81,8 @@ class _QrCodeState extends State<QrCode> {
     // we need to listen for Flutter SizeChanged notification and update controller
     return QRView(
       key: qrKey,
-      onQRViewCreated: _onQRViewCreated,
+      onQRViewCreated: (QRViewController controller) =>
+          _onQRViewCreated(controller, context),
       overlay: QrScannerOverlayShape(
           borderColor: Colors.red,
           borderRadius: 10,

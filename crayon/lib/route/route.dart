@@ -4,6 +4,7 @@ import 'package:crayon/providers/quiz/quiz_indicator.dart';
 import 'package:crayon/providers/quiz/quiz_lobby_provider.dart';
 import 'package:crayon/providers/quiz/scrore.dart' as provider_score;
 import 'package:crayon/providers/quiz/time_provider.dart';
+import 'package:crayon/providers/user/user_provider.dart';
 import 'package:crayon/providers/util/error_provider.dart';
 import 'package:crayon/screens/dashboard/dashboard.dart';
 import 'package:crayon/screens/login/login.dart';
@@ -14,7 +15,6 @@ import 'package:provider/provider.dart';
 
 const String login = 'login';
 const String dashboard = 'dashboard';
-const String quizWelcome = 'welcomeQuiz';
 const String score = 'score';
 const String quiz = 'quiz';
 Route<dynamic> controller(RouteSettings routerSettings) {
@@ -42,6 +42,8 @@ Route<dynamic> controller(RouteSettings routerSettings) {
       return MaterialPageRoute(
           builder: (context) => MultiProvider(
                 providers: [
+                  ChangeNotifierProvider<UserProvider>(
+                      create: (_) => UserProvider(context: context)),
                   ChangeNotifierProvider<NavigationProvider>(
                       create: (_) => NavigationProvider()),
                   ChangeNotifierProvider<QuizLobbyProvider>(

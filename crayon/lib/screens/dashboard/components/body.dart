@@ -1,8 +1,13 @@
 import 'package:crayon/datamodels/lecture/lecture.dart';
 import 'package:crayon/datamodels/lecture/lecture_date.dart';
 import 'package:crayon/datamodels/lecture/lecture_schedule.dart';
+import 'package:crayon/providers/login/login_provider.dart';
 import 'package:crayon/providers/navigation/navigation_provider.dart';
+import 'package:crayon/providers/user/user_provider.dart';
 import 'package:crayon/screens/dashboard/components/schedule.dart';
+import 'package:crayon/state/enum.dart';
+import 'package:crayon/widgets/error_text.dart';
+import 'package:crayon/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
@@ -22,9 +27,12 @@ class _BodyState extends State<Body> {
   @override
   initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) =>
-        Provider.of<NavigationProvider>(context, listen: false)
-            .setPageController(_controller));
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      print('callled');
+      Provider.of<NavigationProvider>(context, listen: false)
+          .setPageController(_controller);
+      Provider.of<UserProvider>(context, listen: false).getUser();
+    });
   }
 
   @override
@@ -36,28 +44,38 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     List<Lecture> lectures = lecture_data;
-
-    return Expanded(
-      child: PageView.builder(
-          controller: _controller,
-          scrollDirection: Axis.vertical,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: 7,
-          itemBuilder: (_, index) {
-            List<LectureSchedule> schedules = getSchedules(lectures, index);
-            if (schedules.isEmpty) {
-              return const Center(
-                  child: Text('A day free!',
-                      style: TextStyle(color: Colors.black)));
-            }
-            return ListView.builder(
-                shrinkWrap: true,
-                itemCount: schedules.length,
-                itemBuilder: (context, i) {
-                  return Schedule(schedule: schedules[i]);
-                });
-          }),
-    );
+    return Consumer<UserProvider>(builder: (_, provider, __) {
+      if (provider.state == NotifierState.initial) {
+        return const SizedBox();
+      } else if (provider.state == NotifierState.loading) {
+        return const LoadingWidget();
+      } else {
+        return provider.user.fold(
+            (failure) => ErrorText(error: failure.code),
+            (user) => Expanded(
+                  child: PageView.builder(
+                      controller: _controller,
+                      scrollDirection: Axis.vertical,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: 7,
+                      itemBuilder: (_, index) {
+                        List<LectureSchedule> schedules =
+                            getSchedules(lectures, index);
+                        if (schedules.isEmpty) {
+                          return const Center(
+                              child: Text('A day free!',
+                                  style: TextStyle(color: Colors.black)));
+                        }
+                        return ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: schedules.length,
+                            itemBuilder: (_, i) {
+                              return Schedule(schedule: schedules[i]);
+                            });
+                      }),
+                ));
+      }
+    });
   }
 
   List<LectureSchedule> getSchedules(List<Lecture> lectures, int day) {

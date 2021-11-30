@@ -3,6 +3,7 @@ import 'package:crayon/l10n/app_localizations_delegate.dart';
 import 'package:crayon/providers/login/login_provider.dart';
 import 'package:crayon/providers/util/locale_provider.dart';
 import 'package:crayon/providers/util/theme.dart';
+import 'package:crayon/service/auth_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,7 +14,7 @@ import 'route/route.dart' as route;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
+  await Firebase.initializeApp();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive, overlays: []);
   SharedPreferences prefs = await SharedPreferences.getInstance();
   runApp(MultiProvider(
@@ -37,12 +38,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context, listen: true);
     final localeProvider = Provider.of<LocaleProvider>(context, listen: true);
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Crayon',
       theme: themeProvider.getTheme,
       onGenerateRoute: route.controller,
-      initialRoute: route.login,
+      initialRoute:
+          AuthService().currentUser == null ? route.login : route.dashboard,
       locale: localeProvider.getLocal,
       localizationsDelegates: const [
         AppLocalizationsDelegate(),
