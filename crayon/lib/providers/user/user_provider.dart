@@ -38,7 +38,7 @@ class UserProvider extends ChangeNotifier {
   /// Function which allows to retrieve the user data from the database.
   void getUser() async {
     setState(NotifierState.loading);
-    ApiService api = ApiService();
+    /*ApiService api = ApiService();
     _user = await Task(() => api.getUserData())
         .attempt()
         .map(
@@ -50,7 +50,7 @@ class UserProvider extends ChangeNotifier {
             }
           }),
         )
-        .run();
+        .run();*/
     setState(NotifierState.loaded);
   }
 

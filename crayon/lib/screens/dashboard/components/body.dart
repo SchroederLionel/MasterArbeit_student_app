@@ -28,7 +28,6 @@ class _BodyState extends State<Body> {
   initState() {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((_) {
-      print('callled');
       Provider.of<NavigationProvider>(context, listen: false)
           .setPageController(_controller);
       Provider.of<UserProvider>(context, listen: false).getUser();
@@ -50,30 +49,27 @@ class _BodyState extends State<Body> {
       } else if (provider.state == NotifierState.loading) {
         return const LoadingWidget();
       } else {
-        return provider.user.fold(
-            (failure) => ErrorText(error: failure.code),
-            (user) => Expanded(
-                  child: PageView.builder(
-                      controller: _controller,
-                      scrollDirection: Axis.vertical,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: 7,
-                      itemBuilder: (_, index) {
-                        List<LectureSchedule> schedules =
-                            getSchedules(lectures, index);
-                        if (schedules.isEmpty) {
-                          return const Center(
-                              child: Text('A day free!',
-                                  style: TextStyle(color: Colors.black)));
-                        }
-                        return ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: schedules.length,
-                            itemBuilder: (_, i) {
-                              return Schedule(schedule: schedules[i]);
-                            });
-                      }),
-                ));
+        return Expanded(
+          child: PageView.builder(
+              controller: _controller,
+              scrollDirection: Axis.vertical,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: 7,
+              itemBuilder: (_, index) {
+                List<LectureSchedule> schedules = getSchedules(lectures, index);
+                if (schedules.isEmpty) {
+                  return const Center(
+                      child: Text('A day free!',
+                          style: TextStyle(color: Colors.black)));
+                }
+                return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: schedules.length,
+                    itemBuilder: (_, i) {
+                      return Schedule(schedule: schedules[i]);
+                    });
+              }),
+        );
       }
     });
   }

@@ -16,7 +16,7 @@ class Dashboard extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       body: Row(
         children: [
-          Navigation(),
+          const Navigation(),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(8.0),

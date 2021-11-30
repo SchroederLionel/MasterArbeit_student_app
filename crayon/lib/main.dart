@@ -24,7 +24,6 @@ void main() async {
               ThemeProvider(isDarkMode: prefs.getBool('themeDark') ?? false)),
       ChangeNotifierProvider<LocaleProvider>(
           create: (_) => LocaleProvider(prefs.getString('language'))),
-      ChangeNotifierProvider<LoginProvider>(create: (_) => LoginProvider())
     ],
     child: const MyApp(),
   ));
@@ -42,10 +41,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Crayon',
-      theme: themeProvider.getTheme,
+      themeMode: themeProvider.mode,
+      theme: themeProvider.light,
+      darkTheme: themeProvider.dark,
       onGenerateRoute: route.controller,
-      initialRoute:
-          AuthService().currentUser == null ? route.login : route.dashboard,
+      initialRoute: route.splash,
       locale: localeProvider.getLocal,
       localizationsDelegates: const [
         AppLocalizationsDelegate(),

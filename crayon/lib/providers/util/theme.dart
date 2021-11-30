@@ -114,11 +114,13 @@ class ThemeProvider extends ChangeNotifier {
   }
 
   ThemeData get getTheme => _selectedTheme;
-
+  ThemeMode get mode => _mode;
+  ThemeMode _mode = ThemeMode.dark;
   void swapTheme() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    _selectedTheme = _selectedTheme == dark ? light : dark;
-    prefs.setBool('themeDark', _selectedTheme == dark ? true : false);
+
+    _mode = _mode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
+    prefs.setBool('themeDark', _mode == ThemeMode.dark ? true : false);
     notifyListeners();
   }
 }
