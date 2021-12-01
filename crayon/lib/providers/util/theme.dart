@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeProvider extends ChangeNotifier {
-  late ThemeData _selectedTheme;
-
   ThemeData light = ThemeData(
       fontFamily: 'Poppins',
       primaryColor: Colors.orange,
@@ -110,12 +108,11 @@ class ThemeProvider extends ChangeNotifier {
       ));
 
   ThemeProvider({required bool isDarkMode}) {
-    _selectedTheme = isDarkMode ? dark : light;
+    _mode = isDarkMode ? ThemeMode.dark : ThemeMode.light;
   }
 
-  ThemeData get getTheme => _selectedTheme;
   ThemeMode get mode => _mode;
-  ThemeMode _mode = ThemeMode.dark;
+  late ThemeMode _mode;
   void swapTheme() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 

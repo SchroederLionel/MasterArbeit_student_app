@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crayon/datamodels/custom_snackbar.dart';
 import 'package:crayon/datamodels/failure.dart';
+import 'package:crayon/datamodels/lecture/lecture.dart';
 import 'package:crayon/datamodels/user/user.dart';
 import 'package:crayon/service/api_service.dart';
 import 'package:crayon/state/enum.dart';
-import 'package:dartz/dartz.dart';
+import 'package:dartz/dartz.dart' as dartz;
 import 'package:flutter/material.dart';
 
 /// Class which allows to get the user data espacially his lectures.
@@ -23,10 +25,10 @@ class UserProvider extends ChangeNotifier {
   /// Variable which can be either a user or a failure.
   /// In case the data retrieval went wrong the variable will be a failure.
   /// In case of a success the user data will be available to the app.
-  late Either<Failure, User> _user;
+  late dartz.Either<Failure, User> _user;
 
   /// Get if  user data or failure.
-  Either<Failure, User> get user => _user;
+  dartz.Either<Failure, User> get user => _user;
 
   /// Sets the state in which the data fetching is in.
   /// Notifies the Consumers to make the visual changes.
@@ -38,33 +40,9 @@ class UserProvider extends ChangeNotifier {
   /// Function which allows to retrieve the user data from the database.
   void getUser() async {
     setState(NotifierState.loading);
-    /*ApiService api = ApiService();
-    _user = await Task(() => api.getUserData())
-        .attempt()
-        .map(
-          (either) => either.leftMap((obj) {
-            try {
-              return obj as Failure;
-            } catch (e) {
-              throw obj;
-            }
-          }),
-        )
-        .run();*/
-    setState(NotifierState.loaded);
-  }
-
-  /// Funciton which allows to add a lecture to the user data.
-  void addLecture(String lectureId) async {
-    /// Change visual my showing loading indicator.
-
-    setState(NotifierState.loading);
     ApiService api = ApiService();
 
-    /// Create a task which allows to add a lecture to the user.
-    /// (Map) required since the left Type is object thus changing it to failure in case of a failure.
-    /// If successfull type String returned which will then be added to the user.
-    Either<Failure, String> add = await Task(() => api.addLecture(lectureId))
+    _user = await dartz.Task(() => api.getUserData())
         .attempt()
         .map(
           (either) => either.leftMap((obj) {
@@ -76,6 +54,31 @@ class UserProvider extends ChangeNotifier {
           }),
         )
         .run();
+    setState(NotifierState.loaded);
+  }
+
+  /// Funciton which allows to add a lecture to the user data.
+  void addLecture(String lectureId) async {
+    /// Change visual my showing loading indicator.
+    setState(NotifierState.loading);
+    ApiService api = ApiService();
+
+    /// Create a task which allows to add a lecture to the user.
+    /// (Map) required since the left Type is object thus changing it to failure in case of a failure.
+    /// If successfull type String returned which will then be added to the user.
+    dartz.Either<Failure, String> add =
+        await dartz.Task(() => api.addLecture(lectureId))
+            .attempt()
+            .map(
+              (either) => either.leftMap((obj) {
+                try {
+                  return obj as Failure;
+                } catch (e) {
+                  throw obj;
+                }
+              }),
+            )
+            .run();
 
     /// Fold to check if it has an failure. If yes don't add the lecture to the user lectures list.
     /// No failure add lecture to the user.
@@ -90,5 +93,15 @@ class UserProvider extends ChangeNotifier {
 
     /// Change state to loaded to make the failure or the updated user list available to the view.
     setState(NotifierState.loaded);
+  }
+
+  Stream<List<Lecture>> lecturesStream(List<String> lecturesToListen) {
+    ApiService api = ApiService();
+    return api.getMyLectures(lecturesToListen);
+  }
+
+  Stream<List<String>> getEnrolledLectureIds() {
+    ApiService api = ApiService();
+    return api.getEnrolledLectures();
   }
 }

@@ -10,6 +10,7 @@ import 'package:crayon/widgets/custom_button.dart';
 import 'package:crayon/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:crayon/route/route.dart' as route;
 
 class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
@@ -78,7 +79,8 @@ class _BodyState extends State<Body> {
                                   text: appTranslation.translate(l.code) ??
                                       l.code,
                                   isError: true)),
-                          (r) => Navigator.of(context).pushNamed('dashboard'));
+                          (r) => Navigator.of(context)
+                              .pushReplacementNamed(route.dashboard));
                     });
 
                     return child as Widget;

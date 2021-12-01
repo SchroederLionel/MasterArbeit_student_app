@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crayon/datamodels/lecture/lecture.dart';
 import 'package:crayon/datamodels/lecture/lecture_date.dart';
 import 'package:crayon/datamodels/lecture/lecture_schedule.dart';
@@ -42,38 +45,74 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    List<Lecture> lectures = lecture_data;
+    // List<Lecture> lectures = lecture_data;
     return Consumer<UserProvider>(builder: (_, provider, __) {
       if (provider.state == NotifierState.initial) {
         return const SizedBox();
       } else if (provider.state == NotifierState.loading) {
         return const LoadingWidget();
       } else {
-        return Expanded(
-          child: PageView.builder(
-              controller: _controller,
-              scrollDirection: Axis.vertical,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: 7,
-              itemBuilder: (_, index) {
-                List<LectureSchedule> schedules = getSchedules(lectures, index);
-                if (schedules.isEmpty) {
-                  return const Center(
-                      child: Text('A day free!',
-                          style: TextStyle(color: Colors.black)));
+        return provider.user.fold((failure) => ErrorText(error: failure.code),
+            (user) {
+          return StreamBuilder<List<String>>(
+            stream: provider.getEnrolledLectureIds(),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return ErrorText(error: snapshot.error.toString());
+              } else if (snapshot.data == null) {
+                return const LoadingWidget();
+              } else {
+                if (snapshot.data!.isEmpty) {
+                  return Container();
+                } else {
+                  print(snapshot.data);
+                  return StreamBuilder<List<Lecture>>(
+                    stream:
+                        provider.lecturesStream(snapshot.data as List<String>),
+                    builder: (context, snap) {
+                      if (snap.hasError) {
+                        return ErrorText(error: snapshot.error.toString());
+                      } else if (snapshot.data == null) {
+                        return const LoadingWidget();
+                      } else {
+                        return Expanded(
+                          child: PageView.builder(
+                              controller: _controller,
+                              scrollDirection: Axis.vertical,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: 7,
+                              itemBuilder: (_, index) {
+                                List<LectureSchedule> schedules =
+                                    getSchedules(snap.data ?? [], index);
+                                if (schedules.isEmpty) {
+                                  return const Center(
+                                      child: Text('A day free!',
+                                          style:
+                                              TextStyle(color: Colors.black)));
+                                }
+                                return ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: schedules.length,
+                                    itemBuilder: (_, i) {
+                                      return Schedule(schedule: schedules[i]);
+                                    });
+                              }),
+                        );
+                      }
+                    },
+                  );
                 }
-                return ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: schedules.length,
-                    itemBuilder: (_, i) {
-                      return Schedule(schedule: schedules[i]);
-                    });
-              }),
-        );
+              }
+            },
+          );
+        });
       }
     });
   }
 
+/**
+
+ */
   List<LectureSchedule> getSchedules(List<Lecture> lectures, int day) {
     List<LectureSchedule> lectureSchedules = [];
 
@@ -87,8 +126,8 @@ class _BodyState extends State<Body> {
               isLobbyOpen: lectures[i].isLobbyOpen,
               day: dates[j].day,
               room: dates[j].room,
-              startingTime: dates[j].startingTime,
-              endingTime: dates[j].endingTime);
+              startingTime: dates[j].startingTime.toString(),
+              endingTime: dates[j].endingTime.toString());
           lectureSchedules.add(schedule);
         }
       }

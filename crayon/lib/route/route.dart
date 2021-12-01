@@ -15,11 +15,11 @@ import 'package:crayon/screens/splashscreen/splashscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-const String splash = 'splash';
-const String login = 'login';
-const String dashboard = 'dashboard';
-const String score = 'score';
-const String quiz = 'quiz';
+const String splash = '';
+const String login = '/login';
+const String dashboard = '/dashboard';
+const String score = '/score';
+const String quiz = '/quiz';
 Route<dynamic> controller(RouteSettings routerSettings) {
   switch (routerSettings.name) {
     case splash:
@@ -27,10 +27,10 @@ Route<dynamic> controller(RouteSettings routerSettings) {
     case login:
       return MaterialPageRoute(
           builder: (context) => MultiProvider(providers: [
+                ChangeNotifierProvider<LoginProvider>(
+                    create: (_) => LoginProvider()),
                 ChangeNotifierProvider<ErrorProvider>(
                     create: (_) => ErrorProvider()),
-                ChangeNotifierProvider<LoginProvider>(
-                    create: (_) => LoginProvider())
               ], child: const Login()));
     case quiz:
       return MaterialPageRoute(

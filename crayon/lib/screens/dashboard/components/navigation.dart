@@ -5,6 +5,7 @@ import 'package:crayon/screens/dashboard/components/qrcode/qrcode.dart';
 import 'package:crayon/service/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:crayon/route/route.dart' as route;
 
 class Navigation extends StatelessWidget {
   const Navigation({Key? key}) : super(key: key);
@@ -52,7 +53,8 @@ class Navigation extends StatelessWidget {
               IconButton(
                   onPressed: () {
                     AuthService().signOut();
-                    Navigator.of(context).pop();
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        route.login, (Route<dynamic> route) => false);
                   },
                   icon: const Icon(Icons.power_settings_new)),
             ],
