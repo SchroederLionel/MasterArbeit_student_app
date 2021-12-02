@@ -1,9 +1,9 @@
 import 'package:crayon/l10n/app_localizations.dart';
 import 'package:crayon/l10n/app_localizations_delegate.dart';
-import 'package:crayon/providers/login/login_provider.dart';
+
 import 'package:crayon/providers/util/locale_provider.dart';
 import 'package:crayon/providers/util/theme.dart';
-import 'package:crayon/service/auth_service.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

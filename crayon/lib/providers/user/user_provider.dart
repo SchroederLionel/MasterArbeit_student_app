@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:crayon/datamodels/custom_snackbar.dart';
 import 'package:crayon/datamodels/failure.dart';
 import 'package:crayon/datamodels/lecture/lecture.dart';
 import 'package:crayon/datamodels/user/user.dart';
@@ -103,5 +101,10 @@ class UserProvider extends ChangeNotifier {
   Stream<List<String>> getEnrolledLectureIds() {
     ApiService api = ApiService();
     return api.getEnrolledLectures();
+  }
+
+  void postQuestion(String question, String lectureId) {
+    ApiService api = ApiService();
+    api.postQuestion(question, lectureId);
   }
 }

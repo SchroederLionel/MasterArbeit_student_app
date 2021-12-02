@@ -29,8 +29,6 @@ class _BodyState extends State<Body> {
   initState() {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((_) async {
-      Provider.of<NavigationProvider>(context, listen: false)
-          .setPageController(_controller);
       var provider = Provider.of<UserProvider>(context, listen: false);
       await provider.getUser();
       _lectureIdStream = provider.getEnrolledLectureIds();
@@ -58,7 +56,7 @@ class _BodyState extends State<Body> {
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return ErrorText(error: snapshot.error.toString());
-              } else if (snapshot.data == null) {
+              } else if (!snapshot.hasData) {
                 return const LoadingWidget();
               } else {
                 if (snapshot.data!.isEmpty) {
@@ -73,6 +71,8 @@ class _BodyState extends State<Body> {
                       } else if (snapshot.data == null) {
                         return const LoadingWidget();
                       } else {
+                        Provider.of<NavigationProvider>(context, listen: false)
+                            .setPageController(_controller);
                         return Expanded(
                           child: PageView.builder(
                               controller: _controller,
@@ -108,9 +108,6 @@ class _BodyState extends State<Body> {
     });
   }
 
-/**
-
- */
   List<LectureSchedule> getSchedules(List<Lecture> lectures, int day) {
     List<LectureSchedule> lectureSchedules = [];
 

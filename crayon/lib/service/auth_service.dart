@@ -1,12 +1,10 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crayon/datamodels/failure.dart';
 import 'package:crayon/datamodels/user/user.dart' as myuser;
 import 'package:crayon/datamodels/user/user_credentials.dart';
 import 'package:crayon/service/validator_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:validators/validators.dart';
 
 /// The Authservice class allows to the user to login or respectively log out the user.

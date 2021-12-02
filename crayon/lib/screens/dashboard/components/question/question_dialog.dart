@@ -41,7 +41,11 @@ class _QuestionDialogState extends State<QuestionDialog> {
           isPassword: false),
       actions: [
         const CancelButton(),
-        ElevatedButton(onPressed: () {}, child: const Text('Send'))
+        ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context, _questionController.text);
+            },
+            child: const Text('Send'))
       ],
     );
   }

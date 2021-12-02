@@ -90,7 +90,7 @@ class ApiService {
       }
 
       throw Failure(code: 'not-logged-in');
-    } on FirebaseException catch (e) {
+    } on FirebaseException catch (_) {
       throw Failure(code: 'firebase-exception');
     } on SocketException {
       throw Failure(code: 'no-internet');
@@ -135,5 +135,18 @@ class ApiService {
                   " LECUTRE COMPLETE");
               return Lecture.fromJson(document.data());
             }).toList());
+  }
+
+  /// Function which allows to ask a question to the teacher.
+  /// Takes two parameter the question from the user and the corresponding lectureId.
+  void postQuestion(String question, String lectureId) {
+    FirebaseFirestore.instance
+        .collection('lectures')
+        .doc(lectureId)
+        .collection('features')
+        .doc('questions')
+        .set({
+      'questions': FieldValue.arrayUnion([question])
+    });
   }
 }

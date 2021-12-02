@@ -7,7 +7,6 @@ import 'package:crayon/screens/dashboard/components/course_times.dart';
 import 'package:crayon/screens/dashboard/components/question/question_dialog.dart';
 import 'package:crayon/screens/dashboard/components/quiz/quiz_login.dart';
 import 'package:crayon/widgets/confirmation_dialog.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -60,7 +59,12 @@ class Schedule extends StatelessWidget {
                   context: context,
                   builder: (BuildContext context) {
                     return const QuestionDialog();
-                  });
+                  }).then((value) {
+                if (value is String) {
+                  Provider.of<UserProvider>(context, listen: false)
+                      .postQuestion(value, schedule.lectureId);
+                }
+              });
             }
           }
         },
