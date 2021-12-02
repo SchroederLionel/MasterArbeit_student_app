@@ -22,22 +22,20 @@ class Lecture {
     final id = json['id'] as String;
     final title = json['title'] as String;
     final isLobbyOpen = json['isLobbyOpen'] ?? false;
-    print(tid);
-    print(id);
+
     /* final slidesData = json['slides'] as List<dynamic>?;
     final slides = slidesData != null
         ? slidesData.map((slide) => Slide.fromJson(slide)).toList()
         : <Slide>[];*/
 
     final lectureData = json['lectureDates'] as List<dynamic>?;
-    print(lectureData);
+
     final lecturesDates = lectureData != null
         ? lectureData
             .map((lectureDate) => LectureDate.fromJson(lectureDate))
             .toList()
         : <LectureDate>[];
 
-    print(lecturesDates.first.endingTime);
     Lecture lecture = Lecture(lecturesDates, [],
         tid: tid, title: title, id: id, isLobbyOpen: isLobbyOpen);
 

@@ -1,10 +1,6 @@
-import 'dart:convert';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crayon/datamodels/lecture/lecture.dart';
 import 'package:crayon/datamodels/lecture/lecture_date.dart';
 import 'package:crayon/datamodels/lecture/lecture_schedule.dart';
-import 'package:crayon/providers/login/login_provider.dart';
 import 'package:crayon/providers/navigation/navigation_provider.dart';
 import 'package:crayon/providers/user/user_provider.dart';
 import 'package:crayon/screens/dashboard/components/schedule.dart';
@@ -23,6 +19,8 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  late Stream<List<String>> _lectureIdStream;
+
   final PageController _controller = PageController(
       initialPage:
           DateTime.now().weekday == 0 ? 6 : DateTime.now().weekday - 1);
@@ -30,10 +28,12 @@ class _BodyState extends State<Body> {
   @override
   initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
       Provider.of<NavigationProvider>(context, listen: false)
           .setPageController(_controller);
-      Provider.of<UserProvider>(context, listen: false).getUser();
+      var provider = Provider.of<UserProvider>(context, listen: false);
+      await provider.getUser();
+      _lectureIdStream = provider.getEnrolledLectureIds();
     });
   }
 
@@ -45,7 +45,6 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    // List<Lecture> lectures = lecture_data;
     return Consumer<UserProvider>(builder: (_, provider, __) {
       if (provider.state == NotifierState.initial) {
         return const SizedBox();
@@ -55,7 +54,7 @@ class _BodyState extends State<Body> {
         return provider.user.fold((failure) => ErrorText(error: failure.code),
             (user) {
           return StreamBuilder<List<String>>(
-            stream: provider.getEnrolledLectureIds(),
+            stream: _lectureIdStream,
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return ErrorText(error: snapshot.error.toString());
@@ -65,7 +64,6 @@ class _BodyState extends State<Body> {
                 if (snapshot.data!.isEmpty) {
                   return Container();
                 } else {
-                  print(snapshot.data);
                   return StreamBuilder<List<Lecture>>(
                     stream:
                         provider.lecturesStream(snapshot.data as List<String>),

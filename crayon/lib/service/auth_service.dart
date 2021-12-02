@@ -9,9 +9,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:validators/validators.dart';
 
+/// The Authservice class allows to the user to login or respectively log out the user.
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   User? get currentUser => _auth.currentUser;
+
+  /// Function which allows to register a user with an email and password.
+  /// The Function checks also the validity of passwords and email entered by the user.
   Future<UserCredential> registerWithEmailPassword(
       UserBasics user, String verificationPassword) async {
     String? isValid = ValidatorService.isValid(
@@ -21,6 +25,8 @@ class AuthService {
       if (isValid != null) {
         throw Failure(code: isValid);
       }
+
+      /// First register the user in Firestore Auth.
       UserCredential userCredential =
           await _auth.createUserWithEmailAndPassword(
         email: user.email,
@@ -32,6 +38,7 @@ class AuthService {
         uid: userCredential.user!.uid,
       );
 
+      /// create a user profile
       await FirebaseFirestore.instance
           .collection('users')
           .doc(userCredential.user!.uid)
@@ -54,6 +61,7 @@ class AuthService {
     }
   }
 
+  /// Function allows to reset the password of a user by email.
   Future<bool> resetPassword(String email) async {
     try {
       if (!isEmail(email)) {
@@ -68,6 +76,8 @@ class AuthService {
 
   Future<User?> get user async => _auth.currentUser;
 
+  /// Function which allows to sign the user in.
+  /// Returns Future UserCredentials from firestore library.
   Future<UserCredential> signInWithEmailPassword(
       String email, String password) async {
     try {
@@ -93,12 +103,7 @@ class AuthService {
     }
   }
 
-  Future<String> signOut() async {
+  void signOut() async {
     await _auth.signOut();
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('auth', false);
-
-    return 'User signed out';
   }
 }

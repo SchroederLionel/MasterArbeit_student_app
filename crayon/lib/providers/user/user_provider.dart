@@ -38,7 +38,7 @@ class UserProvider extends ChangeNotifier {
   }
 
   /// Function which allows to retrieve the user data from the database.
-  void getUser() async {
+  Future<void> getUser() async {
     setState(NotifierState.loading);
     ApiService api = ApiService();
 
@@ -66,30 +66,30 @@ class UserProvider extends ChangeNotifier {
     /// Create a task which allows to add a lecture to the user.
     /// (Map) required since the left Type is object thus changing it to failure in case of a failure.
     /// If successfull type String returned which will then be added to the user.
-    dartz.Either<Failure, String> add =
-        await dartz.Task(() => api.addLecture(lectureId))
-            .attempt()
-            .map(
-              (either) => either.leftMap((obj) {
-                try {
-                  return obj as Failure;
-                } catch (e) {
-                  throw obj;
-                }
-              }),
-            )
-            .run();
+    await dartz.Task(() => api.addLecture(lectureId))
+        .attempt()
+        .map(
+          (either) => either.leftMap((obj) {
+            try {
+              return obj as Failure;
+            } catch (e) {
+              throw obj;
+            }
+          }),
+        )
+        .run();
 
-    /// Fold to check if it has an failure. If yes don't add the lecture to the user lectures list.
-    /// No failure add lecture to the user.
-    /// User is a either type thus unfolding it to allow adding lecture.
-    /// In case the user is a failure don't add the lectureId to the users lecture list else add.
-    add.fold(
-        (failure) => ScaffoldMessenger.of(context)
-            .showSnackBar(CustomSnackbar(text: failure.code, isError: true)),
-        (lectureId) {
-      user.fold((fail) => null, (r) => r.myLectures.add(lectureId));
-    });
+    /// Change state to loaded to make the failure or the updated user list available to the view.
+    setState(NotifierState.loaded);
+  }
+
+  /// Funciton which allows to add a lecture to the user data.
+  void removeLecture(String lectureId, BuildContext context) async {
+    /// Change visual my showing loading indicator.
+    setState(NotifierState.loading);
+    ApiService api = ApiService();
+
+    await api.removeLecture(lectureId);
 
     /// Change state to loaded to make the failure or the updated user list available to the view.
     setState(NotifierState.loaded);

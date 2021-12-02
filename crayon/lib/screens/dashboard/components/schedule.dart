@@ -1,9 +1,12 @@
+import 'package:crayon/datamodels/confirmation_dialog_data.dart';
 import 'package:crayon/datamodels/lecture/lecture_schedule.dart';
 import 'package:crayon/l10n/app_localizations.dart';
 import 'package:crayon/providers/quiz/quiz_lobby_provider.dart';
+import 'package:crayon/providers/user/user_provider.dart';
 import 'package:crayon/screens/dashboard/components/course_times.dart';
 import 'package:crayon/screens/dashboard/components/question/question_dialog.dart';
 import 'package:crayon/screens/dashboard/components/quiz/quiz_login.dart';
+import 'package:crayon/widgets/confirmation_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +22,21 @@ class Schedule extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 4.0),
-      child: InkWell(
+      child: GestureDetector(
+        onLongPress: () {
+          showDialog(
+              context: context,
+              builder: (context) {
+                return ConfirmationDialog(
+                    confirmationDialogData:
+                        ConfirmationDialogData(itemTitle: schedule.title));
+              }).then((value) {
+            if (value == true) {
+              Provider.of<UserProvider>(context, listen: false)
+                  .removeLecture(schedule.lectureId, context);
+            }
+          });
+        },
         onTap: () {
           if (provider.isWaiting) {
             provider.showSnackBar(
