@@ -1,10 +1,11 @@
+import 'package:crayon/providers/navigation/navigation_provider.dart';
 import 'package:crayon/providers/user/user_provider.dart';
 import 'package:crayon/screens/dashboard/components/navigation/navigation_tile.dart';
 import 'package:crayon/screens/dashboard/components/navigation/settings_dialog.dart';
 import 'package:crayon/screens/dashboard/components/qrcode/qrcode.dart';
 import 'package:crayon/service/auth_service.dart';
 import 'package:crayon/state/enum.dart';
-import 'package:crayon/widgets/loading_widget.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:crayon/route/route.dart' as route;
@@ -37,22 +38,18 @@ class Navigation extends StatelessWidget {
                 },
                 icon: const Icon(Icons.qr_code_scanner)),
           ),
-          Consumer<UserProvider>(builder: (_, _provider, __) {
+          Consumer<NavigationProvider>(builder: (_, _provider, __) {
             if (_provider.state == NotifierState.initial) {
               return const SizedBox();
-            } else if (_provider.state == NotifierState.loading) {
-              return const LoadingWidget();
             } else {
-              return _provider.user.fold(
-                  (failure) => const SizedBox(),
-                  (_) => Flexible(
-                        child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: 7,
-                            itemBuilder: (context, index) {
-                              return NavigationTile(pageNumber: index);
-                            }),
-                      ));
+              return Flexible(
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: 7,
+                    itemBuilder: (context, index) {
+                      return NavigationTile(pageNumber: index);
+                    }),
+              );
             }
           }),
           ListView(

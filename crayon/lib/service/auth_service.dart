@@ -32,6 +32,7 @@ class AuthService {
       );
 
       myuser.User newUser = myuser.User(
+        [],
         email: user.email,
         uid: userCredential.user!.uid,
       );

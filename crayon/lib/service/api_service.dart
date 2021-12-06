@@ -41,18 +41,17 @@ class ApiService {
 
   /// Function which allows to remove a lecture where the user is enrolled in.
   /// returns a boolean if the deletion was successfull.
-  Future<bool> removeLecture(String lectureId) async {
+  Future<myuser.User> removeLecture(String lectureId, myuser.User user) async {
     try {
       if (_auth.currentUser != null) {
         await FirebaseFirestore.instance
             .collection('users')
             .doc(_auth.currentUser!.uid)
-            .collection('features')
-            .doc('enrolled-lectures')
             .update({
           'enrolled-lectures': FieldValue.arrayRemove([lectureId])
         });
-        return true;
+        user.enrolledLectures.remove(lectureId);
+        return user;
       }
       throw Failure(code: 'not-logged-in');
     } on FirebaseException catch (_) {
@@ -67,8 +66,9 @@ class ApiService {
   }
 
   /// Function which allows to add a lecture to the users enrolled lecture list.
+  /// Two parameters are required the Lecture id which and the user himself. After the post request if there is no error the user with the added element will be returned.
   /// returns the lectureId if the lecture was successfully added.
-  Future<String> addLecture(String lectureId) async {
+  Future<myuser.User> addLecture(String lectureId, myuser.User user) async {
     try {
       var howMany = '-'.allMatches(lectureId).length;
       String removeDash = lectureId.replaceAll('-', '');
@@ -78,12 +78,11 @@ class ApiService {
           await FirebaseFirestore.instance
               .collection('users')
               .doc(_auth.currentUser!.uid)
-              .collection('features')
-              .doc('enrolled-lectures')
               .set({
             'enrolled-lectures': FieldValue.arrayUnion([lectureId])
           }, SetOptions(merge: true));
-          return lectureId;
+          user.enrolledLectures.add(lectureId);
+          return user;
         }
       } else {
         throw Failure(code: 'wrong-qr-code');
@@ -101,28 +100,6 @@ class ApiService {
     }
   }
 
-  /// Function which allows to retrieve all the lecture ids where the user is enrolled in.
-  /// returns a Stream of strings. (When the user adds)
-  Stream<List<String>> getEnrolledLectures() {
-    return FirebaseFirestore.instance
-        .collection('users')
-        .doc(_auth.currentUser!.uid)
-        .collection('features')
-        .doc('enrolled-lectures')
-        .snapshots()
-        .map((snap) {
-      print((snap.metadata.isFromCache ? "Cached" : "Not Cached") +
-          " LECTURE ID");
-      var json = snap.data();
-      if (json != null) {
-        if (json.containsKey('enrolled-lectures')) {
-          return List.from(json['enrolled-lectures']);
-        }
-      }
-      return [];
-    });
-  }
-
   /// Function which allows to get the actual lectures based on the lecture ids where the user is enrolled in.
   /// returns a list of lectures (Stream). Which allows to detect if the room or something else changes.
   Stream<List<Lecture>> getMyLectures(List<String> lecturesToListen) {
@@ -131,8 +108,7 @@ class ApiService {
         .where('id', whereIn: lecturesToListen)
         .snapshots()
         .map((snapshot) => snapshot.docs.map((document) {
-              print((document.metadata.isFromCache ? "Cached" : "Not Cached") +
-                  " LECUTRE COMPLETE");
+              print((document.metadata.isFromCache ? "Cached" : "Not Cached"));
               return Lecture.fromJson(document.data());
             }).toList());
   }
@@ -148,5 +124,27 @@ class ApiService {
         .set({
       'questions': FieldValue.arrayUnion([question])
     });
+  }
+
+  void joinLobby(String lectureId, String userName) {
+    FirebaseFirestore.instance
+        .collection('lectures')
+        .doc(lectureId)
+        .collection('features')
+        .doc('lobby')
+        .set({
+      'participants': FieldValue.arrayUnion([userName]),
+    }, SetOptions(merge: true));
+  }
+
+  void leaveLobby(String lectureId, String userName) {
+    FirebaseFirestore.instance
+        .collection('lectures')
+        .doc(lectureId)
+        .collection('features')
+        .doc('lobby')
+        .set({
+      'participants': FieldValue.arrayRemove([userName]),
+    }, SetOptions(merge: true));
   }
 }

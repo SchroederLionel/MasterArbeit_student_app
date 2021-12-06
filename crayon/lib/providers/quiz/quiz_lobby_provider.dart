@@ -1,3 +1,4 @@
+import 'package:crayon/service/api_service.dart';
 import 'package:crayon/state/enum.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,15 +11,19 @@ class QuizLobbyProvider extends ChangeNotifier {
   late String _userName;
   String get userName => _userName;
   late String _lectureId;
+  String get lectureId => _lectureId;
   late String _lectureName;
   String get lectureName => _lectureName;
   bool _isWaiting = false;
   bool get isWaiting => _isWaiting;
 
   set(String lectureId, bool isWaiting, String userName, String lectureName) {
+    /// Todo
+    ApiService api = ApiService();
+    api.joinLobby(lectureId, userName);
     _lectureName = lectureName;
     _isWaiting = isWaiting;
-    lectureId = lectureId;
+    _lectureId = lectureId;
     _userName = userName;
     showSnackBar('You entered the waiting room', false);
     setState(LoadingState.yes);
@@ -30,6 +35,9 @@ class QuizLobbyProvider extends ChangeNotifier {
   }
 
   void reset() {
+    ApiService api = ApiService();
+    api.leaveLobby(lectureId, userName);
+    _isWaiting = false;
     _userName = '';
     _lectureId = '';
     _lectureName = '';

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 /// Class which allows to get the user data espacially his lectures.
 class UserProvider extends ChangeNotifier {
+  ApiService api = ApiService();
   BuildContext context;
   UserProvider({required this.context});
 
@@ -38,7 +39,6 @@ class UserProvider extends ChangeNotifier {
   /// Function which allows to retrieve the user data from the database.
   Future<void> getUser() async {
     setState(NotifierState.loading);
-    ApiService api = ApiService();
 
     _user = await dartz.Task(() => api.getUserData())
         .attempt()
@@ -52,6 +52,7 @@ class UserProvider extends ChangeNotifier {
           }),
         )
         .run();
+
     setState(NotifierState.loaded);
   }
 
@@ -59,12 +60,12 @@ class UserProvider extends ChangeNotifier {
   void addLecture(String lectureId) async {
     /// Change visual my showing loading indicator.
     setState(NotifierState.loading);
-    ApiService api = ApiService();
 
     /// Create a task which allows to add a lecture to the user.
     /// (Map) required since the left Type is object thus changing it to failure in case of a failure.
     /// If successfull type String returned which will then be added to the user.
-    await dartz.Task(() => api.addLecture(lectureId))
+    _user = await dartz.Task(
+            () => api.addLecture(lectureId, _user.toOption().toNullable()!))
         .attempt()
         .map(
           (either) => either.leftMap((obj) {
@@ -85,26 +86,31 @@ class UserProvider extends ChangeNotifier {
   void removeLecture(String lectureId, BuildContext context) async {
     /// Change visual my showing loading indicator.
     setState(NotifierState.loading);
-    ApiService api = ApiService();
 
-    await api.removeLecture(lectureId);
+    _user = await dartz.Task(
+            () => api.removeLecture(lectureId, _user.toOption().toNullable()!))
+        .attempt()
+        .map(
+          (either) => either.leftMap((obj) {
+            try {
+              return obj as Failure;
+            } catch (e) {
+              throw obj;
+            }
+          }),
+        )
+        .run();
 
     /// Change state to loaded to make the failure or the updated user list available to the view.
     setState(NotifierState.loaded);
   }
 
-  Stream<List<Lecture>> lecturesStream(List<String> lecturesToListen) {
-    ApiService api = ApiService();
-    return api.getMyLectures(lecturesToListen);
-  }
-
-  Stream<List<String>> getEnrolledLectureIds() {
-    ApiService api = ApiService();
-    return api.getEnrolledLectures();
-  }
-
   void postQuestion(String question, String lectureId) {
-    ApiService api = ApiService();
     api.postQuestion(question, lectureId);
+  }
+
+  void joinLobby(String lectureId, String userName) {
+    ApiService api = ApiService();
+    api.joinLobby(lectureId, userName);
   }
 }

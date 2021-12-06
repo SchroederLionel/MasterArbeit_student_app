@@ -1,10 +1,29 @@
+import 'package:crayon/state/enum.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class NavigationProvider extends ChangeNotifier {
+  NotifierState _state = NotifierState.initial;
+  NotifierState get state => _state;
+
+  setState(NotifierState state) {
+    _state = state;
+    notifyListeners();
+  }
+
   PageController? _controller;
 
-  setPageController(PageController controller) => _controller = controller;
+  setPageController(PageController controller) {
+    _controller = controller;
+    setState(NotifierState.loaded);
+  }
+
+  resetControlller() {
+    if (_controller != null) {
+      _controller!.dispose();
+      setState(NotifierState.initial);
+    }
+  }
 
   int _day = DateTime.now().weekday == 0 ? 6 : DateTime.now().weekday - 1;
 

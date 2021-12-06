@@ -4,6 +4,7 @@ import 'package:crayon/datamodels/lecture/lecture_schedule.dart';
 import 'package:crayon/providers/navigation/navigation_provider.dart';
 import 'package:crayon/providers/user/user_provider.dart';
 import 'package:crayon/screens/dashboard/components/schedule.dart';
+import 'package:crayon/service/api_service.dart';
 import 'package:crayon/state/enum.dart';
 import 'package:crayon/widgets/error_text.dart';
 import 'package:crayon/widgets/loading_widget.dart';
@@ -28,11 +29,6 @@ class _BodyState extends State<Body> {
   @override
   initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
-      var provider = Provider.of<UserProvider>(context, listen: false);
-      await provider.getUser();
-      _lectureIdStream = provider.getEnrolledLectureIds();
-    });
   }
 
   @override
@@ -51,58 +47,56 @@ class _BodyState extends State<Body> {
       } else {
         return provider.user.fold((failure) => ErrorText(error: failure.code),
             (user) {
-          return StreamBuilder<List<String>>(
-            stream: _lectureIdStream,
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return ErrorText(error: snapshot.error.toString());
-              } else if (!snapshot.hasData) {
-                return const LoadingWidget();
-              } else {
-                if (snapshot.data!.isEmpty) {
-                  return Container();
-                } else {
-                  return StreamBuilder<List<Lecture>>(
-                    stream:
-                        provider.lecturesStream(snapshot.data as List<String>),
-                    builder: (context, snap) {
-                      if (snap.hasError) {
-                        return ErrorText(error: snapshot.error.toString());
-                      } else if (snapshot.data == null) {
-                        return const LoadingWidget();
-                      } else {
-                        Provider.of<NavigationProvider>(context, listen: false)
-                            .setPageController(_controller);
-                        return Expanded(
-                          child: PageView.builder(
-                              controller: _controller,
-                              scrollDirection: Axis.vertical,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: 7,
-                              itemBuilder: (_, index) {
-                                List<LectureSchedule> schedules =
-                                    getSchedules(snap.data ?? [], index);
-                                if (schedules.isEmpty) {
-                                  return const Center(
-                                      child: Text('A day free!',
-                                          style:
-                                              TextStyle(color: Colors.black)));
-                                }
-                                return ListView.builder(
-                                    shrinkWrap: true,
-                                    itemCount: schedules.length,
-                                    itemBuilder: (_, i) {
-                                      return Schedule(schedule: schedules[i]);
-                                    });
-                              }),
-                        );
-                      }
-                    },
-                  );
-                }
-              }
-            },
-          );
+          if (user.enrolledLectures.isEmpty) {
+            WidgetsBinding.instance!.addPostFrameCallback((_) async {
+              Provider.of<NavigationProvider>(context, listen: false)
+                  .resetControlller();
+            });
+
+            return Center(child: Text("You aren't enrollet in any course"));
+          } else {
+            WidgetsBinding.instance!.addPostFrameCallback((_) async {
+              Provider.of<NavigationProvider>(context, listen: false)
+                  .setPageController(_controller);
+            });
+
+            return StreamBuilder<List<Lecture>>(
+                stream: ApiService().getMyLectures(user.enrolledLectures),
+                initialData: [],
+                builder: (BuildContext context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const LoadingWidget();
+                  } else if (snapshot.hasError) {
+                    return const ErrorText(
+                      error: 'Failure',
+                    );
+                  } else {
+                    return Expanded(
+                      child: PageView.builder(
+                          controller: _controller,
+                          scrollDirection: Axis.vertical,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: 7,
+                          itemBuilder: (_, index) {
+                            List<LectureSchedule> schedules =
+                                getSchedules(snapshot.data ?? [], index);
+
+                            if (schedules.isEmpty) {
+                              return const Center(
+                                  child: Text('A day free!',
+                                      style: TextStyle(color: Colors.black)));
+                            }
+                            return ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: schedules.length,
+                                itemBuilder: (_, i) {
+                                  return Schedule(schedule: schedules[i]);
+                                });
+                          }),
+                    );
+                  }
+                });
+          }
         });
       }
     });
