@@ -12,10 +12,10 @@ class QuizLengthIndicator extends StatelessWidget {
         return Center(
           child: Text(
             quizIndicator.getIndicator(),
-            style: const TextStyle(
+            style: TextStyle(
                 fontFamily: 'Comforter',
                 fontWeight: FontWeight.bold,
-                color: Colors.yellowAccent,
+                color: Theme.of(context).primaryColor,
                 fontSize: 42),
           ),
         );

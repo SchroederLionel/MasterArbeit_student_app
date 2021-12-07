@@ -22,7 +22,7 @@ class _TimerState extends State<Timer> {
       builder: (_, timeProver, __) {
         return Text(
           '${timeProver.remainingDuration}',
-          style: const TextStyle(color: Colors.white, fontSize: 24),
+          style: Theme.of(context).textTheme.headline2,
         );
       },
     );

@@ -1,8 +1,10 @@
 import 'package:crayon/datamodels/lecture/lecture_date.dart';
 
 import 'package:crayon/datamodels/lecture/slide.dart';
+import 'package:crayon/datamodels/quiz/quiz.dart';
 
 class Lecture {
+  final Quiz? quiz;
   final bool isLobbyOpen;
   final String id;
   final String title;
@@ -12,7 +14,8 @@ class Lecture {
   List<Slide> slides;
 
   Lecture(this.lectureDates, this.slides,
-      {required this.tid,
+      {required this.quiz,
+      required this.tid,
       required this.title,
       required this.id,
       required this.isLobbyOpen});
@@ -28,6 +31,10 @@ class Lecture {
         ? slidesData.map((slide) => Slide.fromJson(slide)).toList()
         : <Slide>[];*/
 
+    final currentQuizData = json['currentQuiz'];
+    final currentQuiz =
+        json['currentQuiz'] != null ? Quiz.fromJson(currentQuizData) : null;
+
     final lectureData = json['lectureDates'] as List<dynamic>?;
 
     final lecturesDates = lectureData != null
@@ -37,7 +44,11 @@ class Lecture {
         : <LectureDate>[];
 
     Lecture lecture = Lecture(lecturesDates, [],
-        tid: tid, title: title, id: id, isLobbyOpen: isLobbyOpen);
+        quiz: currentQuiz,
+        tid: tid,
+        title: title,
+        id: id,
+        isLobbyOpen: isLobbyOpen);
 
     return lecture;
   }

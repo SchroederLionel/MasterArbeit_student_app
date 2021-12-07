@@ -1,9 +1,11 @@
 import 'package:crayon/datamodels/question.dart';
+import 'package:crayon/datamodels/quiz/quiz_result.dart';
 
 import 'package:crayon/providers/quiz/question_right.dart';
 import 'package:crayon/providers/quiz/quiz_indicator.dart';
 
 import 'package:crayon/providers/quiz/time_provider.dart';
+import 'package:crayon/state/enum.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,14 +28,21 @@ class Option extends StatelessWidget {
     return Consumer<QuestionRight>(
         builder: (_, questionRight, __) => InkWell(
               onTap: () {
-                /* questionRight.setNotifierState(
-                    NotifierState.buttonPressed, response);*/
+                questionRight.setNotifierState(NotifierState.loaded, response);
                 quizIndicator.increament();
-                time.addTimeTakenForQuestion(response.isResponseRight);
+                if (response.isResponseRight) {
+                  time.increment();
+                }
 
                 if (quizIndicator.isQuizFinished) {
-                  Navigator.pushNamed(context, 'score',
-                      arguments: time.getAverageTimeTakenForQuiz());
+                  time.stop();
+
+                  Navigator.popAndPushNamed(context, '/score',
+                      arguments: QuizResult(
+                          userName: time.quizOptions.userName,
+                          lectureId: time.quizOptions.lectureId,
+                          totalAvailableScore: time.getMaximumScoreForQuiz(),
+                          score: time.getUserScrore()));
                 }
               },
               child: Container(

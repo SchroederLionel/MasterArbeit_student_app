@@ -21,7 +21,7 @@ class Body extends StatelessWidget {
             SizedBox(height: 5),
             QuizLengthIndicator(),
             Divider(
-              color: Colors.white,
+              color: Colors.orangeAccent,
               thickness: 1.5,
               indent: 50,
               endIndent: 50,

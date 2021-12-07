@@ -11,31 +11,29 @@ class QuizLobbyIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<QuizLobbyProvider>(builder: (_, provider, __) {
-      if (provider.state == LoadingState.yes) {
+      if (provider.state == NotifierState.loading) {
         return InkWell(
           onTap: () {
-            if (provider.state == LoadingState.yes) {
-              showDialog(
-                  context: context,
-                  builder: (context) {
-                    return ConfirmationDialog(
-                        confirmationDialogData: ConfirmationDialogData(
-                      itemTitle: provider.lectureName,
-                      description: '',
-                      title: 'Do you want to leave the Quiz lobby:',
-                    ));
-                  }).then((value) {
-                if (value == true) {
-                  provider.reset();
-                }
-              });
-            }
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return ConfirmationDialog(
+                      confirmationDialogData: ConfirmationDialogData(
+                    itemTitle: provider.lectureName,
+                    description: '',
+                    title: 'Do you want to leave the Quiz lobby:',
+                  ));
+                }).then((value) {
+              if (value == true) {
+                provider.reset();
+              }
+            });
           },
           child: Container(
             margin: const EdgeInsets.only(left: 5),
             height: 30,
             width: 30,
-            child: provider.state == LoadingState.yes
+            child: provider.state == NotifierState.loading
                 ? Stack(
                     alignment: Alignment.center,
                     children: [
@@ -52,6 +50,9 @@ class QuizLobbyIndicator extends StatelessWidget {
           ),
         );
       } else {
+        WidgetsBinding.instance!.addPostFrameCallback((_) async {
+          Provider.of<QuizLobbyProvider>(context, listen: false).initialize();
+        });
         return const SizedBox();
       }
     });

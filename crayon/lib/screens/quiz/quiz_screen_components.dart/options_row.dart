@@ -16,23 +16,24 @@ class OptionsRow extends StatelessWidget {
         IconButton(
             onPressed: () => Navigator.pop(context),
             icon: const Icon(
-              Icons.arrow_back_ios,
-              color: Colors.white,
+              Icons.close,
+              color: Colors.redAccent,
             )),
         const Timer(),
-        TextButton(
-          onPressed: () {
+        InkWell(
+          onTap: () {
             Provider.of<QuizIndicator>(context, listen: false).increament();
           },
-          child: const Text(
-            'Skip',
-            style: TextStyle(color: Colors.white, fontSize: 12),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8), border: Border.all()),
+            child: Text(
+              'Skip',
+              style:
+                  Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 12),
+            ),
           ),
-          style: ButtonStyle(
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.0),
-                      side: const BorderSide(color: Colors.white)))),
         )
       ],
     );

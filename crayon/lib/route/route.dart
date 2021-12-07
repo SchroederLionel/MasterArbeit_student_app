@@ -1,5 +1,6 @@
 // Route Names
-
+import 'package:crayon/datamodels/quiz/quiz_options.dart';
+import 'package:crayon/datamodels/quiz/quiz_result.dart';
 import 'package:crayon/providers/login/login_provider.dart';
 import 'package:crayon/providers/navigation/navigation_provider.dart';
 import 'package:crayon/providers/quiz/quiz_indicator.dart';
@@ -36,20 +37,19 @@ Route<dynamic> controller(RouteSettings routerSettings) {
                     create: (_) => ErrorProvider()),
               ], child: const Login()));
     case quiz:
+      var arg = routerSettings.arguments as QuizOptions;
       return MaterialPageRoute(
           builder: (context) => MultiProvider(
                 providers: [
-                  Provider<provider_score.Score>(
-                      create: (_) => provider_score.Score()),
                   ChangeNotifierProvider<TimeProvider>(
-                      create: (_) => TimeProvider()),
+                      create: (context) =>
+                          TimeProvider(context: context, quizOptions: arg)),
                   ChangeNotifierProvider<QuizIndicator>(
                       create: (context) => QuizIndicator()),
                 ],
                 child: const QuizScreen(),
               ));
     case dashboard:
-      ApiService api = ApiService();
       return MaterialPageRoute(
           builder: (context) => MultiProvider(
                 providers: [
@@ -63,8 +63,8 @@ Route<dynamic> controller(RouteSettings routerSettings) {
                 child: const Dashboard(),
               ));
     case score:
-      var arg = routerSettings.arguments as double;
-      return MaterialPageRoute(builder: (context) => Score(score: arg));
+      var arg = routerSettings.arguments as QuizResult;
+      return MaterialPageRoute(builder: (context) => Score(quizResult: arg));
   }
 
   return MaterialPageRoute(builder: (context) => const Login());

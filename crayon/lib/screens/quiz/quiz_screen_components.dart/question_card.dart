@@ -10,7 +10,7 @@ class QuestionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     var questionP = Provider.of<QuestionRight>(context, listen: false);
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -23,8 +23,10 @@ class QuestionCard extends StatelessWidget {
         children: [
           Text(
             questionP.question.question,
-            style: const TextStyle(
-                color: Colors.black, fontWeight: FontWeight.bold),
+            style: Theme.of(context)
+                .textTheme
+                .headline1!
+                .copyWith(fontSize: 18, color: Colors.black),
           ),
           const SizedBox(height: 10),
           Expanded(

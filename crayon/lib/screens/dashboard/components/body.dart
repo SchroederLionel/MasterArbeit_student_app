@@ -2,7 +2,9 @@ import 'package:crayon/datamodels/lecture/lecture.dart';
 import 'package:crayon/datamodels/lecture/lecture_date.dart';
 import 'package:crayon/datamodels/lecture/lecture_schedule.dart';
 import 'package:crayon/providers/navigation/navigation_provider.dart';
+import 'package:crayon/providers/quiz/quiz_lobby_provider.dart';
 import 'package:crayon/providers/user/user_provider.dart';
+import 'package:crayon/screens/dashboard/components/quiz/quiz_indicator.dart';
 import 'package:crayon/screens/dashboard/components/schedule.dart';
 import 'package:crayon/service/api_service.dart';
 import 'package:crayon/state/enum.dart';
@@ -20,12 +22,10 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  late Stream<List<String>> _lectureIdStream;
-
   final PageController _controller = PageController(
       initialPage:
           DateTime.now().weekday == 0 ? 6 : DateTime.now().weekday - 1);
-
+  late Stream<List<Lecture>> myLectures;
   @override
   initState() {
     super.initState();
@@ -53,7 +53,8 @@ class _BodyState extends State<Body> {
                   .resetControlller();
             });
 
-            return Center(child: Text("You aren't enrollet in any course"));
+            return const Center(
+                child: Text("You aren't enrollet in any course"));
           } else {
             WidgetsBinding.instance!.addPostFrameCallback((_) async {
               Provider.of<NavigationProvider>(context, listen: false)
@@ -104,12 +105,16 @@ class _BodyState extends State<Body> {
 
   List<LectureSchedule> getSchedules(List<Lecture> lectures, int day) {
     List<LectureSchedule> lectureSchedules = [];
-
+    List<String> containsQuiz = [];
     for (int i = 0; i < lectures.length; i++) {
       List<LectureDate> dates = lectures[i].lectureDates;
+      if (lectures[i].quiz != null) {
+        containsQuiz.add(lectures[i].id);
+      }
       for (int j = 0; j < dates.length; j++) {
         if (getDayIndex(dates[j].day) == day) {
           LectureSchedule schedule = LectureSchedule(
+              quiz: lectures[i].quiz,
               lectureId: lectures[i].id,
               title: lectures[i].title,
               isLobbyOpen: lectures[i].isLobbyOpen,
@@ -121,7 +126,12 @@ class _BodyState extends State<Body> {
         }
       }
     }
+
     lectureSchedules.sort((a, b) => a.startingTime.compareTo(b.startingTime));
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+      Provider.of<QuizLobbyProvider>(context, listen: false)
+          .canJoin(lectureSchedules);
+    });
     return lectureSchedules;
   }
 

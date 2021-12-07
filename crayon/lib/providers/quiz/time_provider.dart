@@ -1,16 +1,56 @@
 import 'dart:async';
-import 'package:crayon/datamodels/timerscore.dart';
+import 'package:crayon/datamodels/quiz/quiz_options.dart';
 import 'package:flutter/material.dart';
 
+///
 class TimeProvider extends ChangeNotifier {
+  final QuizOptions quizOptions;
+
+  BuildContext context;
+
   final Stopwatch _watch;
   late Timer _timer;
   int maxDuration = 100;
   int remainingDuration = 100;
-  int _previousTime = 0;
-  TimeProvider() : _watch = Stopwatch();
 
-  final List<TimerScore> _timePerQuestionTaken = [];
+  int _questionsAnsweredRight = 0;
+
+  /// getTotalAmountOfPointsAvailableFor answering the right questions.
+  /// Each correct response awards the user with 200 points.
+  int getTotalAmountOfPointForEachQuestion() {
+    return quizOptions.quiz.questions.length * 200;
+  }
+
+  int getRemainingTimeFromQuiz() {
+    return remainingDuration;
+  }
+
+  /// Each available second rewards the player with 20 points.
+  int getPointsFromRemainingTime() {
+    return remainingDuration * 20;
+  }
+
+  int getMaximumScoreForQuiz() {
+    return getTotalAmountOfPointForEachQuestion() + maxDuration * 20;
+  }
+
+  int getUserScrore() {
+    return _questionsAnsweredRight * 200 + remainingDuration * 20;
+  }
+
+  void increment() {
+    _questionsAnsweredRight++;
+  }
+
+  void stop() {
+    _watch.stop();
+    _timer.cancel();
+  }
+
+  TimeProvider({
+    required this.context,
+    required this.quizOptions,
+  }) : _watch = Stopwatch();
 
   void start() {
     _watch.start();
@@ -24,42 +64,5 @@ class TimeProvider extends ChangeNotifier {
         _timer.cancel();
       }
     });
-  }
-
-  void addTimeTakenForQuestion(bool wasRight) {
-    int current = _watch.elapsed.inSeconds;
-    if (_previousTime == 0) {
-      _timePerQuestionTaken
-          .add(TimerScore(wasRight: wasRight, timeTaken: current));
-      _previousTime = current;
-    } else {
-      var saver = current - _previousTime;
-      _timePerQuestionTaken
-          .add(TimerScore(wasRight: wasRight, timeTaken: saver));
-      _previousTime = current;
-    }
-  }
-
-  int getMaxTimeTakenForQuestion() {
-    return _timePerQuestionTaken.fold(_timePerQuestionTaken.first.timeTaken,
-        (max, cur) => cur.timeTaken >= max ? cur.timeTaken : max);
-  }
-
-  int getMinTimeTakenForQuestion() {
-    return _timePerQuestionTaken.fold(_timePerQuestionTaken.first.timeTaken,
-        (min, cur) => cur.timeTaken <= min ? cur.timeTaken : min);
-  }
-
-  int getCompleteTimeTakenForQuiz() {
-    return _timePerQuestionTaken.fold(
-        0, (previousValue, current) => current.timeTaken + previousValue);
-  }
-
-  double getAverageTimeTakenForQuiz() {
-    var sum = 0;
-    for (int i = 0; i < _timePerQuestionTaken.length; i++) {
-      sum += _timePerQuestionTaken[i].timeTaken;
-    }
-    return sum / _timePerQuestionTaken.length;
   }
 }

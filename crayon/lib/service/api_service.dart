@@ -147,4 +147,20 @@ class ApiService {
       'participants': FieldValue.arrayRemove([userName]),
     }, SetOptions(merge: true));
   }
+
+  Future<bool> lobbySendScore(
+      String userName, String lectureId, int score) async {
+    await FirebaseFirestore.instance
+        .collection('lectures')
+        .doc(lectureId)
+        .collection('features')
+        .doc('responses')
+        .set({
+      'responses': FieldValue.arrayUnion([
+        {'userName': userName, 'score': score}
+      ]),
+    }, SetOptions(merge: true));
+
+    return true;
+  }
 }

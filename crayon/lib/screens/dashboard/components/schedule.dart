@@ -6,6 +6,7 @@ import 'package:crayon/providers/user/user_provider.dart';
 import 'package:crayon/screens/dashboard/components/course_times.dart';
 import 'package:crayon/screens/dashboard/components/question/question_dialog.dart';
 import 'package:crayon/screens/dashboard/components/quiz/quiz_login.dart';
+import 'package:crayon/state/enum.dart';
 import 'package:crayon/widgets/confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -37,7 +38,7 @@ class Schedule extends StatelessWidget {
           });
         },
         onTap: () {
-          if (provider.isWaiting) {
+          if (provider.state == NotifierState.loaded) {
             provider.showSnackBar(
                 'You must leave your current quiz lobby to execute this operation',
                 true);
@@ -50,7 +51,7 @@ class Schedule extends StatelessWidget {
                     return const QuizLogin();
                   }).then((value) {
                 if (value is String) {
-                  provider.set(schedule.lectureId, true, value, schedule.title);
+                  provider.set(schedule.lectureId, value, schedule.title);
                 }
               });
             } else {
