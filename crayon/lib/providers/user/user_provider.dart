@@ -1,5 +1,5 @@
+import 'package:crayon/datamodels/custom_snackbar.dart';
 import 'package:crayon/datamodels/failure.dart';
-import 'package:crayon/datamodels/lecture/lecture.dart';
 import 'package:crayon/datamodels/user/user.dart';
 import 'package:crayon/service/api_service.dart';
 import 'package:crayon/state/enum.dart';
@@ -64,7 +64,7 @@ class UserProvider extends ChangeNotifier {
     /// Create a task which allows to add a lecture to the user.
     /// (Map) required since the left Type is object thus changing it to failure in case of a failure.
     /// If successfull type String returned which will then be added to the user.
-    _user = await dartz.Task(
+    var result = await dartz.Task(
             () => api.addLecture(lectureId, _user.toOption().toNullable()!))
         .attempt()
         .map(
@@ -77,6 +77,13 @@ class UserProvider extends ChangeNotifier {
           }),
         )
         .run();
+    result.fold(
+        (failure) => ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(
+            text: failure.code, isError: true, context: context)), (success) {
+      ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(
+          text: 'lecture-added-sucess', isError: false, context: context));
+      _user = result;
+    });
 
     /// Change state to loaded to make the failure or the updated user list available to the view.
     setState(NotifierState.loaded);
@@ -87,7 +94,7 @@ class UserProvider extends ChangeNotifier {
     /// Change visual my showing loading indicator.
     setState(NotifierState.loading);
 
-    _user = await dartz.Task(
+    var result = await dartz.Task(
             () => api.removeLecture(lectureId, _user.toOption().toNullable()!))
         .attempt()
         .map(
@@ -101,16 +108,56 @@ class UserProvider extends ChangeNotifier {
         )
         .run();
 
+    result.fold(
+        (failure) => ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(
+            text: failure.code, isError: true, context: context)), (success) {
+      ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(
+          text: 'lecture-removed-sucess', isError: false, context: context));
+      _user = result;
+    });
+
     /// Change state to loaded to make the failure or the updated user list available to the view.
     setState(NotifierState.loaded);
   }
 
-  void postQuestion(String question, String lectureId) {
-    api.postQuestion(question, lectureId);
+  void postQuestion(String question, String lectureId) async {
+    var result = await dartz.Task(() => api.postQuestion(question, lectureId))
+        .attempt()
+        .map(
+          (either) => either.leftMap((obj) {
+            try {
+              return obj as Failure;
+            } catch (e) {
+              throw obj;
+            }
+          }),
+        )
+        .run();
+    result.fold(
+        (failure) => ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(
+            text: failure.code, isError: true, context: context)),
+        (sucess) => ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(
+            text: 'quesiton-asked-sucess', isError: false, context: context)));
   }
 
-  void joinLobby(String lectureId, String userName) {
-    ApiService api = ApiService();
-    api.joinLobby(lectureId, userName);
+  void joinLobby(String lectureId, String userName) async {
+    var result = await dartz.Task(() => api.joinLobby(lectureId, userName))
+        .attempt()
+        .map(
+          (either) => either.leftMap((obj) {
+            try {
+              return obj as Failure;
+            } catch (e) {
+              throw obj;
+            }
+          }),
+        )
+        .run();
+
+    result.fold(
+        (failure) => ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(
+            text: failure.code, isError: true, context: context)),
+        (sucess) => ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(
+            text: 'join-lobby-success', isError: false, context: context)));
   }
 }

@@ -49,6 +49,8 @@ class AuthService {
         throw Failure(code: 'weak-password');
       } else if (e.code == 'email-already-in-use') {
         throw Failure(code: 'email-already-exists');
+      } else if (e.code == 'user-disabled') {
+        throw Failure(code: 'user-disabled');
       }
       throw Failure(code: 'firebase-exception');
     } on SocketException {

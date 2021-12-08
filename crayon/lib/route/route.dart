@@ -45,7 +45,8 @@ Route<dynamic> controller(RouteSettings routerSettings) {
                       create: (context) =>
                           TimeProvider(context: context, quizOptions: arg)),
                   ChangeNotifierProvider<QuizIndicator>(
-                      create: (context) => QuizIndicator()),
+                      create: (context) => QuizIndicator(
+                          numberOfQuestions: arg.quiz.questions.length)),
                 ],
                 child: const QuizScreen(),
               ));

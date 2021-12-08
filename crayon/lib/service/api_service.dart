@@ -115,52 +115,92 @@ class ApiService {
 
   /// Function which allows to ask a question to the teacher.
   /// Takes two parameter the question from the user and the corresponding lectureId.
-  void postQuestion(String question, String lectureId) {
-    FirebaseFirestore.instance
-        .collection('lectures')
-        .doc(lectureId)
-        .collection('features')
-        .doc('questions')
-        .set({
-      'questions': FieldValue.arrayUnion([question])
-    });
+  Future<void> postQuestion(String question, String lectureId) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('lectures')
+          .doc(lectureId)
+          .collection('features')
+          .doc('questions')
+          .set({
+        'questions': FieldValue.arrayUnion([question])
+      });
+    } on FirebaseException catch (_) {
+      throw Failure(code: 'firebase-exception');
+    } on SocketException {
+      throw Failure(code: 'no-internet');
+    } on HttpException {
+      throw Failure(code: 'not-found');
+    } on FormatException {
+      throw Failure(code: 'bad-format');
+    }
   }
 
-  void joinLobby(String lectureId, String userName) {
-    FirebaseFirestore.instance
-        .collection('lectures')
-        .doc(lectureId)
-        .collection('features')
-        .doc('lobby')
-        .set({
-      'participants': FieldValue.arrayUnion([userName]),
-    }, SetOptions(merge: true));
+  Future<void> joinLobby(String lectureId, String userName) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('lectures')
+          .doc(lectureId)
+          .collection('features')
+          .doc('lobby')
+          .set({
+        'participants': FieldValue.arrayUnion([userName]),
+      }, SetOptions(merge: true));
+    } on FirebaseException catch (_) {
+      throw Failure(code: 'firebase-exception');
+    } on SocketException {
+      throw Failure(code: 'no-internet');
+    } on HttpException {
+      throw Failure(code: 'not-found');
+    } on FormatException {
+      throw Failure(code: 'bad-format');
+    }
   }
 
   void leaveLobby(String lectureId, String userName) {
-    FirebaseFirestore.instance
-        .collection('lectures')
-        .doc(lectureId)
-        .collection('features')
-        .doc('lobby')
-        .set({
-      'participants': FieldValue.arrayRemove([userName]),
-    }, SetOptions(merge: true));
+    try {
+      FirebaseFirestore.instance
+          .collection('lectures')
+          .doc(lectureId)
+          .collection('features')
+          .doc('lobby')
+          .set({
+        'participants': FieldValue.arrayRemove([userName]),
+      }, SetOptions(merge: true));
+    } on FirebaseException catch (_) {
+      throw Failure(code: 'firebase-exception');
+    } on SocketException {
+      throw Failure(code: 'no-internet');
+    } on HttpException {
+      throw Failure(code: 'not-found');
+    } on FormatException {
+      throw Failure(code: 'bad-format');
+    }
   }
 
   Future<bool> lobbySendScore(
       String userName, String lectureId, int score) async {
-    await FirebaseFirestore.instance
-        .collection('lectures')
-        .doc(lectureId)
-        .collection('features')
-        .doc('responses')
-        .set({
-      'responses': FieldValue.arrayUnion([
-        {'userName': userName, 'score': score}
-      ]),
-    }, SetOptions(merge: true));
+    try {
+      await FirebaseFirestore.instance
+          .collection('lectures')
+          .doc(lectureId)
+          .collection('features')
+          .doc('responses')
+          .set({
+        'responses': FieldValue.arrayUnion([
+          {'userName': userName, 'score': score}
+        ]),
+      }, SetOptions(merge: true));
 
-    return true;
+      return true;
+    } on FirebaseException catch (_) {
+      throw Failure(code: 'firebase-exception');
+    } on SocketException {
+      throw Failure(code: 'no-internet');
+    } on HttpException {
+      throw Failure(code: 'not-found');
+    } on FormatException {
+      throw Failure(code: 'bad-format');
+    }
   }
 }

@@ -1,4 +1,4 @@
-import 'package:crayon/datamodels/question.dart';
+import 'package:crayon/datamodels/quiz/response.dart';
 
 class Question {
   String question;

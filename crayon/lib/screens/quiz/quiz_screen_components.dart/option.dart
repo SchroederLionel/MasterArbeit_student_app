@@ -1,5 +1,5 @@
-import 'package:crayon/datamodels/question.dart';
 import 'package:crayon/datamodels/quiz/quiz_result.dart';
+import 'package:crayon/datamodels/quiz/response.dart';
 
 import 'package:crayon/providers/quiz/question_right.dart';
 import 'package:crayon/providers/quiz/quiz_indicator.dart';
@@ -53,16 +53,12 @@ class Option extends StatelessWidget {
                   color: Colors.transparent,
                   borderRadius: BorderRadius.circular(15),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "${index + 1}. ${response.response}",
-                      style: TextStyle(
-                          color: questionRight.getColor(response),
-                          fontSize: 16),
-                    ),
-                  ],
+                child: Flexible(
+                  child: Text(
+                    "${index + 1}. ${response.response}",
+                    style: TextStyle(
+                        color: questionRight.getColor(response), fontSize: 16),
+                  ),
                 ),
               ),
             ));

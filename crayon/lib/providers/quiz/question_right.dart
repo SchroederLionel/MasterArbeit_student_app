@@ -1,4 +1,5 @@
-import 'package:crayon/datamodels/question.dart';
+import 'package:crayon/datamodels/quiz/questions.dart';
+import 'package:crayon/datamodels/quiz/response.dart';
 import 'package:crayon/state/enum.dart';
 import 'package:flutter/material.dart';
 
