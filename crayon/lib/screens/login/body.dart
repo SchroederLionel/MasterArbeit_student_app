@@ -1,6 +1,5 @@
 import 'package:crayon/datamodels/custom_snackbar.dart';
 import 'package:crayon/datamodels/user/user_credentials.dart';
-import 'package:crayon/l10n/app_localizations.dart';
 import 'package:crayon/providers/login/login_provider.dart';
 import 'package:crayon/screens/login/create_account.dart';
 import 'package:crayon/screens/login/forgot_password.dart';
@@ -31,7 +30,6 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    final appTranslation = AppLocalizations.of(context);
     ValidatorService service = ValidatorService(context: context);
     final loginProvider = Provider.of<LoginProvider>(context, listen: false);
     return Expanded(
@@ -89,7 +87,8 @@ class _BodyState extends State<Body> {
                 child: CustomButton(
                     icon: Icons.login,
                     color: Theme.of(context).primaryColor,
-                    text: appTranslation!.translate('signIn') ?? 'Sign In',
+                    labelCode: 'signIn',
+                    labelSafety: 'Sign In',
                     onPressed: () {
                       var userBasics = UserBasics(
                           email: _emailController.text,

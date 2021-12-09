@@ -1,13 +1,16 @@
+import 'package:crayon/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
   final VoidCallback onPressed;
   final IconData icon;
   final Color color;
-  final String text;
+  final String? labelCode;
+  final String labelSafety;
   const CustomButton(
       {required this.icon,
-      required this.text,
+      required this.labelSafety,
+      this.labelCode,
       required this.color,
       required this.onPressed,
       Key? key})
@@ -20,7 +23,10 @@ class CustomButton extends StatelessWidget {
       child: ElevatedButton.icon(
         onPressed: onPressed,
         icon: Icon(icon),
-        label: Text(text),
+        label: CustomText(
+          safetyText: labelSafety,
+          textCode: labelCode,
+        ),
         style: TextButton.styleFrom(
             backgroundColor: color,
             padding:

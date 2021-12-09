@@ -30,7 +30,8 @@ class Score extends StatelessWidget {
                   Navigator.of(context).pop();
                 },
                 color: Theme.of(context).primaryColor,
-                text: 'Back to Dashboard',
+                labelCode: 'back-to-dashboard',
+                labelSafety: 'Back to Dashboard',
                 icon: Icons.dashboard,
               )
             ],
