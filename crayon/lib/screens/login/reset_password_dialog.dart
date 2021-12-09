@@ -1,5 +1,4 @@
 import 'package:crayon/datamodels/custom_snackbar.dart';
-import 'package:crayon/l10n/app_localizations.dart';
 import 'package:crayon/providers/login/login_provider.dart';
 import 'package:crayon/service/validator_service.dart';
 import 'package:crayon/widgets/cancel_button.dart';
@@ -28,7 +27,6 @@ class _ResetPasswordDailogState extends State<ResetPasswordDailog> {
 
   @override
   Widget build(BuildContext context) {
-    var appTranslation = AppLocalizations.of(context);
     final provider = Provider.of<LoginProvider>(context, listen: false);
     return AlertDialog(
         shape: RoundedRectangleBorder(
@@ -85,7 +83,7 @@ class _ResetPasswordDailogState extends State<ResetPasswordDailog> {
               labelCode: 'email',
               labelSafety: 'Email',
               validator: (String? text) =>
-                  ValidatorService.checkEmail(text, appTranslation),
+                  ValidatorService(context: context).checkEmail(text),
             ),
             const SizedBox(height: 10),
             hasError ? ErrorText(error: errorText) : Container()

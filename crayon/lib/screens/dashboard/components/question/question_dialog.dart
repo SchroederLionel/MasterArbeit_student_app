@@ -1,4 +1,3 @@
-import 'package:crayon/l10n/app_localizations.dart';
 import 'package:crayon/service/validator_service.dart';
 import 'package:crayon/widgets/cancel_button.dart';
 import 'package:crayon/widgets/custom_text.dart';
@@ -22,7 +21,6 @@ class _QuestionDialogState extends State<QuestionDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final appTranslation = AppLocalizations.of(context);
     return AlertDialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
@@ -34,7 +32,7 @@ class _QuestionDialogState extends State<QuestionDialog> {
       content: CustomTextFormField(
         inputAction: TextInputAction.done,
         validator: (String? text) =>
-            ValidatorService.isStringLengthAbove2(text, appTranslation),
+            ValidatorService(context: context).isStringLengthAbove2(text),
         controller: _questionController,
         icon: Icons.contact_support,
         labelCode: 'question',

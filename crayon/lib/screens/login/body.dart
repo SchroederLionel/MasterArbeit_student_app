@@ -31,7 +31,8 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    var appTranslation = AppLocalizations.of(context);
+    final appTranslation = AppLocalizations.of(context);
+    ValidatorService service = ValidatorService(context: context);
     final loginProvider = Provider.of<LoginProvider>(context, listen: false);
     return Expanded(
       child: SingleChildScrollView(
@@ -41,8 +42,7 @@ class _BodyState extends State<Body> {
           children: [
             CustomTextFormField(
               inputAction: TextInputAction.next,
-              validator: (email) =>
-                  ValidatorService.checkEmail(email, appTranslation),
+              validator: (email) => service.checkEmail(email),
               controller: _emailController,
               icon: Icons.email,
               labelCode: 'email',
@@ -50,8 +50,7 @@ class _BodyState extends State<Body> {
             ),
             CustomTextFormField(
               inputAction: TextInputAction.done,
-              validator: (password) =>
-                  ValidatorService.checkPassword(password, appTranslation),
+              validator: (password) => service.checkPassword(password),
               controller: _passwordController,
               icon: Icons.password,
               labelCode: 'password',

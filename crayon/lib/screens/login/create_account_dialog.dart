@@ -1,5 +1,4 @@
 import 'package:crayon/datamodels/user/user_credentials.dart';
-import 'package:crayon/l10n/app_localizations.dart';
 import 'package:crayon/providers/login/login_provider.dart';
 import 'package:crayon/service/validator_service.dart';
 import 'package:crayon/widgets/cancel_button.dart';
@@ -34,7 +33,7 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
 
   @override
   Widget build(BuildContext context) {
-    var appTranslation = AppLocalizations.of(context);
+    ValidatorService service = ValidatorService(context: context);
     final provider = Provider.of<LoginProvider>(context, listen: false);
     return AlertDialog(
       actions: [
@@ -65,7 +64,8 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
                             });
                           }));
                 },
-                child: Text(appTranslation!.translate('create') ?? 'Create'))
+                child:
+                    const CustomText(textCode: 'create', safetyText: 'Create'))
       ],
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
@@ -87,8 +87,7 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
               icon: Icons.email,
               labelCode: 'email',
               labelSafety: 'Email',
-              validator: (String? text) =>
-                  ValidatorService.checkEmail(text, appTranslation),
+              validator: (String? text) => service.checkEmail(text),
               onChanged: (text) {},
             ),
             CustomTextFormField(
@@ -97,8 +96,7 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
               icon: Icons.password,
               labelCode: 'password',
               labelSafety: 'Password',
-              validator: (String? text) =>
-                  ValidatorService.checkPassword(text, appTranslation),
+              validator: (String? text) => service.checkPassword(text),
             ),
             CustomTextFormField(
               inputAction: TextInputAction.done,
@@ -107,9 +105,8 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
               isPassword: true,
               labelCode: 'newVerificationPass',
               labelSafety: 'Verification password',
-              validator: (String? text) =>
-                  ValidatorService.checkVerificationPassword(
-                      _passwordController.text, text, appTranslation),
+              validator: (String? text) => service.checkVerificationPassword(
+                  _passwordController.text, text),
             ),
             const SizedBox(height: 10),
             _error == null

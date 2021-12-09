@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crayon/datamodels/failure.dart';
 import 'package:crayon/datamodels/user/user.dart' as myuser;
 import 'package:crayon/datamodels/user/user_credentials.dart';
-import 'package:crayon/service/validator_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:validators/validators.dart';
 
@@ -16,14 +15,7 @@ class AuthService {
   /// The Function checks also the validity of passwords and email entered by the user.
   Future<UserCredential> registerWithEmailPassword(
       UserBasics user, String verificationPassword) async {
-    String? isValid = ValidatorService.isValid(
-        user.email, user.password, verificationPassword);
-
     try {
-      if (isValid != null) {
-        throw Failure(code: isValid);
-      }
-
       /// First register the user in Firestore Auth.
       UserCredential userCredential =
           await _auth.createUserWithEmailAndPassword(
