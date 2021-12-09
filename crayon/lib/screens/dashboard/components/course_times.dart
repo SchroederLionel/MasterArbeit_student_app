@@ -17,7 +17,6 @@ class CourseTimes extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           CustomText(
-              textCode: '',
               safetyText: startingTime,
               style: Theme.of(context).textTheme.bodyText2),
           const SizedBox(height: 10),

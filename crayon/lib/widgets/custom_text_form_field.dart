@@ -1,30 +1,41 @@
+import 'package:crayon/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final TextEditingController controller;
-  final void Function(String) onChanged;
+  final void Function(String)? onChanged;
   final String? Function(String?)? validator;
   final IconData icon;
-  final String labelText;
-  final bool isPassword;
+  final String? labelCode;
+  final String labelSafety;
+  final bool? isPassword;
   final TextInputAction inputAction;
   const CustomTextFormField(
       {required this.validator,
-      required this.onChanged,
+      this.onChanged,
       required this.inputAction,
       required this.controller,
       required this.icon,
-      required this.labelText,
-      required this.isPassword,
+      required this.labelSafety,
+      this.labelCode,
+      this.isPassword,
       Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var appTranslation = AppLocalizations.of(context);
+    String labelText = '';
+    if (labelCode != null) {
+      labelText = appTranslation!.translate(labelCode as String) ?? labelSafety;
+    } else {
+      labelText = labelSafety;
+    }
+
     return Form(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: TextFormField(
-        obscureText: isPassword,
+        obscureText: isPassword ?? false,
         validator: validator,
         controller: controller,
         textInputAction: inputAction,

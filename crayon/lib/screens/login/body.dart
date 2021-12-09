@@ -40,23 +40,23 @@ class _BodyState extends State<Body> {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             CustomTextFormField(
-                inputAction: TextInputAction.next,
-                validator: (email) =>
-                    ValidatorService.checkEmail(email, appTranslation),
-                onChanged: (String email) => {},
-                controller: _emailController,
-                icon: Icons.email,
-                labelText: appTranslation!.translate('email') ?? 'Email',
-                isPassword: false),
+              inputAction: TextInputAction.next,
+              validator: (email) =>
+                  ValidatorService.checkEmail(email, appTranslation),
+              controller: _emailController,
+              icon: Icons.email,
+              labelCode: 'email',
+              labelSafety: 'Email',
+            ),
             CustomTextFormField(
-                inputAction: TextInputAction.done,
-                validator: (password) =>
-                    ValidatorService.checkPassword(password, appTranslation),
-                onChanged: (String password) => {},
-                controller: _passwordController,
-                icon: Icons.password,
-                labelText: appTranslation.translate('password') ?? 'Password',
-                isPassword: true),
+              inputAction: TextInputAction.done,
+              validator: (password) =>
+                  ValidatorService.checkPassword(password, appTranslation),
+              controller: _passwordController,
+              icon: Icons.password,
+              labelCode: 'password',
+              labelSafety: 'Password',
+            ),
             const ForgotPassword(),
             const SizedBox(
               height: 18,
@@ -90,7 +90,7 @@ class _BodyState extends State<Body> {
                 child: CustomButton(
                     icon: Icons.login,
                     color: Theme.of(context).primaryColor,
-                    text: appTranslation.translate('signIn') ?? 'Sign In',
+                    text: appTranslation!.translate('signIn') ?? 'Sign In',
                     onPressed: () {
                       var userBasics = UserBasics(
                           email: _emailController.text,

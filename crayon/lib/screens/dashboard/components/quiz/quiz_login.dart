@@ -50,11 +50,10 @@ class _QuizLoginState extends State<QuizLogin> {
         inputAction: TextInputAction.done,
         controller: _nameController,
         icon: Icons.account_circle,
-        isPassword: false,
-        labelText: 'Username',
+        labelSafety: 'Username',
+        labelCode: 'username',
         validator: (String? text) =>
             ValidatorService.isStringLengthAbove2(text, appTranslation),
-        onChanged: (_) {},
       ),
     );
   }

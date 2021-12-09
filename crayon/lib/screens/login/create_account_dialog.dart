@@ -85,8 +85,8 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
               inputAction: TextInputAction.next,
               controller: _emailController,
               icon: Icons.email,
-              isPassword: false,
-              labelText: appTranslation!.translate('email') ?? 'Email',
+              labelCode: 'email',
+              labelSafety: 'Email',
               validator: (String? text) =>
                   ValidatorService.checkEmail(text, appTranslation),
               onChanged: (text) {},
@@ -95,23 +95,21 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
               inputAction: TextInputAction.next,
               controller: _passwordController,
               icon: Icons.password,
-              isPassword: true,
-              labelText: appTranslation.translate('password') ?? 'Password',
+              labelCode: 'password',
+              labelSafety: 'Password',
               validator: (String? text) =>
                   ValidatorService.checkPassword(text, appTranslation),
-              onChanged: (text) {},
             ),
             CustomTextFormField(
               inputAction: TextInputAction.done,
               controller: _verificationPasswordController,
               icon: Icons.password,
               isPassword: true,
-              labelText: appTranslation.translate('newVerificationPass') ??
-                  'Verification password',
+              labelCode: 'newVerificationPass',
+              labelSafety: 'Verification password',
               validator: (String? text) =>
                   ValidatorService.checkVerificationPassword(
                       _passwordController.text, text, appTranslation),
-              onChanged: (text) {},
             ),
             const SizedBox(height: 10),
             _error == null

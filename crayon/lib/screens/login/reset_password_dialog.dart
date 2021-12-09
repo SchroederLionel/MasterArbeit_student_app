@@ -82,11 +82,10 @@ class _ResetPasswordDailogState extends State<ResetPasswordDailog> {
               inputAction: TextInputAction.done,
               controller: _emailController,
               icon: Icons.email,
-              isPassword: false,
-              labelText: appTranslation!.translate('email') ?? 'Email',
+              labelCode: 'email',
+              labelSafety: 'Email',
               validator: (String? text) =>
                   ValidatorService.checkEmail(text, appTranslation),
-              onChanged: (text) {},
             ),
             const SizedBox(height: 10),
             hasError ? ErrorText(error: errorText) : Container()
