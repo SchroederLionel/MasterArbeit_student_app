@@ -3,9 +3,9 @@ import 'package:crayon/l10n/app_localizations.dart';
 import 'package:crayon/providers/login/login_provider.dart';
 import 'package:crayon/service/validator_service.dart';
 import 'package:crayon/widgets/cancel_button.dart';
+import 'package:crayon/widgets/custom_text.dart';
 import 'package:crayon/widgets/custom_text_form_field.dart';
 import 'package:crayon/widgets/error_text.dart';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -34,10 +34,13 @@ class _ResetPasswordDailogState extends State<ResetPasswordDailog> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
-        title: Text(
-          appTranslation!.translate('reset-password') ?? 'Reset password',
-          style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 24),
-        ),
+        title: CustomText(
+            overflow: null,
+            textAlign: null,
+            textCode: 'reset-password',
+            safetyText: 'Reset password',
+            style:
+                Theme.of(context).textTheme.headline2!.copyWith(fontSize: 24)),
         actions: [
           const CancelButton(),
           ElevatedButton(
@@ -52,16 +55,23 @@ class _ResetPasswordDailogState extends State<ResetPasswordDailog> {
                         });
                       }, (worked) {
                         Navigator.of(context).pop();
-                        WidgetsBinding.instance!.addPostFrameCallback((_) {
-                          ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(
-                              text: appTranslation.translate(
-                                      'reset-password-link-was-send-to-your-email') ??
-                                  'Reset password link was sent to your email',
-                              isError: false));
-                        });
+                        CustomSnackbar(
+                                saftyString:
+                                    'Reset password link was sent to your email',
+                                context: context,
+                                text:
+                                    'reset-password-link-was-send-to-your-email',
+                                isError: false)
+                            .showSnackBar();
                       }));
             },
-            child: Text(appTranslation.translate('send') ?? 'Send'),
+            child: const CustomText(
+              overflow: null,
+              textAlign: null,
+              textCode: 'send',
+              safetyText: 'Send',
+              style: null,
+            ),
           )
         ],
         content: ListView(
@@ -73,7 +83,7 @@ class _ResetPasswordDailogState extends State<ResetPasswordDailog> {
               controller: _emailController,
               icon: Icons.email,
               isPassword: false,
-              labelText: appTranslation.translate('email') ?? 'Email',
+              labelText: appTranslation!.translate('email') ?? 'Email',
               validator: (String? text) =>
                   ValidatorService.checkEmail(text, appTranslation),
               onChanged: (text) {},

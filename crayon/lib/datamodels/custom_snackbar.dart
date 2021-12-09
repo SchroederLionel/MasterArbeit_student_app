@@ -23,4 +23,9 @@ class CustomSnackbar extends SnackBar {
                   fontWeight: FontWeight.w700,
                   fontFamily: 'Poppins'),
             ));
+
+  showSnackBar() {
+    WidgetsBinding.instance!.addPostFrameCallback(
+        (_) => ScaffoldMessenger.of(context).showSnackBar(this));
+  }
 }

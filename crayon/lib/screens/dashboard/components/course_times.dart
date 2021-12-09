@@ -1,3 +1,4 @@
+import 'package:crayon/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class CourseTimes extends StatelessWidget {
@@ -15,7 +16,10 @@ class CourseTimes extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(startingTime, style: Theme.of(context).textTheme.bodyText2),
+          CustomText(
+              textCode: '',
+              safetyText: startingTime,
+              style: Theme.of(context).textTheme.bodyText2),
           const SizedBox(height: 10),
           Text(endingTime,
               style: const TextStyle(

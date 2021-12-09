@@ -103,14 +103,25 @@ class ApiService {
   /// Function which allows to get the actual lectures based on the lecture ids where the user is enrolled in.
   /// returns a list of lectures (Stream). Which allows to detect if the room or something else changes.
   Stream<List<Lecture>> getMyLectures(List<String> lecturesToListen) {
-    return FirebaseFirestore.instance
-        .collection('lectures')
-        .where('id', whereIn: lecturesToListen)
-        .snapshots()
-        .map((snapshot) => snapshot.docs.map((document) {
-              print((document.metadata.isFromCache ? "Cached" : "Not Cached"));
-              return Lecture.fromJson(document.data());
-            }).toList());
+    try {
+      return FirebaseFirestore.instance
+          .collection('lectures')
+          .where('id', whereIn: lecturesToListen)
+          .snapshots()
+          .map((snapshot) => snapshot.docs.map((document) {
+                print(
+                    (document.metadata.isFromCache ? "Cached" : "Not Cached"));
+                return Lecture.fromJson(document.data());
+              }).toList());
+    } on FirebaseException catch (_) {
+      throw Failure(code: 'firebase-exception');
+    } on SocketException {
+      throw Failure(code: 'no-internet');
+    } on HttpException {
+      throw Failure(code: 'not-found');
+    } on FormatException {
+      throw Failure(code: 'bad-format');
+    }
   }
 
   /// Function which allows to ask a question to the teacher.

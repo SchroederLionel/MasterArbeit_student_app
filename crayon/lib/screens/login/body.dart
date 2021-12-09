@@ -74,12 +74,13 @@ class _BodyState extends State<Body> {
                   } else {
                     WidgetsBinding.instance!.addPostFrameCallback((_) {
                       provider.userCredential.fold(
-                          (l) => ScaffoldMessenger.of(context).showSnackBar(
-                              CustomSnackbar(
-                                  text: appTranslation.translate(l.code) ??
-                                      l.code,
-                                  isError: true)),
-                          (r) => Navigator.of(context)
+                          (failure) => CustomSnackbar(
+                                  text: failure.code,
+                                  context: context,
+                                  saftyString: 'Failed to login',
+                                  isError: true)
+                              .showSnackBar(),
+                          (success) => Navigator.of(context)
                               .pushReplacementNamed(route.dashboard));
                     });
 
@@ -97,12 +98,12 @@ class _BodyState extends State<Body> {
                       if (userBasics.isValid()) {
                         loginProvider.signUserIn(userBasics);
                       } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            CustomSnackbar(
-                                text: appTranslation
-                                        .translate('complete-all-the-fields') ??
-                                    'Fill in all the fields!',
-                                isError: true));
+                        CustomSnackbar(
+                                saftyString: 'Fill in all the fields!',
+                                context: context,
+                                text: 'complete-all-the-fields',
+                                isError: true)
+                            .showSnackBar();
                       }
                     })),
             const SizedBox(

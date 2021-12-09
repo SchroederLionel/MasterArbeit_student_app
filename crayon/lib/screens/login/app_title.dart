@@ -1,4 +1,4 @@
-import 'package:crayon/l10n/app_localizations.dart';
+import 'package:crayon/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class AppTitle extends StatelessWidget {
@@ -6,27 +6,33 @@ class AppTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var appTranslation = AppLocalizations.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        Text(appTranslation!.translate('hello') ?? 'Hello',
-            textAlign: TextAlign.center,
-            style: const TextStyle(
+        const CustomText(
+            style: TextStyle(
               fontSize: 70.0,
               fontWeight: FontWeight.bold,
               height: 0.80,
-            )),
+            ),
+            overflow: null,
+            textAlign: null,
+            textCode: 'hello',
+            safetyText: 'Hello'),
         Row(
-          children: [
-            Text(appTranslation.translate('there') ?? 'There',
-                style: const TextStyle(
+          children: const [
+            CustomText(
+                overflow: null,
+                textAlign: null,
+                style: TextStyle(
                   fontSize: 70.0,
                   fontWeight: FontWeight.w700,
                   height: 0.80,
-                )),
-            const Text('.',
+                ),
+                textCode: 'there',
+                safetyText: 'There'),
+            Text('.',
                 style: TextStyle(
                     fontSize: 70.0,
                     height: 0.80,

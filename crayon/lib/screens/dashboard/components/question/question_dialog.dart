@@ -1,6 +1,7 @@
 import 'package:crayon/l10n/app_localizations.dart';
 import 'package:crayon/service/validator_service.dart';
 import 'package:crayon/widgets/cancel_button.dart';
+import 'package:crayon/widgets/custom_text.dart';
 import 'package:crayon/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 
@@ -26,10 +27,10 @@ class _QuestionDialogState extends State<QuestionDialog> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
-      title: Text(
-        'Question',
-        style: Theme.of(context).textTheme.headline2,
-      ),
+      title: CustomText(
+          textCode: 'question',
+          safetyText: 'Question',
+          style: Theme.of(context).textTheme.headline2),
       content: CustomTextFormField(
           inputAction: TextInputAction.done,
           validator: (String? text) =>
@@ -45,7 +46,7 @@ class _QuestionDialogState extends State<QuestionDialog> {
             onPressed: () {
               Navigator.pop(context, _questionController.text);
             },
-            child: const Text('Send'))
+            child: const CustomText(textCode: 'send', safetyText: 'Send'))
       ],
     );
   }

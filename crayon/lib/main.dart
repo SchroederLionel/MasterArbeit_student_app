@@ -1,5 +1,6 @@
 import 'package:crayon/l10n/app_localizations.dart';
 import 'package:crayon/l10n/app_localizations_delegate.dart';
+import 'package:crayon/providers/login/login_provider.dart';
 
 import 'package:crayon/providers/util/locale_provider.dart';
 import 'package:crayon/providers/util/theme.dart';
@@ -19,6 +20,7 @@ void main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   runApp(MultiProvider(
     providers: [
+      ChangeNotifierProvider<LoginProvider>(create: (_) => LoginProvider()),
       ChangeNotifierProvider<ThemeProvider>(
           create: (BuildContext context) =>
               ThemeProvider(isDarkMode: prefs.getBool('themeDark') ?? false)),

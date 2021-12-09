@@ -8,6 +8,7 @@ import 'package:crayon/screens/dashboard/components/question/question_dialog.dar
 import 'package:crayon/screens/dashboard/components/quiz/quiz_login.dart';
 import 'package:crayon/state/enum.dart';
 import 'package:crayon/widgets/confirmation_dialog.dart';
+import 'package:crayon/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -87,26 +88,26 @@ class Schedule extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15.0),
                   ),
                   child: Padding(
-                    padding:
-                        const EdgeInsets.only(top: 7.0, bottom: 7.0, left: 7.0),
-                    child: ListTile(
-                        title: Text(
-                          schedule.title,
-                          style: const TextStyle(
-                              fontSize: 17,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700),
-                        ),
-                        subtitle: Text(
-                          '${appTranslation!.translate('room') ?? "Room"}: ${schedule.room}',
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontFamily: 'Poppins'),
-                        )),
-                  ),
+                      padding: const EdgeInsets.only(
+                          top: 7.0, bottom: 7.0, left: 7.0),
+                      child: ListTile(
+                          title: CustomText(
+                            safetyText: schedule.title,
+                            style: const TextStyle(
+                                fontSize: 17,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700),
+                          ),
+                          subtitle: CustomText(
+                              additional: schedule.room,
+                              textCode: 'room',
+                              safetyText: 'Room',
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontFamily: 'Poppins')))),
                 ),
-              )
+              ),
             ]),
       ),
     );

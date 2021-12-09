@@ -1,11 +1,10 @@
 // Route Names
 import 'package:crayon/datamodels/quiz/quiz_options.dart';
 import 'package:crayon/datamodels/quiz/quiz_result.dart';
-import 'package:crayon/providers/login/login_provider.dart';
+
 import 'package:crayon/providers/navigation/navigation_provider.dart';
 import 'package:crayon/providers/quiz/quiz_indicator.dart';
 import 'package:crayon/providers/quiz/quiz_lobby_provider.dart';
-import 'package:crayon/providers/quiz/scrore.dart' as provider_score;
 import 'package:crayon/providers/quiz/time_provider.dart';
 
 import 'package:crayon/providers/user/user_provider.dart';
@@ -15,7 +14,6 @@ import 'package:crayon/screens/login/login.dart';
 import 'package:crayon/screens/quiz/quiz_screen.dart';
 import 'package:crayon/screens/quiz/quiz_screen_components.dart/score.dart';
 import 'package:crayon/screens/splashscreen/splashscreen.dart';
-import 'package:crayon/service/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -31,8 +29,6 @@ Route<dynamic> controller(RouteSettings routerSettings) {
     case login:
       return MaterialPageRoute(
           builder: (context) => MultiProvider(providers: [
-                ChangeNotifierProvider<LoginProvider>(
-                    create: (_) => LoginProvider()),
                 ChangeNotifierProvider<ErrorProvider>(
                     create: (_) => ErrorProvider()),
               ], child: const Login()));

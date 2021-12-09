@@ -3,6 +3,7 @@ import 'package:crayon/l10n/app_localizations.dart';
 import 'package:crayon/providers/login/login_provider.dart';
 import 'package:crayon/service/validator_service.dart';
 import 'package:crayon/widgets/cancel_button.dart';
+import 'package:crayon/widgets/custom_text.dart';
 import 'package:crayon/widgets/custom_text_form_field.dart';
 import 'package:crayon/widgets/error_text.dart';
 
@@ -69,9 +70,13 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
-      title: Text(
-          appTranslation!.translate('create-account') ?? 'Create Account',
-          style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 24)),
+      title: CustomText(
+        overflow: null,
+        textAlign: null,
+        textCode: 'create-account',
+        safetyText: 'Create Account',
+        style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 24),
+      ),
       content: SingleChildScrollView(
         child: ListView(
           shrinkWrap: true,
@@ -81,7 +86,7 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
               controller: _emailController,
               icon: Icons.email,
               isPassword: false,
-              labelText: appTranslation.translate('email') ?? 'Email',
+              labelText: appTranslation!.translate('email') ?? 'Email',
               validator: (String? text) =>
                   ValidatorService.checkEmail(text, appTranslation),
               onChanged: (text) {},

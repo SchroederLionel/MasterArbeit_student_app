@@ -78,10 +78,18 @@ class UserProvider extends ChangeNotifier {
         )
         .run();
     result.fold(
-        (failure) => ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(
-            text: failure.code, isError: true, context: context)), (success) {
-      ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(
-          text: 'lecture-added-sucess', isError: false, context: context));
+        (failure) => CustomSnackbar(
+              text: failure.code,
+              isError: true,
+              context: context,
+              saftyString: 'Failed to add lecture',
+            ).showSnackBar(), (success) {
+      CustomSnackbar(
+        text: 'lecture-added-sucess',
+        isError: false,
+        context: context,
+        saftyString: 'Lecture added successfully',
+      ).showSnackBar();
       _user = result;
     });
 
@@ -109,10 +117,18 @@ class UserProvider extends ChangeNotifier {
         .run();
 
     result.fold(
-        (failure) => ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(
-            text: failure.code, isError: true, context: context)), (success) {
-      ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(
-          text: 'lecture-removed-sucess', isError: false, context: context));
+        (failure) => CustomSnackbar(
+              text: failure.code,
+              isError: true,
+              context: context,
+              saftyString: 'Failed to remove lecture',
+            ).showSnackBar(), (success) {
+      CustomSnackbar(
+        text: 'lecture-removed-sucess',
+        isError: false,
+        context: context,
+        saftyString: 'Successfully removed lecture',
+      ).showSnackBar();
       _user = result;
     });
 
@@ -135,9 +151,17 @@ class UserProvider extends ChangeNotifier {
         .run();
     result.fold(
         (failure) => ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(
-            text: failure.code, isError: true, context: context)),
-        (sucess) => ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(
-            text: 'quesiton-asked-sucess', isError: false, context: context)));
+              text: failure.code,
+              isError: true,
+              context: context,
+              saftyString: 'Failed to ask question',
+            )),
+        (sucess) => CustomSnackbar(
+              text: 'quesiton-asked-sucess',
+              isError: false,
+              context: context,
+              saftyString: 'Successfully asked question',
+            ).showSnackBar());
   }
 
   void joinLobby(String lectureId, String userName) async {
@@ -155,9 +179,17 @@ class UserProvider extends ChangeNotifier {
         .run();
 
     result.fold(
-        (failure) => ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(
-            text: failure.code, isError: true, context: context)),
-        (sucess) => ScaffoldMessenger.of(context).showSnackBar(CustomSnackbar(
-            text: 'join-lobby-success', isError: false, context: context)));
+        (failure) => CustomSnackbar(
+              text: failure.code,
+              isError: true,
+              context: context,
+              saftyString: 'Failed to join lobby',
+            ).showSnackBar(),
+        (sucess) => CustomSnackbar(
+              text: 'join-lobby-success',
+              isError: false,
+              context: context,
+              saftyString: 'Successfully joined lecture',
+            ).showSnackBar());
   }
 }

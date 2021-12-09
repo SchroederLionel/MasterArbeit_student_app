@@ -1,5 +1,5 @@
-import 'package:crayon/l10n/app_localizations.dart';
 import 'package:crayon/screens/login/create_account_dialog.dart';
+import 'package:crayon/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class CreateAccount extends StatelessWidget {
@@ -7,7 +7,6 @@ class CreateAccount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var appTranslation = AppLocalizations.of(context);
     return Center(
       child: TextButton(
           onPressed: () {
@@ -17,8 +16,9 @@ class CreateAccount extends StatelessWidget {
                   return const CreateAccountDialog();
                 });
           },
-          child: Text(
-            appTranslation!.translate('create-account') ?? 'Create account',
+          child: CustomText(
+            textCode: 'create-account',
+            safetyText: 'Create account',
             style: Theme.of(context).textTheme.bodyText1!.copyWith(
                 fontSize: 14,
                 decoration: TextDecoration.underline,

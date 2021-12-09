@@ -1,6 +1,7 @@
 import 'package:crayon/l10n/app_localizations.dart';
 import 'package:crayon/service/validator_service.dart';
 import 'package:crayon/widgets/cancel_button.dart';
+import 'package:crayon/widgets/custom_text.dart';
 import 'package:crayon/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -39,12 +40,12 @@ class _QuizLoginState extends State<QuizLogin> {
                 Navigator.of(context).pop(_nameController.text);
               }
             },
-            child: const Text('Join'))
+            child: const CustomText(textCode: 'join', safetyText: 'Join'))
       ],
-      title: Text(
-        "Gameshow",
-        style: Theme.of(context).textTheme.headline2,
-      ),
+      title: CustomText(
+          textCode: 'gameshow',
+          safetyText: 'Gameshow',
+          style: Theme.of(context).textTheme.headline2),
       content: CustomTextFormField(
         inputAction: TextInputAction.done,
         controller: _nameController,

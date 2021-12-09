@@ -1,6 +1,6 @@
 import 'package:crayon/datamodels/confirmation_dialog_data.dart';
-import 'package:crayon/l10n/app_localizations.dart';
 import 'package:crayon/widgets/cancel_button.dart';
+import 'package:crayon/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class ConfirmationDialog extends StatelessWidget {
@@ -10,28 +10,20 @@ class ConfirmationDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var appTranslation = AppLocalizations.of(context);
     return AlertDialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
-      title: Text(
-        confirmationDialogData.title ??
-            appTranslation!.translate('delete') ??
-            'Delete',
-        style: Theme.of(context).textTheme.headline6,
-      ),
+      title: const CustomText(textCode: 'delete', safetyText: 'Delete'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            confirmationDialogData.description ??
-                appTranslation!.translate('confirmationDeletion') ??
-                'Confirm deletion',
-            style: Theme.of(context).textTheme.bodyText1,
-          ),
+          CustomText(
+              textCode: confirmationDialogData.title,
+              safetyText: 'Confirm deletion',
+              style: Theme.of(context).textTheme.bodyText1),
           Center(
             child: Text(
               confirmationDialogData.itemTitle,
@@ -44,9 +36,7 @@ class ConfirmationDialog extends StatelessWidget {
         const CancelButton(),
         ElevatedButton(
             onPressed: () => Navigator.pop(context, true),
-            child: Text(confirmationDialogData.acceptTitle ??
-                appTranslation!.translate('yes') ??
-                'Yes'))
+            child: const CustomText(textCode: 'yes', safetyText: 'Yes'))
       ],
     );
   }
