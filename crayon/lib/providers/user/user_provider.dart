@@ -24,10 +24,10 @@ class UserProvider extends ChangeNotifier {
   /// Variable which can be either a user or a failure.
   /// In case the data retrieval went wrong the variable will be a failure.
   /// In case of a success the user data will be available to the app.
-  late dartz.Either<Failure, User> _user;
+  User? _user;
 
   /// Get if  user data or failure.
-  dartz.Either<Failure, User> get user => _user;
+  User? get user => _user;
 
   /// Sets the state in which the data fetching is in.
   /// Notifies the Consumers to make the visual changes.
@@ -40,18 +40,29 @@ class UserProvider extends ChangeNotifier {
   Future<void> getUser() async {
     setState(NotifierState.loading);
 
-    _user = await dartz.Task(() => api.getUserData())
-        .attempt()
-        .map(
-          (either) => either.leftMap((obj) {
-            try {
-              return obj as Failure;
-            } catch (e) {
-              throw obj;
-            }
-          }),
-        )
-        .run();
+    dartz.Either<Failure, User> _result =
+        await dartz.Task(() => api.getUserData())
+            .attempt()
+            .map(
+              (either) => either.leftMap((obj) {
+                try {
+                  return obj as Failure;
+                } catch (e) {
+                  throw obj;
+                }
+              }),
+            )
+            .run();
+
+    _result.fold(
+        (failure) => CustomSnackbar(
+              text: failure.code,
+              isError: true,
+              context: context,
+              saftyString: 'Failed to retrieve user data',
+            ).showSnackBar(), (user) {
+      _user = user;
+    });
 
     setState(NotifierState.loaded);
   }
@@ -64,8 +75,7 @@ class UserProvider extends ChangeNotifier {
     /// Create a task which allows to add a lecture to the user.
     /// (Map) required since the left Type is object thus changing it to failure in case of a failure.
     /// If successfull type String returned which will then be added to the user.
-    var result = await dartz.Task(
-            () => api.addLecture(lectureId, _user.toOption().toNullable()!))
+    var result = await dartz.Task(() => api.addLecture(lectureId))
         .attempt()
         .map(
           (either) => either.leftMap((obj) {
@@ -77,20 +87,21 @@ class UserProvider extends ChangeNotifier {
           }),
         )
         .run();
+
     result.fold(
         (failure) => CustomSnackbar(
               text: failure.code,
               isError: true,
               context: context,
               saftyString: 'Failed to add lecture',
-            ).showSnackBar(), (success) {
+            ).showSnackBar(), (lectureId) {
       CustomSnackbar(
         text: 'lecture-added-sucess',
         isError: false,
         context: context,
         saftyString: 'Lecture added successfully',
       ).showSnackBar();
-      _user = result;
+      _user!.enrolledLectures.add(lectureId);
     });
 
     /// Change state to loaded to make the failure or the updated user list available to the view.
@@ -102,8 +113,7 @@ class UserProvider extends ChangeNotifier {
     /// Change visual my showing loading indicator.
     setState(NotifierState.loading);
 
-    var result = await dartz.Task(
-            () => api.removeLecture(lectureId, _user.toOption().toNullable()!))
+    var result = await dartz.Task(() => api.removeLecture(lectureId))
         .attempt()
         .map(
           (either) => either.leftMap((obj) {
@@ -122,14 +132,14 @@ class UserProvider extends ChangeNotifier {
               isError: true,
               context: context,
               saftyString: 'Failed to remove lecture',
-            ).showSnackBar(), (success) {
+            ).showSnackBar(), (lectureId) {
       CustomSnackbar(
         text: 'lecture-removed-sucess',
         isError: false,
         context: context,
         saftyString: 'Successfully removed lecture',
       ).showSnackBar();
-      _user = result;
+      _user!.enrolledLectures.remove(lectureId);
     });
 
     /// Change state to loaded to make the failure or the updated user list available to the view.

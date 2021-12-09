@@ -31,7 +31,6 @@ class CustomTextFormField extends StatelessWidget {
     } else {
       labelText = labelSafety;
     }
-
     return Form(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: TextFormField(

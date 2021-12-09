@@ -7,6 +7,7 @@ import 'package:crayon/service/validator_service.dart';
 import 'package:crayon/state/enum.dart';
 import 'package:crayon/widgets/custom_button.dart';
 import 'package:crayon/widgets/custom_text_form_field.dart';
+import 'package:crayon/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:crayon/route/route.dart' as route;
@@ -63,11 +64,7 @@ class _BodyState extends State<Body> {
                   if (provider.state == NotifierState.initial) {
                     return child as Widget;
                   } else if (provider.state == NotifierState.loading) {
-                    return Center(
-                      child: CircularProgressIndicator(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    );
+                    return const LoadingWidget();
                   } else {
                     WidgetsBinding.instance!.addPostFrameCallback((_) {
                       provider.userCredential.fold(

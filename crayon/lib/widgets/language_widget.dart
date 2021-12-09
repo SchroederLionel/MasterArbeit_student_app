@@ -2,7 +2,6 @@ import 'package:crayon/datamodels/custom_locale.dart';
 import 'package:crayon/l10n/app_localizations.dart';
 import 'package:crayon/l10n/l10n.dart';
 import 'package:crayon/providers/util/locale_provider.dart';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

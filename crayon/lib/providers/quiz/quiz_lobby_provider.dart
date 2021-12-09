@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 import 'package:crayon/datamodels/lecture/lecture_schedule.dart';
-import 'package:crayon/datamodels/quiz/quiz.dart';
 import 'package:crayon/datamodels/quiz/quiz_options.dart';
 import 'package:crayon/service/api_service.dart';
 import 'package:crayon/state/enum.dart';

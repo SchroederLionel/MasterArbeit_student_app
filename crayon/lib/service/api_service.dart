@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crayon/datamodels/failure.dart';
 import 'package:crayon/datamodels/lecture/lecture.dart';
 import 'package:crayon/datamodels/user/user.dart' as myuser;
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:validators/validators.dart';
@@ -41,7 +40,7 @@ class ApiService {
 
   /// Function which allows to remove a lecture where the user is enrolled in.
   /// returns a boolean if the deletion was successfull.
-  Future<myuser.User> removeLecture(String lectureId, myuser.User user) async {
+  Future<String> removeLecture(String lectureId) async {
     try {
       if (_auth.currentUser != null) {
         await FirebaseFirestore.instance
@@ -50,8 +49,8 @@ class ApiService {
             .update({
           'enrolled-lectures': FieldValue.arrayRemove([lectureId])
         });
-        user.enrolledLectures.remove(lectureId);
-        return user;
+
+        return lectureId;
       }
       throw Failure(code: 'not-logged-in');
     } on FirebaseException catch (_) {
@@ -68,7 +67,7 @@ class ApiService {
   /// Function which allows to add a lecture to the users enrolled lecture list.
   /// Two parameters are required the Lecture id which and the user himself. After the post request if there is no error the user with the added element will be returned.
   /// returns the lectureId if the lecture was successfully added.
-  Future<myuser.User> addLecture(String lectureId, myuser.User user) async {
+  Future<String> addLecture(String lectureId) async {
     try {
       var howMany = '-'.allMatches(lectureId).length;
       String removeDash = lectureId.replaceAll('-', '');
@@ -81,8 +80,8 @@ class ApiService {
               .set({
             'enrolled-lectures': FieldValue.arrayUnion([lectureId])
           }, SetOptions(merge: true));
-          user.enrolledLectures.add(lectureId);
-          return user;
+
+          return lectureId;
         }
       } else {
         throw Failure(code: 'wrong-qr-code');
