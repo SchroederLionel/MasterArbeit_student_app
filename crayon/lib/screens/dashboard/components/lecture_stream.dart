@@ -4,6 +4,7 @@ import 'package:crayon/datamodels/lecture/lecture_schedule.dart';
 import 'package:crayon/datamodels/user/user.dart';
 import 'package:crayon/providers/navigation/navigation_provider.dart';
 import 'package:crayon/providers/quiz/quiz_lobby_provider.dart';
+import 'package:crayon/providers/user/user_provider.dart';
 import 'package:crayon/screens/dashboard/components/schedule.dart';
 import 'package:crayon/service/api_service.dart';
 import 'package:crayon/widgets/custom_text.dart';
@@ -13,30 +14,39 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class LectureStream extends StatefulWidget {
-  final User user;
-  const LectureStream({Key? key, required this.user}) : super(key: key);
+  const LectureStream({Key? key}) : super(key: key);
 
   @override
   _LectureStreamState createState() => _LectureStreamState();
 }
 
 class _LectureStreamState extends State<LectureStream> {
-  late Stream<List<Lecture>> _stream;
+  Stream<List<Lecture>>? _stream;
   final PageController _controller = PageController(
       initialPage:
           DateTime.now().weekday == 0 ? 6 : DateTime.now().weekday - 1);
   @override
   initState() {
-    _stream = ApiService().getMyLectures(widget.user.enrolledLectures);
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
     WidgetsBinding.instance!.addPostFrameCallback((_) async {
       Provider.of<NavigationProvider>(context, listen: false)
           .setPageController(_controller);
     });
+    _stream = ApiService().getMyLectures(
+        Provider.of<UserProvider>(context, listen: false)
+            .user!
+            .enrolledLectures);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return StreamBuilder<List<Lecture>>(
         stream: _stream,
         initialData: const [],

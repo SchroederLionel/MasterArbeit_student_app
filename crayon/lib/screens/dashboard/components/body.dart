@@ -31,7 +31,7 @@ class Body extends StatelessWidget {
                     safetyText: "You aren't enrollet in any course",
                     textCode: 'no-courses-enrolled'));
           } else {
-            return LectureStream(user: provider.user!);
+            return const LectureStream();
           }
         }
       }

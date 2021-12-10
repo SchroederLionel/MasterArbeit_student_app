@@ -35,7 +35,8 @@ class ConfirmationDialog extends StatelessWidget {
       actions: [
         const CancelButton(),
         ElevatedButton(
-            onPressed: () => Navigator.pop(context, true),
+            onPressed: () =>
+                Navigator.of(context, rootNavigator: true).pop(true),
             child: const CustomText(textCode: 'yes', safetyText: 'Yes'))
       ],
     );

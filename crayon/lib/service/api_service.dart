@@ -102,12 +102,16 @@ class ApiService {
   /// Function which allows to get the actual lectures based on the lecture ids where the user is enrolled in.
   /// returns a list of lectures (Stream). Which allows to detect if the room or something else changes.
   Stream<List<Lecture>> getMyLectures(List<String> lecturesToListen) {
+    print('CALLED');
     try {
       return FirebaseFirestore.instance
           .collection('lectures')
           .where('id', whereIn: lecturesToListen)
-          .snapshots()
+          .snapshots(includeMetadataChanges: false)
           .map((snapshot) => snapshot.docs.map((document) {
+                print(snapshot.metadata.isFromCache
+                    ? "-----Cached-----"
+                    : "----Not Cached----");
                 print(
                     (document.metadata.isFromCache ? "Cached" : "Not Cached"));
                 return Lecture.fromJson(document.data());

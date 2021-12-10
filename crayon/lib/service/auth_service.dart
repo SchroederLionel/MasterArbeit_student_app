@@ -17,6 +17,11 @@ class AuthService {
       UserBasics user, String verificationPassword) async {
     try {
       /// First register the user in Firestore Auth.
+
+      var error = user.isValid(verificationPassword);
+      if (error != null) {
+        throw Failure(code: error);
+      }
       UserCredential userCredential =
           await _auth.createUserWithEmailAndPassword(
         email: user.email,

@@ -25,14 +25,14 @@ class Schedule extends StatelessWidget {
         onLongPress: () {
           showDialog(
               context: context,
-              builder: (context) {
+              builder: (BuildContext context) {
                 return ConfirmationDialog(
                     confirmationDialogData:
                         ConfirmationDialogData(itemTitle: schedule.title));
               }).then((value) {
             if (value == true) {
               Provider.of<UserProvider>(context, listen: false)
-                  .removeLecture(schedule.lectureId, context);
+                  .removeLecture(schedule.lectureId);
             }
           });
         },

@@ -53,6 +53,7 @@ class _BodyState extends State<Body> {
               controller: _passwordController,
               icon: Icons.password,
               labelCode: 'password',
+              isPassword: true,
               labelSafety: 'Password',
             ),
             const ForgotPassword(),
@@ -90,7 +91,7 @@ class _BodyState extends State<Body> {
                       var userBasics = UserBasics(
                           email: _emailController.text,
                           password: _passwordController.text);
-                      if (userBasics.isValid()) {
+                      if (userBasics.isValidLogin()) {
                         loginProvider.signUserIn(userBasics);
                       } else {
                         CustomSnackbar(

@@ -70,46 +70,56 @@ class UserProvider extends ChangeNotifier {
   /// Funciton which allows to add a lecture to the user data.
   void addLecture(String lectureId) async {
     /// Change visual my showing loading indicator.
-    setState(NotifierState.loading);
 
-    /// Create a task which allows to add a lecture to the user.
-    /// (Map) required since the left Type is object thus changing it to failure in case of a failure.
-    /// If successfull type String returned which will then be added to the user.
-    var result = await dartz.Task(() => api.addLecture(lectureId))
-        .attempt()
-        .map(
-          (either) => either.leftMap((obj) {
-            try {
-              return obj as Failure;
-            } catch (e) {
-              throw obj;
-            }
-          }),
-        )
-        .run();
-
-    result.fold(
-        (failure) => CustomSnackbar(
-              text: failure.code,
-              isError: true,
-              context: context,
-              saftyString: 'Failed to add lecture',
-            ).showSnackBar(), (lectureId) {
+    if (user!.enrolledLectures.contains(lectureId)) {
       CustomSnackbar(
-        text: 'lecture-added-sucess',
-        isError: false,
+        text: 'lecture-already-enrolled',
+        isError: true,
         context: context,
-        saftyString: 'Lecture added successfully',
+        saftyString: 'You are alread enrolled in this lecture.',
       ).showSnackBar();
-      _user!.enrolledLectures.add(lectureId);
-    });
+    } else {
+      setState(NotifierState.loading);
 
-    /// Change state to loaded to make the failure or the updated user list available to the view.
-    setState(NotifierState.loaded);
+      /// Create a task which allows to add a lecture to the user.
+      /// (Map) required since the left Type is object thus changing it to failure in case of a failure.
+      /// If successfull type String returned which will then be added to the user.
+      var result = await dartz.Task(() => api.addLecture(lectureId))
+          .attempt()
+          .map(
+            (either) => either.leftMap((obj) {
+              try {
+                return obj as Failure;
+              } catch (e) {
+                throw obj;
+              }
+            }),
+          )
+          .run();
+
+      result.fold(
+          (failure) => CustomSnackbar(
+                text: failure.code,
+                isError: true,
+                context: context,
+                saftyString: 'Failed to add lecture',
+              ).showSnackBar(), (lectureId) {
+        CustomSnackbar(
+          text: 'lecture-added-sucess',
+          isError: false,
+          context: context,
+          saftyString: 'Lecture added successfully',
+        ).showSnackBar();
+        _user!.enrolledLectures.add(lectureId);
+      });
+
+      /// Change state to loaded to make the failure or the updated user list available to the view.
+      setState(NotifierState.loaded);
+    }
   }
 
   /// Funciton which allows to add a lecture to the user data.
-  void removeLecture(String lectureId, BuildContext context) async {
+  void removeLecture(String lectureId) async {
     /// Change visual my showing loading indicator.
     setState(NotifierState.loading);
 

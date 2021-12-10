@@ -5,12 +5,23 @@ class UserBasics {
   String password;
   UserBasics({required this.email, required this.password});
 
-  bool isValid() {
+  String? isValid(String verificationPassod) {
+    if (!isEmail(email)) {
+      return 'invalidEmail';
+    } else if (isPasswordValid(password)) {
+      return 'passwordCheck';
+    } else if (password != verificationPassod) {
+      return 'passwordMatch';
+    }
+
+    return null;
+  }
+
+  bool isValidLogin() {
     if (isEmail(email) && isPasswordValid(password)) {
       return true;
-    } else {
-      return false;
     }
+    return false;
   }
 
   bool isPasswordValid(String password) {
