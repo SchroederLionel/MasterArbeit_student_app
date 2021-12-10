@@ -3,10 +3,11 @@ import 'package:crayon/providers/navigation/navigation_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class NavigationTile extends StatelessWidget {
+class DayNavigationTile extends StatelessWidget {
   final int pageNumber;
 
-  const NavigationTile({Key? key, required this.pageNumber}) : super(key: key);
+  const DayNavigationTile({Key? key, required this.pageNumber})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,11 +1,11 @@
 import 'package:crayon/datamodels/lecture/lecture.dart';
 import 'package:crayon/datamodels/lecture/lecture_date.dart';
 import 'package:crayon/datamodels/lecture/lecture_schedule.dart';
-import 'package:crayon/datamodels/user/user.dart';
 import 'package:crayon/providers/navigation/navigation_provider.dart';
 import 'package:crayon/providers/quiz/quiz_lobby_provider.dart';
 import 'package:crayon/providers/user/user_provider.dart';
-import 'package:crayon/screens/dashboard/components/schedule.dart';
+import 'package:crayon/screens/dashboard/components/body/components/lecture/schedule.dart';
+
 import 'package:crayon/service/api_service.dart';
 import 'package:crayon/widgets/custom_text.dart';
 import 'package:crayon/widgets/error_text.dart';
@@ -22,11 +22,11 @@ class LectureStream extends StatefulWidget {
 
 class _LectureStreamState extends State<LectureStream> {
   Stream<List<Lecture>>? _stream;
-  final PageController _controller = PageController(
-      initialPage:
-          DateTime.now().weekday == 0 ? 6 : DateTime.now().weekday - 1);
+  late final PageController _controller;
   @override
   initState() {
+    var day = Provider.of<NavigationProvider>(context, listen: false).day;
+    _controller = PageController(initialPage: day);
     WidgetsBinding.instance!.addPostFrameCallback((_) async {
       Provider.of<NavigationProvider>(context, listen: false)
           .setPageController(_controller);
@@ -41,7 +41,6 @@ class _LectureStreamState extends State<LectureStream> {
   @override
   void dispose() {
     _controller.dispose();
-
     super.dispose();
   }
 

@@ -1,11 +1,8 @@
-import 'package:crayon/providers/navigation/navigation_provider.dart';
 import 'package:crayon/providers/user/user_provider.dart';
-import 'package:crayon/screens/dashboard/components/navigation/navigation_tile.dart';
-import 'package:crayon/screens/dashboard/components/navigation/settings_dialog.dart';
-import 'package:crayon/screens/dashboard/components/qrcode/qrcode.dart';
+import 'package:crayon/screens/dashboard/components/navigation/components/day_navigation/day_navigation.dart';
+import 'package:crayon/screens/dashboard/components/navigation/dialogs/qrcode.dart';
+import 'package:crayon/screens/dashboard/components/navigation/dialogs/settings_dialog.dart';
 import 'package:crayon/service/auth_service.dart';
-import 'package:crayon/state/enum.dart';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:crayon/route/route.dart' as route;
@@ -38,27 +35,7 @@ class Navigation extends StatelessWidget {
                 },
                 icon: const Icon(Icons.qr_code_scanner)),
           ),
-          Consumer2<NavigationProvider, UserProvider>(
-              builder: (_, _navigationProvider, _userProvider, __) {
-            if (_userProvider.user == null) {
-              return const SizedBox();
-            }
-            if (_userProvider.user!.enrolledLectures.isEmpty) {
-              return const SizedBox();
-            }
-            if (_navigationProvider.state == NotifierState.initial) {
-              return const SizedBox();
-            } else {
-              return Flexible(
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: 7,
-                    itemBuilder: (context, index) {
-                      return NavigationTile(pageNumber: index);
-                    }),
-              );
-            }
-          }),
+          const DayNavigation(),
           ListView(
             shrinkWrap: true,
             children: [

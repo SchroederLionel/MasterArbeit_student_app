@@ -1,6 +1,6 @@
 import 'package:crayon/providers/navigation/navigation_provider.dart';
 import 'package:crayon/providers/user/user_provider.dart';
-import 'package:crayon/screens/dashboard/components/lecture_stream.dart';
+import 'package:crayon/screens/dashboard/components/body/components/lecture_stream.dart';
 import 'package:crayon/state/enum.dart';
 import 'package:crayon/widgets/custom_text.dart';
 import 'package:crayon/widgets/loading_widget.dart';

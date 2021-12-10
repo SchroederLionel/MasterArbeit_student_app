@@ -26,6 +26,7 @@ class NavigationProvider extends ChangeNotifier {
   }
 
   int _day = DateTime.now().weekday == 0 ? 6 : DateTime.now().weekday - 1;
+  int get day => _day;
 
   void moveToPage(int pageNumber) {
     if (_controller != null) {

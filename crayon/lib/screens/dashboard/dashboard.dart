@@ -1,9 +1,8 @@
 import 'package:crayon/providers/user/user_provider.dart';
-import 'package:crayon/screens/dashboard/components/body.dart';
-import 'package:crayon/screens/dashboard/components/day_time.dart';
-import 'package:crayon/screens/dashboard/components/navigation.dart';
-import 'package:crayon/screens/dashboard/components/quiz/quiz_indicator.dart';
-import 'package:crayon/screens/dashboard/components/title_dash.dart';
+import 'package:crayon/screens/dashboard/components/body/body.dart';
+import 'package:crayon/screens/dashboard/components/day_quiz_indicator/day_quiz_indicator.dart';
+import 'package:crayon/screens/dashboard/components/navigation/navigation.dart';
+import 'package:crayon/screens/dashboard/components/title/title_dash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -39,20 +38,12 @@ class _DashboardState extends State<Dashboard> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    children: const [
-                      QuizLobbyIndicator(),
-                      Spacer(),
-                      DayTime(),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  const TitleDash(),
-                  const Divider(color: Colors.grey),
-                  const Body()
+                children: const [
+                  DayQuizIndicator(),
+                  SizedBox(height: 20),
+                  TitleDash(),
+                  Divider(color: Colors.grey),
+                  Body()
                 ],
               ),
             ),

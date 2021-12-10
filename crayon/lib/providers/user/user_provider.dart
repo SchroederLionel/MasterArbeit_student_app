@@ -2,7 +2,7 @@ import 'package:crayon/datamodels/custom_snackbar.dart';
 import 'package:crayon/datamodels/failure.dart';
 import 'package:crayon/datamodels/user/user.dart';
 import 'package:crayon/providers/navigation/navigation_provider.dart';
-import 'package:crayon/screens/dashboard/components/navigation.dart';
+import 'package:crayon/screens/dashboard/components/navigation/navigation.dart';
 import 'package:crayon/service/api_service.dart';
 import 'package:crayon/state/enum.dart';
 import 'package:dartz/dartz.dart' as dartz;
