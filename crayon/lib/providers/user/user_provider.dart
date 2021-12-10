@@ -1,10 +1,13 @@
 import 'package:crayon/datamodels/custom_snackbar.dart';
 import 'package:crayon/datamodels/failure.dart';
 import 'package:crayon/datamodels/user/user.dart';
+import 'package:crayon/providers/navigation/navigation_provider.dart';
+import 'package:crayon/screens/dashboard/components/navigation.dart';
 import 'package:crayon/service/api_service.dart';
 import 'package:crayon/state/enum.dart';
 import 'package:dartz/dartz.dart' as dartz;
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 /// Class which allows to get the user data espacially his lectures.
 class UserProvider extends ChangeNotifier {

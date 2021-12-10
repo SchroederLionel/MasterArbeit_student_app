@@ -3,8 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crayon/datamodels/failure.dart';
 import 'package:crayon/datamodels/lecture/lecture.dart';
 import 'package:crayon/datamodels/user/user.dart' as myuser;
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+
 import 'package:validators/validators.dart';
 
 /// The ApiSerivce class main role is to make the different requests to Firestore.

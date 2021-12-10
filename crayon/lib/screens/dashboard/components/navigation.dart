@@ -38,8 +38,15 @@ class Navigation extends StatelessWidget {
                 },
                 icon: const Icon(Icons.qr_code_scanner)),
           ),
-          Consumer<NavigationProvider>(builder: (_, _provider, __) {
-            if (_provider.state == NotifierState.initial) {
+          Consumer2<NavigationProvider, UserProvider>(
+              builder: (_, _navigationProvider, _userProvider, __) {
+            if (_userProvider.user == null) {
+              return const SizedBox();
+            }
+            if (_userProvider.user!.enrolledLectures.isEmpty) {
+              return const SizedBox();
+            }
+            if (_navigationProvider.state == NotifierState.initial) {
               return const SizedBox();
             } else {
               return Flexible(
