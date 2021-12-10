@@ -12,7 +12,7 @@ import 'package:crayon/providers/util/error_provider.dart';
 import 'package:crayon/screens/dashboard/dashboard.dart';
 import 'package:crayon/screens/login/login.dart';
 import 'package:crayon/screens/quiz/quiz_screen.dart';
-import 'package:crayon/screens/quiz/quiz_screen_components.dart/score.dart';
+import 'package:crayon/screens/score/score.dart';
 import 'package:crayon/screens/splashscreen/splashscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

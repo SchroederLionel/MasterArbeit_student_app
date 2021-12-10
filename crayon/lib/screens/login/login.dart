@@ -1,6 +1,6 @@
-import 'package:crayon/screens/login/app_title.dart';
-import 'package:crayon/screens/login/body.dart';
-import 'package:crayon/screens/login/options_row.dart';
+import 'package:crayon/screens/login/components/title/app_title.dart';
+import 'package:crayon/screens/login/components/body/body.dart';
+import 'package:crayon/screens/login/components/body/components/options_row.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatelessWidget {

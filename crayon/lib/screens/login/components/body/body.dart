@@ -1,8 +1,8 @@
 import 'package:crayon/datamodels/custom_snackbar.dart';
 import 'package:crayon/datamodels/user/user_credentials.dart';
 import 'package:crayon/providers/login/login_provider.dart';
-import 'package:crayon/screens/login/create_account.dart';
-import 'package:crayon/screens/login/forgot_password.dart';
+import 'package:crayon/screens/login/components/body/components/create_account.dart';
+import 'package:crayon/screens/login/dialog/forgot_password.dart';
 import 'package:crayon/service/validator_service.dart';
 import 'package:crayon/state/enum.dart';
 import 'package:crayon/widgets/custom_button.dart';

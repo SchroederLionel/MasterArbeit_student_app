@@ -1,6 +1,6 @@
 import 'package:crayon/datamodels/failure.dart';
 import 'package:crayon/l10n/app_localizations.dart';
-import 'package:crayon/screens/login/reset_password_dialog.dart';
+import 'package:crayon/screens/login/dialog/reset_password_dialog.dart';
 import 'package:crayon/widgets/custom_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
