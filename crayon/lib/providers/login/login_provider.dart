@@ -5,6 +5,7 @@ import 'package:crayon/state/enum.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:crayon/route/route.dart' as route;
 
 class LoginProvider extends ChangeNotifier {
   NotifierState _state = NotifierState.initial;
@@ -67,5 +68,12 @@ class LoginProvider extends ChangeNotifier {
         )
         .run();
     setState(NotifierState.loaded);
+  }
+
+  Future<void> signOut(BuildContext context) async {
+    _state = NotifierState.initial;
+    await Navigator.of(context)
+        .pushNamedAndRemoveUntil(route.login, (Route<dynamic> route) => false);
+    AuthService().signOut();
   }
 }

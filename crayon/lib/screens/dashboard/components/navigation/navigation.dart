@@ -1,11 +1,11 @@
+import 'package:crayon/providers/login/login_provider.dart';
 import 'package:crayon/providers/user/user_provider.dart';
 import 'package:crayon/screens/dashboard/components/navigation/components/day_navigation/day_navigation.dart';
 import 'package:crayon/screens/dashboard/components/navigation/dialogs/qrcode.dart';
 import 'package:crayon/screens/dashboard/components/navigation/dialogs/settings_dialog.dart';
-import 'package:crayon/service/auth_service.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:crayon/route/route.dart' as route;
 
 class Navigation extends StatelessWidget {
   const Navigation({Key? key}) : super(key: key);
@@ -45,9 +45,8 @@ class Navigation extends StatelessWidget {
                   icon: const Icon(Icons.settings)),
               IconButton(
                   onPressed: () {
-                    AuthService().signOut();
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                        route.login, (Route<dynamic> route) => false);
+                    Provider.of<LoginProvider>(context, listen: false)
+                        .signOut(context);
                   },
                   icon: const Icon(Icons.power_settings_new)),
             ],

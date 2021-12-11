@@ -3,10 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crayon/datamodels/failure.dart';
 import 'package:crayon/datamodels/lecture/lecture.dart';
 import 'package:crayon/datamodels/user/user.dart' as myuser;
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-
 import 'package:validators/validators.dart';
 
 /// The ApiSerivce class main role is to make the different requests to Firestore.
@@ -104,7 +102,6 @@ class ApiService {
   /// Function which allows to get the actual lectures based on the lecture ids where the user is enrolled in.
   /// returns a list of lectures (Stream). Which allows to detect if the room or something else changes.
   Stream<List<Lecture>> getMyLectures(List<String> lecturesToListen) {
-    print('CALLED');
     try {
       return FirebaseFirestore.instance
           .collection('lectures')
