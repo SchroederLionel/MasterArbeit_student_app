@@ -34,7 +34,6 @@ class Option extends StatelessWidget {
 
                 if (quizIndicator.isQuizFinished) {
                   time.stop();
-
                   Navigator.popAndPushNamed(context, route.score,
                       arguments: QuizResult(
                           userName: time.quizOptions.userName,
