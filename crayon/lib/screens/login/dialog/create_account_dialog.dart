@@ -1,3 +1,4 @@
+import 'package:crayon/constants/constants.dart';
 import 'package:crayon/datamodels/user/user_credentials.dart';
 import 'package:crayon/providers/login/login_provider.dart';
 import 'package:crayon/service/validator_service.dart';
@@ -59,6 +60,7 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
                             });
                           }, (userCredential) {
                             Navigator.of(context).pop();
+                            resetView();
                             WidgetsBinding.instance!.addPostFrameCallback((_) {
                               Navigator.of(context).pushNamed('dashboard');
                             });

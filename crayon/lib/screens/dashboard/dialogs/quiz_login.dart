@@ -1,3 +1,4 @@
+import 'package:crayon/constants/constants.dart';
 import 'package:crayon/service/validator_service.dart';
 import 'package:crayon/widgets/cancel_button.dart';
 import 'package:crayon/widgets/custom_text.dart';
@@ -35,6 +36,7 @@ class _QuizLoginState extends State<QuizLogin> {
         ElevatedButton(
             onPressed: () {
               if (_nameController.text.length > 1) {
+                resetView();
                 Navigator.of(context).pop(_nameController.text);
               }
             },

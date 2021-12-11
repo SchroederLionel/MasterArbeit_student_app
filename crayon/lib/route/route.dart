@@ -1,4 +1,5 @@
 // Route Names
+import 'package:crayon/constants/constants.dart';
 import 'package:crayon/datamodels/quiz/quiz_options.dart';
 import 'package:crayon/datamodels/quiz/quiz_result.dart';
 
@@ -23,6 +24,7 @@ const String dashboard = '/dashboard';
 const String score = '/score';
 const String quiz = '/quiz';
 Route<dynamic> controller(RouteSettings routerSettings) {
+  resetView();
   switch (routerSettings.name) {
     case splash:
       return MaterialPageRoute(builder: (context) => const Splashscreen());

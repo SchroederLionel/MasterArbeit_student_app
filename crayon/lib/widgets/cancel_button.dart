@@ -1,3 +1,4 @@
+import 'package:crayon/constants/constants.dart';
 import 'package:crayon/l10n/app_localizations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,10 @@ class CancelButton extends StatelessWidget {
     var appTranslation = AppLocalizations.of(context);
     return ElevatedButton(
         style: ElevatedButton.styleFrom(primary: Colors.grey[500]),
-        onPressed: () => Navigator.pop(context, false),
+        onPressed: () {
+          Navigator.pop(context, false);
+          resetView();
+        },
         child: Text(appTranslation!.translate('cancel') ?? 'Cancel'));
   }
 }

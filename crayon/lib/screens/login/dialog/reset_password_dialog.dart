@@ -1,3 +1,4 @@
+import 'package:crayon/constants/constants.dart';
 import 'package:crayon/datamodels/custom_snackbar.dart';
 import 'package:crayon/providers/login/login_provider.dart';
 import 'package:crayon/service/validator_service.dart';
@@ -52,6 +53,7 @@ class _ResetPasswordDailogState extends State<ResetPasswordDailog> {
                           errorText = failure.code;
                         });
                       }, (worked) {
+                        resetView();
                         Navigator.of(context).pop();
                         CustomSnackbar(
                                 saftyString:
