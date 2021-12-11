@@ -16,9 +16,9 @@ class TimeProvider extends ChangeNotifier {
   int _questionsAnsweredRight = 0;
 
   /// getTotalAmountOfPointsAvailableFor answering the right questions.
-  /// Each correct response awards the user with 200 points.
+  /// Each correct response awards the user with 20 points.
   int getTotalAmountOfPointForEachQuestion() {
-    return quizOptions.quiz.questions.length * 200;
+    return quizOptions.quiz.questions.length * 20;
   }
 
   int getRemainingTimeFromQuiz() {
@@ -27,15 +27,23 @@ class TimeProvider extends ChangeNotifier {
 
   /// Each available second rewards the player with 20 points.
   int getPointsFromRemainingTime() {
-    return remainingDuration * 20;
+    return remainingDuration * 2;
   }
 
   int getMaximumScoreForQuiz() {
-    return getTotalAmountOfPointForEachQuestion() + maxDuration * 20;
+    return (getTotalAmountOfPointForEachQuestion() +
+            (maxDuration - quizOptions.quiz.questions.length) * 2) *
+        quizOptions.quiz.questions.length;
   }
 
   int getUserScrore() {
-    return _questionsAnsweredRight * 200 + remainingDuration * 20;
+    int score = (_questionsAnsweredRight * 20 + remainingDuration * 2) *
+        _questionsAnsweredRight;
+    int maxScore = getMaximumScoreForQuiz();
+    if (score > maxScore) {
+      return maxScore;
+    }
+    return score;
   }
 
   void increment() {
