@@ -53,12 +53,10 @@ class Option extends StatelessWidget {
                   color: Colors.transparent,
                   borderRadius: BorderRadius.circular(15),
                 ),
-                child: Flexible(
-                  child: Text(
-                    "${index + 1}. ${response.response}",
-                    style: TextStyle(
-                        color: questionRight.getColor(response), fontSize: 16),
-                  ),
+                child: Text(
+                  "${index + 1}. ${response.response}",
+                  style: TextStyle(
+                      color: questionRight.getColor(response), fontSize: 16),
                 ),
               ),
             ));

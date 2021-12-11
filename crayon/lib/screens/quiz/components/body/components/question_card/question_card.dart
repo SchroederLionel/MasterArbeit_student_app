@@ -1,5 +1,5 @@
 import 'package:crayon/providers/quiz/question_right.dart';
-import 'package:crayon/screens/quiz/quiz_screen_components.dart/option.dart';
+import 'package:crayon/screens/quiz/components/body/components/question_card/components/option.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

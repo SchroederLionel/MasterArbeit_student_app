@@ -1,7 +1,7 @@
 import 'package:crayon/providers/quiz/question_right.dart';
 import 'package:crayon/providers/quiz/quiz_indicator.dart';
 import 'package:crayon/providers/quiz/time_provider.dart';
-import 'package:crayon/screens/quiz/quiz_screen_components.dart/question_card.dart';
+import 'package:crayon/screens/quiz/components/body/components/question_card/question_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +26,7 @@ class _BodyState extends State<Body> {
     Provider.of<QuizIndicator>(context, listen: false)
         .setController(_pageController);
     var time = Provider.of<TimeProvider>(context, listen: false);
-    return Expanded(
+    return Flexible(
         child: PageView.builder(
             controller: _pageController,
             physics: const NeverScrollableScrollPhysics(),

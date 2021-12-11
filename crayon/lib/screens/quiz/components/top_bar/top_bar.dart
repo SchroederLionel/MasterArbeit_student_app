@@ -1,5 +1,5 @@
 import 'package:crayon/providers/quiz/quiz_indicator.dart';
-import 'package:crayon/screens/quiz/quiz_screen_components.dart/timer.dart';
+import 'package:crayon/screens/quiz/components/top_bar/components/timer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
