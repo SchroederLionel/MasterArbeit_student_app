@@ -12,7 +12,7 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserProvider>(builder: (_, provider, __) {
+    return Consumer<UserProvider>(builder: (context, provider, __) {
       if (provider.state == NotifierState.initial) {
         return const SizedBox();
       } else if (provider.state == NotifierState.loading) {

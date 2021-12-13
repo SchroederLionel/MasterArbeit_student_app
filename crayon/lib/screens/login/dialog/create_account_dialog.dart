@@ -37,6 +37,7 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
     ValidatorService service = ValidatorService(context: context);
     final provider = Provider.of<LoginProvider>(context, listen: false);
     return AlertDialog(
+      scrollable: true,
       actions: [
         const CancelButton(),
         isLoading
@@ -79,9 +80,9 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
         safetyText: 'Create Account',
         style: Theme.of(context).textTheme.headline2!.copyWith(fontSize: 24),
       ),
-      content: SingleChildScrollView(
-        child: ListView(
-          shrinkWrap: true,
+      content: SizedBox(
+        width: 500,
+        child: Column(
           children: [
             CustomTextFormField(
               inputAction: TextInputAction.next,
@@ -96,6 +97,7 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
               inputAction: TextInputAction.next,
               controller: _passwordController,
               icon: Icons.password,
+              isPassword: true,
               labelCode: 'password',
               labelSafety: 'Password',
               validator: (String? text) => service.checkPassword(text),

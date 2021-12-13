@@ -114,7 +114,7 @@
     "scan-lecture":"Scan",
     "no-permission":"Pas d'autorisation d'utiliser l'appareil photo",
     "leave-quiz-lobby":"Voulez-vous quitter la salle d'attente du Quiz ?",
-    "delete-lecture":"delete-lecture",
+    "delete-lecture":"Supprimer le cour:",
     "requires-leaving-lobby":"Vous devez quitter votre salon de quiz actuel pour exécuter cette opération",
     "no-courses-enrolled":"Vous n'êtes inscrit à aucun cours",
     "a-day-free":"Temps libre",

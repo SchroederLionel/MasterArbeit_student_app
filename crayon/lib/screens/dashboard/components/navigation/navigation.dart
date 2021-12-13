@@ -1,8 +1,10 @@
+import 'package:crayon/datamodels/confirmation_dialog_data.dart';
 import 'package:crayon/providers/login/login_provider.dart';
 import 'package:crayon/providers/user/user_provider.dart';
 import 'package:crayon/screens/dashboard/components/navigation/components/day_navigation/day_navigation.dart';
 import 'package:crayon/screens/dashboard/components/navigation/dialogs/qrcode.dart';
 import 'package:crayon/screens/dashboard/components/navigation/dialogs/settings_dialog.dart';
+import 'package:crayon/widgets/confirmation_dialog.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -45,8 +47,17 @@ class Navigation extends StatelessWidget {
                   icon: const Icon(Icons.settings)),
               IconButton(
                   onPressed: () {
-                    Provider.of<LoginProvider>(context, listen: false)
-                        .signOut(context);
+                    showDialog(
+                        context: context,
+                        builder: (_) => ConfirmationDialog(
+                            confirmationDialogData: ConfirmationDialogData(
+                                acceptTitle: 'yes',
+                                safetyText: 'Are you sure to logout?',
+                                textCode: 'confirm-logout',
+                                itemTitle: ''))).then((value) => value == true
+                        ? Provider.of<LoginProvider>(context, listen: false)
+                            .signOut(context)
+                        : null);
                   },
                   icon: const Icon(Icons.power_settings_new)),
             ],

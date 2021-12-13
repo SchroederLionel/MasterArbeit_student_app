@@ -66,5 +66,10 @@ Route<dynamic> controller(RouteSettings routerSettings) {
       return MaterialPageRoute(builder: (context) => Score(quizResult: arg));
   }
 
-  return MaterialPageRoute(builder: (context) => const Login());
+  return MaterialPageRoute(
+      builder: (context) => MultiProvider(providers: [
+            ChangeNotifierProvider<ErrorProvider>(
+                create: (_) => ErrorProvider()),
+          ], child: const Login()));
+  ;
 }

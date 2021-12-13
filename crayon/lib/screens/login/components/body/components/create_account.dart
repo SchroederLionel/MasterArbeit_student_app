@@ -11,6 +11,8 @@ class CreateAccount extends StatelessWidget {
       child: TextButton(
           onPressed: () {
             showDialog(
+                barrierDismissible: false,
+                barrierColor: Colors.black87,
                 context: context,
                 builder: (BuildContext context) {
                   return const CreateAccountDialog();

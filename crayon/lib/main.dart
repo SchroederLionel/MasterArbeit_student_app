@@ -41,21 +41,26 @@ class MyApp extends StatelessWidget {
     final themeProvider = Provider.of<ThemeProvider>(context, listen: true);
     final localeProvider = Provider.of<LocaleProvider>(context, listen: true);
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Crayon',
-      themeMode: themeProvider.mode,
-      theme: themeProvider.light,
-      darkTheme: themeProvider.dark,
-      onGenerateRoute: route.controller,
-      initialRoute: route.splash,
-      locale: localeProvider.getLocal,
-      localizationsDelegates: const [
-        AppLocalizationsDelegate(),
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      supportedLocales: AppLocalizations.languages,
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).requestFocus(FocusNode());
+      },
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Crayon',
+        themeMode: themeProvider.mode,
+        theme: themeProvider.light,
+        darkTheme: themeProvider.dark,
+        onGenerateRoute: route.controller,
+        initialRoute: route.splash,
+        locale: localeProvider.getLocal,
+        localizationsDelegates: const [
+          AppLocalizationsDelegate(),
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: AppLocalizations.languages,
+      ),
     );
   }
 }

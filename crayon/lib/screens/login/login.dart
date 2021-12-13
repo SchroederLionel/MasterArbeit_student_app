@@ -1,6 +1,10 @@
 import 'package:crayon/screens/login/components/title/app_title.dart';
 import 'package:crayon/screens/login/components/body/body.dart';
 import 'package:crayon/screens/login/components/body/components/options_row.dart';
+import 'package:crayon/screens/login/login_mobile.dart';
+import 'package:crayon/screens/login/login_small_mobile.dart';
+import 'package:crayon/screens/login/login_tablet.dart';
+import 'package:crayon/widgets/responsive.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatelessWidget {
@@ -8,21 +12,16 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 14.0),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  OptionsRow(),
-                  SizedBox(height: 30),
-                  AppTitle(),
-                  SizedBox(height: 30),
-                  Body(),
-                ])),
+            padding: EdgeInsets.symmetric(vertical: 5, horizontal: 14.0),
+            child: Responsive(
+              smallMobile: LoginSmallMobile(),
+              mobile: LoginMobile(),
+              tablet: LoginTablet(),
+            )),
       ),
     );
   }

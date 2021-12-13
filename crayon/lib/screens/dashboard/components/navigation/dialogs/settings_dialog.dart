@@ -20,11 +20,18 @@ class SettingsDialog extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const LanguageWidget(),
-            ElevatedButton.icon(
-                onPressed: () => themeProvider.swapTheme(),
-                icon: const Icon(Icons.lightbulb_outline),
-                label: const CustomText(
-                    textCode: 'brightness', safetyText: 'Brightness'))
+            MediaQuery.of(context).size.width < 350
+                ? IconButton(
+                    onPressed: () => themeProvider.swapTheme(),
+                    icon: Icon(
+                      Icons.lightbulb_outline,
+                      color: Theme.of(context).primaryColor,
+                    ))
+                : ElevatedButton.icon(
+                    onPressed: () => themeProvider.swapTheme(),
+                    icon: const Icon(Icons.lightbulb_outline),
+                    label: const CustomText(
+                        textCode: 'brightness', safetyText: 'Brightness'))
           ],
         ),
       ),

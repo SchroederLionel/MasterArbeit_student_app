@@ -46,14 +46,17 @@ class _QuizLoginState extends State<QuizLogin> {
           textCode: 'gameshow',
           safetyText: 'Gameshow',
           style: Theme.of(context).textTheme.headline2),
-      content: CustomTextFormField(
-        inputAction: TextInputAction.done,
-        controller: _nameController,
-        icon: Icons.account_circle,
-        labelSafety: 'Username',
-        labelCode: 'username',
-        validator: (String? text) =>
-            ValidatorService(context: context).isStringLengthAbove2(text),
+      content: SizedBox(
+        width: 400,
+        child: CustomTextFormField(
+          inputAction: TextInputAction.done,
+          controller: _nameController,
+          icon: Icons.account_circle,
+          labelSafety: 'Username',
+          labelCode: 'username',
+          validator: (String? text) =>
+              ValidatorService(context: context).isStringLengthAbove2(text),
+        ),
       ),
     );
   }

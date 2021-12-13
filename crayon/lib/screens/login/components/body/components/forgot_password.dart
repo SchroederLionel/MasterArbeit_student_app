@@ -14,6 +14,8 @@ class ForgotPassword extends StatelessWidget {
     return TextButton(
         onPressed: () {
           showDialog(
+              barrierDismissible: false,
+              barrierColor: Colors.black87,
               context: context,
               builder: (BuildContext context) {
                 return const ResetPasswordDailog();

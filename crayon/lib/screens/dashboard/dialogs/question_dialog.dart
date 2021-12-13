@@ -30,14 +30,17 @@ class _QuestionDialogState extends State<QuestionDialog> {
           textCode: 'question',
           safetyText: 'Question',
           style: Theme.of(context).textTheme.headline2),
-      content: CustomTextFormField(
-        inputAction: TextInputAction.done,
-        validator: (String? text) =>
-            ValidatorService(context: context).isStringLengthAbove2(text),
-        controller: _questionController,
-        icon: Icons.contact_support,
-        labelCode: 'question',
-        labelSafety: 'Question',
+      content: SizedBox(
+        width: 400,
+        child: CustomTextFormField(
+          inputAction: TextInputAction.done,
+          validator: (String? text) =>
+              ValidatorService(context: context).isStringLengthAbove2(text),
+          controller: _questionController,
+          icon: Icons.contact_support,
+          labelCode: 'question',
+          labelSafety: 'Question',
+        ),
       ),
       actions: [
         const CancelButton(),

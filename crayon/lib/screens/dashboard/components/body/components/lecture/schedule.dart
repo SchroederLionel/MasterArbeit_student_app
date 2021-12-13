@@ -25,6 +25,7 @@ class Schedule extends StatelessWidget {
       child: GestureDetector(
         onLongPress: () {
           showDialog(
+              barrierColor: Colors.black87,
               context: context,
               builder: (BuildContext context) {
                 return ConfirmationDialog(
@@ -51,6 +52,7 @@ class Schedule extends StatelessWidget {
           } else {
             if (schedule.isLobbyOpen) {
               showDialog(
+                  barrierColor: Colors.black87,
                   barrierDismissible: false,
                   context: context,
                   builder: (BuildContext context) {
@@ -62,6 +64,7 @@ class Schedule extends StatelessWidget {
               });
             } else {
               showDialog(
+                  barrierColor: Colors.black87,
                   barrierDismissible: false,
                   context: context,
                   builder: (BuildContext context) {

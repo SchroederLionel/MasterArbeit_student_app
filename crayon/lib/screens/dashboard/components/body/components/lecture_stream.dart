@@ -69,7 +69,10 @@ class _LectureStreamState extends State<LectureStream> {
                     if (schedules.isEmpty) {
                       return Center(
                           child: CustomText(
-                              style: Theme.of(context).textTheme.headline5,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline5!
+                                  .copyWith(fontSize: 18),
                               textCode: 'a-day-free',
                               safetyText: 'A day free!'));
                     }

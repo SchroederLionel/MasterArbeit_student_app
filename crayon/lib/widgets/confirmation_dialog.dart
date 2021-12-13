@@ -19,18 +19,21 @@ class ConfirmationDialog extends StatelessWidget {
         textCode: confirmationDialogData.textCode,
         safetyText: confirmationDialogData.safetyText,
       ),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child: Text(
-              confirmationDialogData.itemTitle,
-              style: Theme.of(context).textTheme.bodyText1,
+      content: SizedBox(
+        width: 400,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Text(
+                confirmationDialogData.itemTitle,
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       actions: [
         const CancelButton(),

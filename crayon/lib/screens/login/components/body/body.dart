@@ -33,83 +33,80 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     ValidatorService service = ValidatorService(context: context);
     final loginProvider = Provider.of<LoginProvider>(context, listen: false);
-    return Expanded(
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            CustomTextFormField(
-              inputAction: TextInputAction.next,
-              validator: (email) => service.checkEmail(email),
-              controller: _emailController,
-              icon: Icons.email,
-              labelCode: 'email',
-              labelSafety: 'Email',
-            ),
-            CustomTextFormField(
-              inputAction: TextInputAction.done,
-              validator: (password) => service.checkPassword(password),
-              controller: _passwordController,
-              icon: Icons.password,
-              labelCode: 'password',
-              isPassword: true,
-              labelSafety: 'Password',
-            ),
-            const ForgotPassword(),
-            const SizedBox(
-              height: 18,
-            ),
-            Consumer<LoginProvider>(
-                builder: (context, provider, child) {
-                  if (provider.state == NotifierState.initial) {
-                    return child as Widget;
-                  } else if (provider.state == NotifierState.loading) {
-                    return const LoadingWidget();
-                  } else {
-                    WidgetsBinding.instance!.addPostFrameCallback((_) {
-                      provider.userCredential.fold(
-                          (failure) => CustomSnackbar(
-                                  text: failure.code,
-                                  context: context,
-                                  saftyString: 'Failed to login',
-                                  isError: true)
-                              .showSnackBar(), (success) {
-                        print(success.credential.toString());
-                        Navigator.of(context)
-                            .pushReplacementNamed(route.dashboard);
-                      });
-                    });
-
-                    return child as Widget;
-                  }
-                },
-                child: CustomButton(
-                    icon: Icons.login,
-                    color: Theme.of(context).primaryColor,
-                    labelCode: 'signIn',
-                    labelSafety: 'Sign In',
-                    onPressed: () {
-                      var userBasics = UserBasics(
-                          email: _emailController.text,
-                          password: _passwordController.text);
-                      if (userBasics.isValidLogin()) {
-                        loginProvider.signUserIn(userBasics);
-                      } else {
-                        CustomSnackbar(
-                                saftyString: 'Fill in all the fields!',
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          CustomTextFormField(
+            inputAction: TextInputAction.next,
+            validator: (email) => service.checkEmail(email),
+            controller: _emailController,
+            icon: Icons.email,
+            labelCode: 'email',
+            labelSafety: 'Email',
+          ),
+          CustomTextFormField(
+            inputAction: TextInputAction.done,
+            validator: (password) => service.checkPassword(password),
+            controller: _passwordController,
+            icon: Icons.password,
+            labelCode: 'password',
+            isPassword: true,
+            labelSafety: 'Password',
+          ),
+          const ForgotPassword(),
+          const SizedBox(
+            height: 18,
+          ),
+          Consumer<LoginProvider>(
+              builder: (context, provider, child) {
+                if (provider.state == NotifierState.initial) {
+                  return child as Widget;
+                } else if (provider.state == NotifierState.loading) {
+                  return const LoadingWidget();
+                } else {
+                  WidgetsBinding.instance!.addPostFrameCallback((_) {
+                    provider.userCredential.fold(
+                        (failure) => CustomSnackbar(
+                                text: failure.code,
                                 context: context,
-                                text: 'complete-all-the-fields',
+                                saftyString: 'Failed to login',
                                 isError: true)
-                            .showSnackBar();
-                      }
-                    })),
-            const SizedBox(
-              height: 18,
-            ),
-            const CreateAccount(),
-          ],
-        ),
+                            .showSnackBar(), (success) {
+                      Navigator.of(context)
+                          .pushReplacementNamed(route.dashboard);
+                    });
+                  });
+
+                  return child as Widget;
+                }
+              },
+              child: CustomButton(
+                  icon: Icons.login,
+                  color: Theme.of(context).primaryColor,
+                  labelCode: 'signIn',
+                  labelSafety: 'Sign In',
+                  onPressed: () {
+                    var userBasics = UserBasics(
+                        email: _emailController.text,
+                        password: _passwordController.text);
+                    if (userBasics.isValidLogin()) {
+                      loginProvider.signUserIn(userBasics);
+                    } else {
+                      CustomSnackbar(
+                              saftyString: 'Fill in all the fields!',
+                              context: context,
+                              text: 'complete-all-the-fields',
+                              isError: true)
+                          .showSnackBar();
+                    }
+                  })),
+          const SizedBox(
+            height: 18,
+          ),
+          const CreateAccount(),
+        ],
       ),
     );
   }

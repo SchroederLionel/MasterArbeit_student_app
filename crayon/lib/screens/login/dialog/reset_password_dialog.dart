@@ -6,6 +6,7 @@ import 'package:crayon/widgets/cancel_button.dart';
 import 'package:crayon/widgets/custom_text.dart';
 import 'package:crayon/widgets/custom_text_form_field.dart';
 import 'package:crayon/widgets/error_text.dart';
+import 'package:crayon/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +21,7 @@ class _ResetPasswordDailogState extends State<ResetPasswordDailog> {
   late TextEditingController _emailController;
   String errorText = '';
   bool hasError = false;
+  bool isLoading = false;
   @override
   void initState() {
     super.initState();
@@ -30,6 +32,7 @@ class _ResetPasswordDailogState extends State<ResetPasswordDailog> {
   Widget build(BuildContext context) {
     final provider = Provider.of<LoginProvider>(context, listen: false);
     return AlertDialog(
+        scrollable: true,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
@@ -43,14 +46,19 @@ class _ResetPasswordDailogState extends State<ResetPasswordDailog> {
           ElevatedButton(
             onPressed: () async {
               FocusScope.of(context).unfocus();
+              setState(() {
+                isLoading = true;
+              });
               provider
                   .resetPassword(_emailController.text)
                   .then((value) => value.fold((failure) {
                         setState(() {
                           hasError = true;
+                          isLoading = false;
                           errorText = failure.code;
                         });
                       }, (worked) {
+                        isLoading = false;
                         resetView();
                         Navigator.of(context).pop();
                         CustomSnackbar(
@@ -72,22 +80,24 @@ class _ResetPasswordDailogState extends State<ResetPasswordDailog> {
             ),
           )
         ],
-        content: ListView(
-          shrinkWrap: true,
-          padding: const EdgeInsets.all(0),
-          children: [
-            CustomTextFormField(
-              inputAction: TextInputAction.done,
-              controller: _emailController,
-              icon: Icons.email,
-              labelCode: 'email',
-              labelSafety: 'Email',
-              validator: (String? text) =>
-                  ValidatorService(context: context).checkEmail(text),
-            ),
-            const SizedBox(height: 10),
-            hasError ? ErrorText(error: errorText) : Container()
-          ],
+        content: SizedBox(
+          width: 400,
+          child: Column(
+            children: [
+              CustomTextFormField(
+                inputAction: TextInputAction.done,
+                controller: _emailController,
+                icon: Icons.email,
+                labelCode: 'email',
+                labelSafety: 'Email',
+                validator: (String? text) =>
+                    ValidatorService(context: context).checkEmail(text),
+              ),
+              const SizedBox(height: 10),
+              isLoading ? const LoadingWidget() : const SizedBox(),
+              hasError ? ErrorText(error: errorText) : const SizedBox()
+            ],
+          ),
         ));
   }
 }
