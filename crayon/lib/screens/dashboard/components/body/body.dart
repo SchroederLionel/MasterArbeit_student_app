@@ -28,7 +28,7 @@ class Body extends StatelessWidget {
             });
             return const Center(
                 child: CustomText(
-                    safetyText: "You aren't enrollet in any course",
+                    safetyText: "You aren't enrolled in any course",
                     textCode: 'no-courses-enrolled'));
           } else {
             return const LectureStream();

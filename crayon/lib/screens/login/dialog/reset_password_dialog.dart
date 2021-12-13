@@ -34,8 +34,6 @@ class _ResetPasswordDailogState extends State<ResetPasswordDailog> {
           borderRadius: BorderRadius.circular(15),
         ),
         title: CustomText(
-            overflow: null,
-            textAlign: null,
             textCode: 'reset-password',
             safetyText: 'Reset password',
             style:

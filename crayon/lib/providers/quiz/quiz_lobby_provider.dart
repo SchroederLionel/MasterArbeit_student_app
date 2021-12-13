@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:crayon/datamodels/custom_snackbar.dart';
 import 'package:crayon/datamodels/lecture/lecture_schedule.dart';
 import 'package:crayon/datamodels/quiz/quiz_options.dart';
 import 'package:crayon/service/api_service.dart';
@@ -33,7 +34,13 @@ class QuizLobbyProvider extends ChangeNotifier {
     _lectureName = lectureName;
     _lectureId = lectureId;
     _userName = userName;
-    showSnackBar('You entered the waiting room', false);
+    CustomSnackbar(
+            text: 'entered-waiting-room',
+            saftyString: 'You entered the waiting room',
+            isError: false,
+            context: context)
+        .showSnackBar();
+
     setState(NotifierState.loading);
   }
 
@@ -82,15 +89,5 @@ class QuizLobbyProvider extends ChangeNotifier {
                 quiz: schedules[i].quiz!));
       }
     }
-  }
-
-  showSnackBar(String text, bool isError) {
-    final snackBar = SnackBar(
-        backgroundColor: isError ? Colors.redAccent : Colors.greenAccent,
-        content: Text(
-          text,
-          style: const TextStyle(color: Colors.white),
-        ));
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

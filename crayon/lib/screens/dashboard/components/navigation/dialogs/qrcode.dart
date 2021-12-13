@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:crayon/datamodels/custom_snackbar.dart';
 import 'package:crayon/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -62,9 +63,12 @@ class _QrCodeState extends State<QrCode> {
 
   void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
     if (!p) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('no Permission')),
-      );
+      CustomSnackbar(
+              text: 'no-permission',
+              saftyString: 'No permission to use camera',
+              isError: true,
+              context: context)
+          .showSnackBar();
     }
   }
 

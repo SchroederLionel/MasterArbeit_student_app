@@ -1,17 +1,19 @@
+import 'dart:async';
+
 import 'package:crayon/datamodels/custom_snackbar.dart';
 import 'package:crayon/datamodels/failure.dart';
+import 'package:crayon/datamodels/lecture/lecture.dart';
 import 'package:crayon/datamodels/user/user.dart';
-import 'package:crayon/providers/navigation/navigation_provider.dart';
-import 'package:crayon/screens/dashboard/components/navigation/navigation.dart';
+
 import 'package:crayon/service/api_service.dart';
 import 'package:crayon/state/enum.dart';
 import 'package:dartz/dartz.dart' as dartz;
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 /// Class which allows to get the user data espacially his lectures.
 class UserProvider extends ChangeNotifier {
   ApiService api = ApiService();
+
   BuildContext context;
   UserProvider({required this.context});
 
@@ -79,7 +81,7 @@ class UserProvider extends ChangeNotifier {
         text: 'lecture-already-enrolled',
         isError: true,
         context: context,
-        saftyString: 'You are alread enrolled in this lecture.',
+        saftyString: 'You are already enrolled in this lecture.',
       ).showSnackBar();
     } else {
       setState(NotifierState.loading);
@@ -212,7 +214,7 @@ class UserProvider extends ChangeNotifier {
               text: 'join-lobby-success',
               isError: false,
               context: context,
-              saftyString: 'Successfully joined lecture',
+              saftyString: 'Successfully joined lobby',
             ).showSnackBar());
   }
 }

@@ -1,4 +1,5 @@
 import 'package:crayon/datamodels/confirmation_dialog_data.dart';
+import 'package:crayon/datamodels/custom_snackbar.dart';
 import 'package:crayon/datamodels/lecture/lecture_schedule.dart';
 import 'package:crayon/providers/quiz/quiz_lobby_provider.dart';
 import 'package:crayon/providers/user/user_provider.dart';
@@ -27,8 +28,10 @@ class Schedule extends StatelessWidget {
               context: context,
               builder: (BuildContext context) {
                 return ConfirmationDialog(
-                    confirmationDialogData:
-                        ConfirmationDialogData(itemTitle: schedule.title));
+                    confirmationDialogData: ConfirmationDialogData(
+                        itemTitle: schedule.title,
+                        textCode: 'delete-lecture',
+                        safetyText: 'Do you want to delete the lecture:'));
               }).then((value) {
             if (value == true) {
               Provider.of<UserProvider>(context, listen: false)
@@ -38,9 +41,13 @@ class Schedule extends StatelessWidget {
         },
         onTap: () {
           if (provider.state == NotifierState.loaded) {
-            provider.showSnackBar(
-                'You must leave your current quiz lobby to execute this operation',
-                true);
+            CustomSnackbar(
+                    text: 'requires-leaving-lobby',
+                    saftyString:
+                        'You must leave your current quiz lobby to execute this operation',
+                    isError: true,
+                    context: context)
+                .showSnackBar();
           } else {
             if (schedule.isLobbyOpen) {
               showDialog(

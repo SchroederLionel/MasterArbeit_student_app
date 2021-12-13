@@ -19,10 +19,10 @@ class QuizLobbyIndicator extends StatelessWidget {
                 builder: (context) {
                   return ConfirmationDialog(
                       confirmationDialogData: ConfirmationDialogData(
-                    itemTitle: provider.lectureName,
-                    description: '',
-                    title: 'Do you want to leave the Quiz lobby:',
-                  ));
+                          itemTitle: provider.lectureName,
+                          description: '',
+                          safetyText: 'Do you want to leave the Quiz lobby?',
+                          textCode: 'leave-quiz-lobby'));
                 }).then((value) {
               if (value == true) {
                 provider.reset();

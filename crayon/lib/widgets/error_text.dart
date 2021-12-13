@@ -1,4 +1,4 @@
-import 'package:crayon/l10n/app_localizations.dart';
+import 'package:crayon/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class ErrorText extends StatelessWidget {
@@ -7,10 +7,10 @@ class ErrorText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var appTranslation = AppLocalizations.of(context);
     return Center(
-      child: Text(
-        appTranslation!.translate(error) ?? error,
+      child: CustomText(
+        textCode: error,
+        safetyText: error,
         style: const TextStyle(
             fontSize: 19,
             fontFamily: 'Poppins',

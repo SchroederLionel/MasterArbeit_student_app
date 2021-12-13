@@ -20,7 +20,7 @@ class NavigationProvider extends ChangeNotifier {
 
   resetControlller() {
     if (_controller != null) {
-      _controller!.dispose();
+      // _controller!.dispose();
       setState(NotifierState.initial);
     }
   }

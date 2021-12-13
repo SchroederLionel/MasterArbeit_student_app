@@ -111,6 +111,7 @@ class ApiService {
                 print(snapshot.metadata.isFromCache
                     ? "-----Cached-----"
                     : "----Not Cached----");
+                print(snapshot.docChanges.length);
                 print(
                     (document.metadata.isFromCache ? "Cached" : "Not Cached"));
                 return Lecture.fromJson(document.data());

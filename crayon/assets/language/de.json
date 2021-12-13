@@ -103,5 +103,24 @@
     "send":"Senden",
     "reset-password-link-was-send-to-your-email":"Der Link zum Zurücksetzen des Passworts wurde an Ihre E-Mail gesendet",
     "complete-all-the-fields" :"Füllen Sie alle Felder aus!",
-    "user-not-found":"Kein Benutzer unter dieser E-Mail gefunden"
+    "user-not-found":"Kein Benutzer unter dieser E-Mail gefunden",
+    
+    "back-to-dashboard":"Zurück zum Dashboard",
+    "skip":"Überspringen",
+    "gameshow":"Spielshow",
+    "join":"Beitreten",
+    "username":"Nutzername",
+    "scan-lecture":"QR-Code scannen",
+    "no-permission":"Keine Berechtigung zur Verwendung der Kamera",
+    "leave-quiz-lobby":"Möchten Sie die Quiz-Lobby verlassen?",
+    "delete-lecture":"Löschung der Veranstaltung",
+    "requires-leaving-lobby":"Sie müssen Ihre aktuelle Quiz-Lobby verlassen, um diesen Vorgang auszuführen",
+    "no-courses-enrolled":"Du bist in keinem Kurs eingeschrieben",
+    "a-day-free":"Freizeit",
+    "entered-waiting-room":"Du bist dem Wartezimmer beigetreten",
+    "lecture-already-enrolled":"Sie sind bereits in diese Vorlesung eingeschrieben.",
+    "lecture-added-sucess":"Vorlesung erfolgreich hinzugefügt",
+    "lecture-removed-sucess":"Vorlesung erfolgreich entfernt",
+    "quesiton-asked-sucess":"Erfolgreich gestellte Frage",
+    "join-lobby-success":"Vorlesung erfolgreich beigetreten"
 }

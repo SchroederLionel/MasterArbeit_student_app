@@ -103,5 +103,24 @@
     "send":"Send",
     "reset-password-link-was-send-to-your-email":"Reset password link was sent to your email",
     "complete-all-the-fields" :"Fill in all the fields!",
-    "user-not-found":"No user found under this email"
+    "user-not-found":"No user found under this email",
+
+    "back-to-dashboard":"Back to Dashboard",
+    "skip":"Skip",
+    "gameshow":"Gameshow",
+    "join":"Join",
+    "username":"Username",
+    "scan-lecture":"Scan Lecture",
+    "no-permission":"No permission to use camera",
+    "leave-quiz-lobby":"Do you want to leave the Quiz lobby?",
+    "delete-lecture":"Delete-lecture",
+    "requires-leaving-lobby":"You must leave your current quiz lobby to execute this operation",
+    "no-courses-enrolled":"You aren't enrolled in any course",
+    "a-day-free":"Spare time",
+    "entered-waiting-room":"You joined the waiting room",
+    "lecture-already-enrolled":"You are already enrolled in this lecture.",
+    "lecture-added-sucess":"Lecture added successfully",
+    "lecture-removed-sucess":"Successfully removed lecture",
+    "quesiton-asked-sucess":"Successfully asked question",
+    "join-lobby-success":"Successfully joined lecture"
 }

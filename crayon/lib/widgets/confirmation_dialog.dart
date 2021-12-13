@@ -15,20 +15,19 @@ class ConfirmationDialog extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
-      title: const CustomText(textCode: 'delete', safetyText: 'Delete'),
+      title: CustomText(
+        textCode: confirmationDialogData.textCode,
+        safetyText: confirmationDialogData.safetyText,
+      ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomText(
-              textCode: confirmationDialogData.title,
-              safetyText: 'Confirm deletion',
-              style: Theme.of(context).textTheme.bodyText1),
           Center(
             child: Text(
               confirmationDialogData.itemTitle,
-              style: Theme.of(context).textTheme.headline6,
+              style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
         ],

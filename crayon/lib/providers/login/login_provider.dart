@@ -72,8 +72,8 @@ class LoginProvider extends ChangeNotifier {
 
   Future<void> signOut(BuildContext context) async {
     _state = NotifierState.initial;
-    await Navigator.of(context)
+    await AuthService().signOut();
+    Navigator.of(context)
         .pushNamedAndRemoveUntil(route.login, (Route<dynamic> route) => false);
-    AuthService().signOut();
   }
 }

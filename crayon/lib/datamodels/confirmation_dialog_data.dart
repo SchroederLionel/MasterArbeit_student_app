@@ -1,13 +1,15 @@
 class ConfirmationDialogData {
-  String? title;
+  String? textCode;
   String? description;
   String? cancelTitle;
   String? acceptTitle;
-  late String itemTitle;
+  String itemTitle;
+  String safetyText;
   ConfirmationDialogData(
-      {this.title,
+      {this.textCode,
       this.description,
       this.cancelTitle,
       this.acceptTitle,
+      required this.safetyText,
       required this.itemTitle});
 }

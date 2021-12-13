@@ -74,9 +74,11 @@ class _BodyState extends State<Body> {
                                   context: context,
                                   saftyString: 'Failed to login',
                                   isError: true)
-                              .showSnackBar(),
-                          (success) => Navigator.of(context)
-                              .pushReplacementNamed(route.dashboard));
+                              .showSnackBar(), (success) {
+                        print(success.credential.toString());
+                        Navigator.of(context)
+                            .pushReplacementNamed(route.dashboard);
+                      });
                     });
 
                     return child as Widget;
