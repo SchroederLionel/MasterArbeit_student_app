@@ -11,11 +11,13 @@ import 'package:provider/provider.dart';
 class Option extends StatelessWidget {
   final Response response;
   final int index;
+  final String question;
 
   const Option({
     Key? key,
     required this.index,
     required this.response,
+    required this.question,
   }) : super(key: key);
 
   @override
@@ -31,6 +33,8 @@ class Option extends StatelessWidget {
                 if (response.isResponseRight) {
                   time.increment();
                 }
+
+                time.addResponse(question, response.isResponseRight);
 
                 if (quizIndicator.isQuizFinished) {
                   time.stop();

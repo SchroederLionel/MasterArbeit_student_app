@@ -36,6 +36,7 @@ class QuestionCard extends StatelessWidget {
                   itemCount: questionP.question.responses.length,
                   itemBuilder: (context, index) {
                     return Option(
+                        question: questionP.question.question,
                         index: index,
                         response: questionP.question.responses[index]);
                   }))

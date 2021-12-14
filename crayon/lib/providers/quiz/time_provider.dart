@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:crayon/datamodels/quiz/quiz_options.dart';
+import 'package:crayon/datamodels/quiz/quiz_response.dart';
 import 'package:crayon/datamodels/quiz/quiz_result.dart';
 import 'package:crayon/route/route.dart' as route;
 import 'package:flutter/material.dart';
@@ -9,11 +10,13 @@ class TimeProvider extends ChangeNotifier {
   final QuizOptions quizOptions;
 
   BuildContext context;
+  final List<QuizResponse> _responses = [];
 
   final Stopwatch _watch;
   late Timer _timer;
-  int maxDuration = 100;
-  int remainingDuration = 100;
+  final int _maxDuration;
+  int _remainingDuration;
+  int get remainingDuration => _remainingDuration;
 
   int _questionsAnsweredRight = 0;
 
@@ -24,22 +27,22 @@ class TimeProvider extends ChangeNotifier {
   }
 
   int getRemainingTimeFromQuiz() {
-    return remainingDuration;
+    return _remainingDuration;
   }
 
   /// Each available second rewards the player with 20 points.
   int getPointsFromRemainingTime() {
-    return remainingDuration * 2;
+    return _remainingDuration * 2;
   }
 
   int getMaximumScoreForQuiz() {
     return (getTotalAmountOfPointForEachQuestion() +
-            (maxDuration - quizOptions.quiz.questions.length) * 2) *
+            (_maxDuration - quizOptions.quiz.questions.length) * 2) *
         quizOptions.quiz.questions.length;
   }
 
   int getUserScrore() {
-    int score = (_questionsAnsweredRight * 20 + remainingDuration * 2) *
+    int score = (_questionsAnsweredRight * 20 + _remainingDuration * 2) *
         _questionsAnsweredRight;
     int maxScore = getMaximumScoreForQuiz();
     if (score > maxScore) {
@@ -52,6 +55,10 @@ class TimeProvider extends ChangeNotifier {
     _questionsAnsweredRight++;
   }
 
+  void addResponse(String question, bool wasTrue) {
+    _responses.add(QuizResponse(question: question, wasResponseRight: wasTrue));
+  }
+
   void stop() {
     _watch.stop();
     _timer.cancel();
@@ -60,13 +67,15 @@ class TimeProvider extends ChangeNotifier {
   TimeProvider({
     required this.context,
     required this.quizOptions,
-  }) : _watch = Stopwatch();
+  })  : _watch = Stopwatch(),
+        _maxDuration = quizOptions.quiz.seconds ?? 100,
+        _remainingDuration = quizOptions.quiz.seconds ?? 100;
 
   void start() {
     _watch.start();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (_watch.elapsed.inSeconds <= maxDuration) {
-        remainingDuration = maxDuration - _watch.elapsed.inSeconds;
+      if (_watch.elapsed.inSeconds <= _maxDuration) {
+        _remainingDuration = _maxDuration - _watch.elapsed.inSeconds;
         notifyListeners();
       } else {
         _watch.stop();
