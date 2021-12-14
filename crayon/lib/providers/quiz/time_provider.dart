@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:crayon/datamodels/quiz/quiz_options.dart';
+import 'package:crayon/datamodels/quiz/quiz_result.dart';
+import 'package:crayon/route/route.dart' as route;
 import 'package:flutter/material.dart';
 
 ///
@@ -67,9 +69,16 @@ class TimeProvider extends ChangeNotifier {
         remainingDuration = maxDuration - _watch.elapsed.inSeconds;
         notifyListeners();
       } else {
-        notifyListeners();
         _watch.stop();
         _timer.cancel();
+        notifyListeners();
+
+        Navigator.of(context).pushNamed(route.score,
+            arguments: QuizResult(
+                totalAvailableScore: getMaximumScoreForQuiz(),
+                score: getUserScrore(),
+                lectureId: quizOptions.lectureId,
+                userName: quizOptions.userName));
       }
     });
   }

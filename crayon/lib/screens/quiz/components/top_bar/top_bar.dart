@@ -1,6 +1,5 @@
 import 'package:crayon/providers/quiz/quiz_indicator.dart';
 import 'package:crayon/screens/quiz/components/top_bar/components/timer.dart';
-import 'package:crayon/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,20 +26,7 @@ class TopBar extends StatelessWidget {
             onTap: () {
               Provider.of<QuizIndicator>(context, listen: false).increament();
             },
-            child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all()),
-                child: CustomText(
-                  safetyText: 'Skip',
-                  textCode: 'skip',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1!
-                      .copyWith(fontSize: 12),
-                )),
+            child: const Icon(Icons.arrow_right),
           )
         ],
       ),

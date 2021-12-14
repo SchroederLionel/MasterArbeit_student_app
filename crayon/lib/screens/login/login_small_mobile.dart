@@ -1,6 +1,5 @@
 import 'package:crayon/screens/login/components/body/body.dart';
 import 'package:crayon/screens/login/components/body/components/options_row.dart';
-import 'package:crayon/screens/login/components/title/app_title.dart';
 import 'package:flutter/material.dart';
 
 class LoginSmallMobile extends StatelessWidget {
@@ -12,8 +11,8 @@ class LoginSmallMobile extends StatelessWidget {
       children: const [
         OptionsRow(),
         SizedBox(height: 5),
-        AppTitle(),
-        Expanded(child: Body()),
+        // AppTitle(),
+        Expanded(child: Center(child: Body())),
       ],
     );
   }

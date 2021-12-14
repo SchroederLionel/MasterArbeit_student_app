@@ -28,6 +28,7 @@ class _QuizLoginState extends State<QuizLogin> {
       DeviceOrientation.portraitUp,
     ]);
     return AlertDialog(
+      scrollable: true,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
