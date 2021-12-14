@@ -7,6 +7,7 @@ import 'package:crayon/providers/navigation/navigation_provider.dart';
 import 'package:crayon/providers/quiz/quiz_indicator.dart';
 import 'package:crayon/providers/quiz/quiz_lobby_provider.dart';
 import 'package:crayon/providers/quiz/time_provider.dart';
+import 'package:crayon/providers/score/score_provider.dart';
 
 import 'package:crayon/providers/user/user_provider.dart';
 import 'package:crayon/providers/util/error_provider.dart';
@@ -63,7 +64,16 @@ Route<dynamic> controller(RouteSettings routerSettings) {
               ));
     case score:
       var arg = routerSettings.arguments as QuizResult;
-      return MaterialPageRoute(builder: (context) => Score(quizResult: arg));
+      return MaterialPageRoute(
+          builder: (context) => MultiProvider(
+                providers: [
+                  ChangeNotifierProvider<ScoreProvider>(
+                      create: (_) =>
+                          ScoreProvider(context: context, result: arg)),
+                ],
+                child:
+                    Score(score: arg.score, maxScore: arg.totalAvailableScore),
+              ));
   }
 
   return MaterialPageRoute(

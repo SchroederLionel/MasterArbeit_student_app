@@ -11,7 +11,7 @@ class TimeProvider extends ChangeNotifier {
 
   BuildContext context;
   final List<QuizResponse> _responses = [];
-
+  List<QuizResponse> get responses => _responses;
   final Stopwatch _watch;
   late Timer _timer;
   final int _maxDuration;
@@ -84,6 +84,7 @@ class TimeProvider extends ChangeNotifier {
 
         Navigator.of(context).pushNamed(route.score,
             arguments: QuizResult(
+                responses: _responses,
                 totalAvailableScore: getMaximumScoreForQuiz(),
                 score: getUserScrore(),
                 lectureId: quizOptions.lectureId,

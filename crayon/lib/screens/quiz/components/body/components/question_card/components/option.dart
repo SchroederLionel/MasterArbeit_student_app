@@ -40,6 +40,7 @@ class Option extends StatelessWidget {
                   time.stop();
                   Navigator.popAndPushNamed(context, route.score,
                       arguments: QuizResult(
+                          responses: time.responses,
                           userName: time.quizOptions.userName,
                           lectureId: time.quizOptions.lectureId,
                           totalAvailableScore: time.getMaximumScoreForQuiz(),

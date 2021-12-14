@@ -1,11 +1,28 @@
-import 'package:crayon/datamodels/quiz/quiz_result.dart';
+import 'package:crayon/providers/score/score_provider.dart';
+import 'package:crayon/state/enum.dart';
 import 'package:crayon/widgets/custom_button.dart';
+import 'package:crayon/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class Score extends StatelessWidget {
-  final QuizResult quizResult;
+class Score extends StatefulWidget {
+  final int score;
+  final int maxScore;
+  const Score({Key? key, required this.score, required this.maxScore})
+      : super(key: key);
 
-  const Score({Key? key, required this.quizResult}) : super(key: key);
+  @override
+  State<Score> createState() => _ScoreState();
+}
+
+class _ScoreState extends State<Score> {
+  @override
+  void initState() {
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+      Provider.of<ScoreProvider>(context, listen: false).postResponse();
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,21 +36,31 @@ class Score extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const SizedBox(),
-              Text(
-                '${quizResult.score}/${quizResult.totalAvailableScore}',
-                style: Theme.of(context).textTheme.headline1!.copyWith(
-                      fontFamily: 'Comforter',
-                    ),
+              Center(
+                child: Text(
+                  '${widget.score}/${widget.maxScore}',
+                  style: Theme.of(context).textTheme.headline1!.copyWith(
+                        fontFamily: 'Comforter',
+                      ),
+                ),
               ),
-              CustomButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                color: Theme.of(context).primaryColor,
-                labelCode: 'back-to-dashboard',
-                labelSafety: 'Back to Dashboard',
-                icon: Icons.dashboard,
-              )
+              Consumer<ScoreProvider>(builder: (_, score, __) {
+                if (score.state == NotifierState.initial) {
+                  return const LoadingWidget();
+                } else if (score.state == NotifierState.loaded) {
+                  return CustomButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    color: Theme.of(context).primaryColor,
+                    labelCode: 'back-to-dashboard',
+                    labelSafety: 'Back to Dashboard',
+                    icon: Icons.dashboard,
+                  );
+                } else {
+                  return const SizedBox();
+                }
+              })
             ],
           ),
         ),

@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crayon/datamodels/failure.dart';
 import 'package:crayon/datamodels/lecture/lecture.dart';
+import 'package:crayon/datamodels/quiz/quiz_response.dart';
+import 'package:crayon/datamodels/quiz/quiz_result.dart';
 import 'package:crayon/datamodels/user/user.dart' as myuser;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -180,6 +182,27 @@ class ApiService {
           .doc('lobby')
           .set({
         'participants': FieldValue.arrayRemove([userName]),
+      }, SetOptions(merge: true));
+    } on FirebaseException catch (_) {
+      throw Failure(code: 'firebase-exception');
+    } on SocketException {
+      throw Failure(code: 'no-internet');
+    } on HttpException {
+      throw Failure(code: 'not-found');
+    } on FormatException {
+      throw Failure(code: 'bad-format');
+    }
+  }
+
+  Future<void> postResponse(QuizResult result) {
+    try {
+      return FirebaseFirestore.instance
+          .collection('lectures')
+          .doc(result.lectureId)
+          .collection('features')
+          .doc('responses')
+          .set({
+        'responses': FieldValue.arrayUnion([result.toJson()]),
       }, SetOptions(merge: true));
     } on FirebaseException catch (_) {
       throw Failure(code: 'firebase-exception');
