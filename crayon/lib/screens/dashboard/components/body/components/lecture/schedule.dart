@@ -20,104 +20,127 @@ class Schedule extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = Provider.of<QuizLobbyProvider>(context, listen: false);
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 4.0),
-      child: GestureDetector(
-        onLongPress: () {
-          showDialog(
-              barrierColor: Colors.black87,
-              context: context,
-              builder: (BuildContext context) {
-                return ConfirmationDialog(
-                    confirmationDialogData: ConfirmationDialogData(
-                        itemTitle: schedule.title,
-                        textCode: 'delete-lecture',
-                        safetyText: 'Do you want to delete the lecture:'));
-              }).then((value) {
-            if (value == true) {
-              Provider.of<UserProvider>(context, listen: false)
-                  .removeLecture(schedule.lectureId);
-            }
-          });
-        },
-        onTap: () {
-          if (provider.state == NotifierState.loaded) {
-            CustomSnackbar(
-                    text: 'requires-leaving-lobby',
-                    saftyString:
-                        'You must leave your current quiz lobby to execute this operation',
-                    isError: true,
-                    context: context)
-                .showSnackBar();
-          } else {
-            if (schedule.isLobbyOpen) {
-              showDialog(
-                  barrierColor: Colors.black87,
-                  barrierDismissible: false,
-                  context: context,
-                  builder: (BuildContext context) {
-                    return const QuizLogin();
-                  }).then((value) {
-                if (value is String) {
-                  provider.set(schedule.lectureId, value, schedule.title);
+    return Stack(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 8.0),
+          child: GestureDetector(
+              onLongPress: () {
+                showDialog(
+                    barrierColor: Colors.black87,
+                    context: context,
+                    builder: (BuildContext context) {
+                      return ConfirmationDialog(
+                          confirmationDialogData: ConfirmationDialogData(
+                              itemTitle: schedule.title,
+                              textCode: 'delete-lecture',
+                              safetyText:
+                                  'Do you want to delete the lecture:'));
+                    }).then((value) {
+                  if (value == true) {
+                    Provider.of<UserProvider>(context, listen: false)
+                        .removeLecture(schedule.lectureId);
+                  }
+                });
+              },
+              onTap: () {
+                if (provider.state == NotifierState.loaded) {
+                  CustomSnackbar(
+                          text: 'requires-leaving-lobby',
+                          saftyString:
+                              'You must leave your current quiz lobby to execute this operation',
+                          isError: true,
+                          context: context)
+                      .showSnackBar();
+                } else {
+                  if (schedule.isLobbyOpen) {
+                    showDialog(
+                        barrierColor: Colors.black87,
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (BuildContext context) {
+                          return const QuizLogin();
+                        }).then((value) {
+                      if (value is String) {
+                        provider.set(schedule.lectureId, value, schedule.title);
+                      }
+                    });
+                  } else {
+                    showDialog(
+                        barrierColor: Colors.black87,
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (BuildContext context) {
+                          return const QuestionDialog();
+                        }).then((value) {
+                      if (value is String) {
+                        Provider.of<UserProvider>(context, listen: false)
+                            .postQuestion(value, schedule.lectureId);
+                      }
+                    });
+                  }
                 }
-              });
-            } else {
-              showDialog(
-                  barrierColor: Colors.black87,
-                  barrierDismissible: false,
-                  context: context,
-                  builder: (BuildContext context) {
-                    return const QuestionDialog();
-                  }).then((value) {
-                if (value is String) {
-                  Provider.of<UserProvider>(context, listen: false)
-                      .postQuestion(value, schedule.lectureId);
-                }
-              });
-            }
-          }
-        },
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CourseTimes(
-                startingTime: schedule.startingTime,
-                endingTime: schedule.endingTime,
-              ),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Card(
-                  color: schedule.isLobbyOpen
-                      ? Colors.greenAccent
-                      : Theme.of(context).primaryColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  child: Padding(
-                      padding: const EdgeInsets.only(
-                          top: 7.0, bottom: 7.0, left: 7.0),
-                      child: ListTile(
-                          title: CustomText(
-                            safetyText: schedule.title,
-                            style: const TextStyle(
-                                fontSize: 17,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700),
-                          ),
-                          subtitle: CustomText(
-                              additional: schedule.room,
-                              textCode: 'room',
-                              safetyText: 'Room',
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontFamily: 'Poppins')))),
+              },
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CourseTimes(
+                      startingTime: schedule.startingTime,
+                      endingTime: schedule.endingTime,
+                    ),
+                    const SizedBox(width: 14),
+                    Expanded(
+                      child: Card(
+                        elevation: 4,
+                        color: schedule.isLobbyOpen
+                            ? Colors.greenAccent
+                            : Theme.of(context).scaffoldBackgroundColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        child: Padding(
+                            padding: const EdgeInsets.only(
+                                top: 5.0, bottom: 5.0, left: 3.0),
+                            child: ListTile(
+                                title: CustomText(
+                                  overflow: TextOverflow.ellipsis,
+                                  safetyText: schedule.title,
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                subtitle: CustomText(
+                                    additional: schedule.room,
+                                    textCode: 'room',
+                                    safetyText: 'Room',
+                                    style: const TextStyle(
+                                        fontSize: 12, fontFamily: 'Poppins')))),
+                      ),
+                    ),
+                  ])),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  borderRadius: const BorderRadius.all(Radius.circular(15))),
+              child: CustomText(
+                safetyText: schedule.type,
+                textCode: schedule.type,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 12,
                 ),
               ),
-            ]),
-      ),
+            ),
+          ],
+        )
+      ],
     );
   }
 }

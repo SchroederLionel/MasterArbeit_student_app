@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crayon/datamodels/failure.dart';
 import 'package:crayon/datamodels/lecture/lecture.dart';
-import 'package:crayon/datamodels/quiz/quiz_response.dart';
 import 'package:crayon/datamodels/quiz/quiz_result.dart';
 import 'package:crayon/datamodels/user/user.dart' as myuser;
 import 'package:firebase_auth/firebase_auth.dart';
@@ -110,12 +109,6 @@ class ApiService {
           .where('id', whereIn: lecturesToListen)
           .snapshots(includeMetadataChanges: false)
           .map((snapshot) => snapshot.docs.map((document) {
-                print(snapshot.metadata.isFromCache
-                    ? "-----Cached-----"
-                    : "----Not Cached----");
-                print(snapshot.docChanges.length);
-                print(
-                    (document.metadata.isFromCache ? "Cached" : "Not Cached"));
                 return Lecture.fromJson(document.data());
               }).toList());
     } on FirebaseException catch (_) {

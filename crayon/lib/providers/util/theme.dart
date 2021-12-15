@@ -32,7 +32,7 @@ class ThemeProvider extends ChangeNotifier {
               fontFamily: 'Poppins',
               fontSize: 21,
               fontWeight: FontWeight.w600,
-              color: Colors.blueAccent),
+              color: Colors.black),
           bodyText1: TextStyle(
               fontFamily: 'Poppins',
               fontSize: 18,
@@ -84,7 +84,7 @@ class ThemeProvider extends ChangeNotifier {
             fontFamily: 'Poppins',
             fontSize: 21,
             fontWeight: FontWeight.w600,
-            color: Colors.blueAccent),
+            color: Colors.white),
         bodyText1: TextStyle(
             fontFamily: 'Poppins',
             fontSize: 18,

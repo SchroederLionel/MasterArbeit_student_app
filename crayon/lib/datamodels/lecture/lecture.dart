@@ -1,4 +1,5 @@
 import 'package:crayon/datamodels/lecture/lecture_date.dart';
+import 'package:crayon/datamodels/lecture/lecture_schedule.dart';
 
 import 'package:crayon/datamodels/lecture/slide.dart';
 import 'package:crayon/datamodels/quiz/quiz.dart';

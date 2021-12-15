@@ -21,7 +21,7 @@ class LectureStream extends StatefulWidget {
 }
 
 class _LectureStreamState extends State<LectureStream> {
-  Stream<List<Lecture>>? _stream;
+  //Stream<List<Lecture>>? _stream;
   late final PageController _controller;
   @override
   initState() {
@@ -31,10 +31,10 @@ class _LectureStreamState extends State<LectureStream> {
       Provider.of<NavigationProvider>(context, listen: false)
           .setPageController(_controller);
     });
-    _stream = ApiService().getMyLectures(
+    /*_stream = ApiService().getMyLectures(
         Provider.of<UserProvider>(context, listen: false)
             .user!
-            .enrolledLectures);
+            .enrolledLectures);*/
     super.initState();
   }
 
@@ -47,7 +47,10 @@ class _LectureStreamState extends State<LectureStream> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<Lecture>>(
-        stream: _stream,
+        stream: ApiService().getMyLectures(
+            Provider.of<UserProvider>(context, listen: false)
+                .user!
+                .enrolledLectures),
         initialData: const [],
         builder: (BuildContext context, snapshot) {
           if (!snapshot.hasData) {
@@ -99,6 +102,7 @@ class _LectureStreamState extends State<LectureStream> {
       for (int j = 0; j < dates.length; j++) {
         if (getDayIndex(dates[j].day) == day) {
           LectureSchedule schedule = LectureSchedule(
+              type: dates[j].type,
               quiz: lectures[i].quiz,
               lectureId: lectures[i].id,
               title: lectures[i].title,

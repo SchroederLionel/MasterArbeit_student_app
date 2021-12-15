@@ -1,6 +1,7 @@
 import 'package:crayon/datamodels/quiz/quiz.dart';
 
 class LectureSchedule {
+  final String type;
   final Quiz? quiz;
   final String lectureId;
   final String title;
@@ -12,6 +13,7 @@ class LectureSchedule {
 
   LectureSchedule(
       {required this.quiz,
+      required this.type,
       required this.lectureId,
       required this.title,
       required this.day,
