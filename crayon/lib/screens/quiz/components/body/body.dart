@@ -18,6 +18,7 @@ class _BodyState extends State<Body> {
   @override
   void dispose() {
     _pageController.dispose();
+
     super.dispose();
   }
 

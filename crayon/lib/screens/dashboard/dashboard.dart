@@ -1,3 +1,4 @@
+import 'package:crayon/providers/quiz/quiz_lobby_provider.dart';
 import 'package:crayon/providers/user/user_provider.dart';
 import 'package:crayon/screens/dashboard/components/body/body.dart';
 import 'package:crayon/screens/dashboard/components/day_quiz_indicator/day_quiz_indicator.dart';
@@ -21,6 +22,7 @@ class _DashboardState extends State<Dashboard> {
     WidgetsBinding.instance!.addPostFrameCallback((_) async {
       var provider = Provider.of<UserProvider>(context, listen: false);
       await provider.getUser();
+      Provider.of<QuizLobbyProvider>(context, listen: false).initialize();
     });
   }
 

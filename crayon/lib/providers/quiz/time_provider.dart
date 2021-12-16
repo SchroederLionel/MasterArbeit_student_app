@@ -100,6 +100,7 @@ class TimeProvider extends ChangeNotifier {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_watch.elapsed.inSeconds <= _maxDuration) {
         _remainingDuration = _maxDuration - _watch.elapsed.inSeconds;
+
         notifyListeners();
       } else {
         // If the time is elapsed.

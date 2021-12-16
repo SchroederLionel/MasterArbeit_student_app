@@ -22,7 +22,7 @@ class _QrCodeState extends State<QrCode> {
       child: Stack(
         alignment: Alignment.topCenter,
         children: [
-          Expanded(child: _buildQrView(context)),
+          _buildQrView(context),
           Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(

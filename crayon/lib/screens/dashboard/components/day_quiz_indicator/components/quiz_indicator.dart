@@ -11,7 +11,7 @@ class QuizLobbyIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<QuizLobbyProvider>(builder: (_, provider, __) {
-      if (provider.state == NotifierState.loading) {
+      if (provider.state == NotifierState.loaded) {
         return InkWell(
           onTap: () {
             showDialog(
@@ -33,7 +33,7 @@ class QuizLobbyIndicator extends StatelessWidget {
             margin: const EdgeInsets.only(left: 5),
             height: 30,
             width: 30,
-            child: provider.state == NotifierState.loading
+            child: provider.state == NotifierState.loaded
                 ? Stack(
                     alignment: Alignment.center,
                     children: [
@@ -50,9 +50,6 @@ class QuizLobbyIndicator extends StatelessWidget {
           ),
         );
       } else {
-        WidgetsBinding.instance!.addPostFrameCallback((_) async {
-          Provider.of<QuizLobbyProvider>(context, listen: false).initialize();
-        });
         return const SizedBox();
       }
     });

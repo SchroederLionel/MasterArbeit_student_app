@@ -1,6 +1,3 @@
-import 'package:crayon/screens/login/components/title/app_title.dart';
-import 'package:crayon/screens/login/components/body/body.dart';
-import 'package:crayon/screens/login/components/body/components/options_row.dart';
 import 'package:crayon/screens/login/login_mobile.dart';
 import 'package:crayon/screens/login/login_small_mobile.dart';
 import 'package:crayon/screens/login/login_tablet.dart';

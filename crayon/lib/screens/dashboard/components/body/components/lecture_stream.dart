@@ -31,10 +31,7 @@ class _LectureStreamState extends State<LectureStream> {
       Provider.of<NavigationProvider>(context, listen: false)
           .setPageController(_controller);
     });
-    /*_stream = ApiService().getMyLectures(
-        Provider.of<UserProvider>(context, listen: false)
-            .user!
-            .enrolledLectures);*/
+
     super.initState();
   }
 

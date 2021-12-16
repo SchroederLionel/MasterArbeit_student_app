@@ -1,4 +1,5 @@
 import 'package:crayon/providers/quiz/quiz_indicator.dart';
+import 'package:crayon/providers/quiz/time_provider.dart';
 import 'package:crayon/screens/quiz/components/top_bar/components/timer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +17,10 @@ class TopBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           IconButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: () {
+                Provider.of<TimeProvider>(context, listen: false).stop();
+                Navigator.pop(context);
+              },
               icon: const Icon(
                 Icons.close,
                 color: Colors.redAccent,

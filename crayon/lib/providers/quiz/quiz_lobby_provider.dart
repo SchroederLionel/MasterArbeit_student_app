@@ -40,6 +40,7 @@ class QuizLobbyProvider extends ChangeNotifier {
           }),
         )
         .run();
+
     result.fold(
         (failure) => CustomSnackbar(
               text: failure.code,
@@ -62,7 +63,7 @@ class QuizLobbyProvider extends ChangeNotifier {
         context: context,
         saftyString: 'Successfully joined lobby',
       ).showSnackBar();
-      setState(NotifierState.loading);
+      setState(NotifierState.loaded);
     });
   }
 
@@ -72,12 +73,16 @@ class QuizLobbyProvider extends ChangeNotifier {
   void initialize() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? lobby = prefs.getString('currentlyInLobby');
+
     if (lobby != null) {
       Map<String, dynamic> lobbyMap = jsonDecode(lobby) as Map<String, dynamic>;
       _userName = lobbyMap['username'] ?? '';
       _lectureId = lobbyMap['lectureId'] ?? '';
       _lectureName = lobbyMap['lectureName'] ?? '';
-      setState(NotifierState.loading);
+
+      if (!(_userName.isEmpty && _lectureId.isEmpty && _lectureName.isEmpty)) {
+        setState(NotifierState.loaded);
+      }
     }
   }
 
@@ -110,12 +115,14 @@ class QuizLobbyProvider extends ChangeNotifier {
       if (schedules[i].lectureId == _lectureId) {
         var userName = _userName;
         var lectureId = _lectureId;
-        leaveLobby();
-        Navigator.pushNamed(context, '/quiz',
-            arguments: QuizOptions(
-                userName: userName,
-                lectureId: lectureId,
-                quiz: schedules[i].quiz!));
+        if (schedules[i].quiz != null) {
+          leaveLobby();
+          Navigator.pushNamed(context, '/quiz',
+              arguments: QuizOptions(
+                  userName: userName,
+                  lectureId: lectureId,
+                  quiz: schedules[i].quiz!));
+        }
       }
     }
   }

@@ -83,5 +83,4 @@ Route<dynamic> controller(RouteSettings routerSettings) {
             ChangeNotifierProvider<ErrorProvider>(
                 create: (_) => ErrorProvider()),
           ], child: const Login()));
-  ;
 }
