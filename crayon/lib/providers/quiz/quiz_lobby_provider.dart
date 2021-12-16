@@ -1,13 +1,15 @@
 import 'dart:convert';
 import 'package:crayon/datamodels/custom_snackbar.dart';
+import 'package:crayon/datamodels/failure.dart';
 import 'package:crayon/datamodels/lecture/lecture_schedule.dart';
 import 'package:crayon/datamodels/quiz/quiz_options.dart';
 import 'package:crayon/service/api_service.dart';
 import 'package:crayon/state/enum.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// The quiz lobby provider is in charge of showing if a user is in a quiz lobby or not.
 class QuizLobbyProvider extends ChangeNotifier {
   final BuildContext context;
   late NotifierState _state = NotifierState.initial;
@@ -20,10 +22,26 @@ class QuizLobbyProvider extends ChangeNotifier {
   String _lectureName = '';
   String get lectureName => _lectureName;
 
-  set(String lectureId, String userName, String lectureName) async {
-    /// Todo
+  /// Function which sets up the quiz lobby, by making a post request with the username.
+  /// username the lecture id and name.
+  /// Stores in shared preferences if the user leaves app and goes back to it.
+  ///
+  void set(String lectureId, String userName, String lectureName) async {
     ApiService api = ApiService();
-    api.joinLobby(lectureId, userName);
+
+    var result = await Task(() => api.joinLobby(lectureId, userName))
+        .attempt()
+        .map(
+          (either) => either.leftMap((obj) {
+            try {
+              return obj as Failure;
+            } catch (e) {
+              throw obj;
+            }
+          }),
+        )
+        .run();
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, dynamic> lobby = {
       'username': userName,
@@ -44,6 +62,9 @@ class QuizLobbyProvider extends ChangeNotifier {
     setState(NotifierState.loading);
   }
 
+  /// Function which initializes the quiz lobby.
+  /// The user joins the lobby and sets the notifier state to loading.
+  /// Stores the lobby session in shared preferences .
   void initialize() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? lobby = prefs.getString('currentlyInLobby');
@@ -56,13 +77,17 @@ class QuizLobbyProvider extends ChangeNotifier {
     }
   }
 
+  /// Function which allows to change the state of the quizLobby.
+  /// param NotifierState initial or loading.
+  /// (loaded state not used since at the loaded level the user will be on the quiz screen.)
   void setState(NotifierState state) {
     _state = state;
     notifyListeners();
   }
 
-  void enterQuiz() {}
-
+  /// Function which allows to reset the game lobby.
+  /// Removes the values in shared preferences that the user is in a lobby.
+  /// And sets the state to initial (User isn't waiting for the start of a quiz).
   void reset() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('currentlyInLobby');

@@ -1,10 +1,7 @@
 import 'dart:async';
-
 import 'package:crayon/datamodels/custom_snackbar.dart';
 import 'package:crayon/datamodels/failure.dart';
-import 'package:crayon/datamodels/lecture/lecture.dart';
 import 'package:crayon/datamodels/user/user.dart';
-
 import 'package:crayon/service/api_service.dart';
 import 'package:crayon/state/enum.dart';
 import 'package:dartz/dartz.dart' as dartz;
@@ -14,6 +11,7 @@ import 'package:flutter/material.dart';
 class UserProvider extends ChangeNotifier {
   ApiService api = ApiService();
 
+  /// Context used for snackbar.
   BuildContext context;
   UserProvider({required this.context});
 
@@ -42,6 +40,7 @@ class UserProvider extends ChangeNotifier {
   }
 
   /// Function which allows to retrieve the user data from the database.
+  /// In case of  failure a snackbar will be showed to the user.
   Future<void> getUser() async {
     setState(NotifierState.loading);
 
@@ -73,6 +72,8 @@ class UserProvider extends ChangeNotifier {
   }
 
   /// Funciton which allows to add a lecture to the user data.
+  /// Parameter is the lectureId (String).
+  /// In case of  failure or success a snackbar will be showed.
   void addLecture(String lectureId) async {
     /// Change visual my showing loading indicator.
 
@@ -89,6 +90,7 @@ class UserProvider extends ChangeNotifier {
       /// Create a task which allows to add a lecture to the user.
       /// (Map) required since the left Type is object thus changing it to failure in case of a failure.
       /// If successfull type String returned which will then be added to the user.
+      ///  In case of  failure or success a snackbar will be showed.
       var result = await dartz.Task(() => api.addLecture(lectureId))
           .attempt()
           .map(
@@ -124,6 +126,7 @@ class UserProvider extends ChangeNotifier {
   }
 
   /// Funciton which allows to add a lecture to the user data.
+  /// In case of  failure or success a snackbar will be showed.
   void removeLecture(String lectureId) async {
     /// Change visual my showing loading indicator.
     setState(NotifierState.loading);
@@ -161,6 +164,9 @@ class UserProvider extends ChangeNotifier {
     setState(NotifierState.loaded);
   }
 
+  /// Function which allows to make a post request.
+  /// Parameter: String question and the lecture id.
+  /// In case of  failure or success a snackbar will be showed.
   void postQuestion(String question, String lectureId) async {
     var result = await dartz.Task(() => api.postQuestion(question, lectureId))
         .attempt()
@@ -189,6 +195,9 @@ class UserProvider extends ChangeNotifier {
             ).showSnackBar());
   }
 
+  /// Function which allows to join a lobby.
+  /// Parameters: lectureId (String) and the userName(String)
+  ///  In case of  failure or success a snackbar will be showed.
   void joinLobby(String lectureId, String userName) async {
     var result = await dartz.Task(() => api.joinLobby(lectureId, userName))
         .attempt()

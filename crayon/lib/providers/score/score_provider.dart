@@ -6,6 +6,8 @@ import 'package:crayon/state/enum.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 
+/// Score is used for sending the post request of the quiz score performed by the user.
+/// Score is also used for display purposes
 class ScoreProvider extends ChangeNotifier {
   NotifierState _state = NotifierState.initial;
   NotifierState get state => _state;
@@ -18,6 +20,9 @@ class ScoreProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Function which allows to send a post request of the users responses and personal score.
+  /// No params required since the score is already defined in the in the scoreprovider.
+  /// Displays a snackbar in case of an error or success.
   void postResponse() async {
     ApiService api = ApiService();
     setState(NotifierState.loading);

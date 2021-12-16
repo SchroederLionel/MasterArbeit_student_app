@@ -1,11 +1,17 @@
 import 'package:crayon/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
+/// Custom Button is a button which is used so that each button looks the same and Provides translation.
+
 class CustomButton extends StatelessWidget {
   final VoidCallback onPressed;
   final IconData icon;
   final Color color;
+
+  /// String code which is used for translation
   final String? labelCode;
+
+  /// If the labelCode is null or the translation return null the labelSafety will be displayed.
   final String labelSafety;
   const CustomButton(
       {required this.icon,
@@ -19,6 +25,7 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+      // max available width.
       width: double.infinity,
       child: ElevatedButton.icon(
         onPressed: onPressed,

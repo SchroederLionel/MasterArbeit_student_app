@@ -5,6 +5,7 @@ import 'package:crayon/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/// Shows the score of the player after a quiz.
 class Score extends StatefulWidget {
   final int score;
   final int maxScore;

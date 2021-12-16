@@ -5,11 +5,13 @@ import 'package:crayon/providers/util/locale_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/// Language widget is used to change the language;
 class LanguageWidget extends StatelessWidget {
   const LanguageWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    /// localProvider allows to change the language of the app.
     final localeProvider = Provider.of<LocaleProvider>(context, listen: false);
 
     return DropdownButton(

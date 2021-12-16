@@ -101,6 +101,7 @@ class AuthService {
     }
   }
 
+  /// Function which allows a user to sign out.
   Future<void> signOut() async {
     _auth.signOut();
   }

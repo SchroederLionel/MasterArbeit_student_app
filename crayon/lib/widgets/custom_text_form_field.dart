@@ -1,9 +1,13 @@
 import 'package:crayon/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
+/// CustomTextFormField is a widgets which allows to use a text field with a form field.
+/// Used for input checks and keeping the same layout for each textfield.
 class CustomTextFormField extends StatelessWidget {
   final TextEditingController controller;
   final void Function(String)? onChanged;
+
+  /// Validator function which is used by the form widget to check if a string is valid.(returns null if string is valid).
   final String? Function(String?)? validator;
   final IconData icon;
   final String? labelCode;

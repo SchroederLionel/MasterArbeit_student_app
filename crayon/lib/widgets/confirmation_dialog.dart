@@ -4,6 +4,8 @@ import 'package:crayon/widgets/cancel_button.dart';
 import 'package:crayon/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
+/// The confirmation dialog allows the user to confirm an action.
+/// Requires ConfirmationDialog Data and allows translation.
 class ConfirmationDialog extends StatelessWidget {
   final ConfirmationDialogData confirmationDialogData;
   const ConfirmationDialog({required this.confirmationDialogData, Key? key})

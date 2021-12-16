@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Error provider is used to display errors.
 class ErrorProvider extends ChangeNotifier {
   String _errorText = '';
 

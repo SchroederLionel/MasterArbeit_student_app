@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// Theme provider is used for managing the theme changed.
+/// Contains the theme light and dark and stores the favorite theme in shared preferences.
 class ThemeProvider extends ChangeNotifier {
   ThemeData light = ThemeData(
       fontFamily: 'Poppins',
@@ -107,15 +109,19 @@ class ThemeProvider extends ChangeNotifier {
             color: Colors.white),
       ));
 
+  /// ThemeProvider required at intitialization the theme mode ( light or dark.)
+  /// Parameter is a bool true if dark theme should be used and white for white theme.
   ThemeProvider({required bool isDarkMode}) {
     _mode = isDarkMode ? ThemeMode.dark : ThemeMode.light;
   }
 
   ThemeMode get mode => _mode;
   late ThemeMode _mode;
+
+  /// Function which allows to swap the theme from dark to white or the other way depending on the current theme mode.
+  /// On swap the  change of will be stored in the shared preferences.
   void swapTheme() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
     _mode = _mode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
     prefs.setBool('themeDark', _mode == ThemeMode.dark ? true : false);
     notifyListeners();

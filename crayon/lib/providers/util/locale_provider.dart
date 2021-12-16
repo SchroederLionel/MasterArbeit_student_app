@@ -4,6 +4,8 @@ import 'package:crayon/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// The localprovider is used for language changes.
+/// By chaning the language the new language string code will be stored into the sharedpreferences.
 class LocaleProvider extends ChangeNotifier {
   Locale _locale = AppLocalizations.languages.first;
 

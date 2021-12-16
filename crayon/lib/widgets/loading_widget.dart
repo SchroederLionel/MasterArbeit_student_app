@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Loadingwidget used to display the loading process of a longer process.
 class LoadingWidget extends StatelessWidget {
   const LoadingWidget({Key? key}) : super(key: key);
 
