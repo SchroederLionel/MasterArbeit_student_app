@@ -194,36 +194,4 @@ class UserProvider extends ChangeNotifier {
               saftyString: 'Successfully asked question',
             ).showSnackBar());
   }
-
-  /// Function which allows to join a lobby.
-  /// Parameters: lectureId (String) and the userName(String)
-  ///  In case of  failure or success a snackbar will be showed.
-  void joinLobby(String lectureId, String userName) async {
-    var result = await dartz.Task(() => api.joinLobby(lectureId, userName))
-        .attempt()
-        .map(
-          (either) => either.leftMap((obj) {
-            try {
-              return obj as Failure;
-            } catch (e) {
-              throw obj;
-            }
-          }),
-        )
-        .run();
-
-    result.fold(
-        (failure) => CustomSnackbar(
-              text: failure.code,
-              isError: true,
-              context: context,
-              saftyString: 'Failed to join lobby',
-            ).showSnackBar(),
-        (sucess) => CustomSnackbar(
-              text: 'join-lobby-success',
-              isError: false,
-              context: context,
-              saftyString: 'Successfully joined lobby',
-            ).showSnackBar());
-  }
 }

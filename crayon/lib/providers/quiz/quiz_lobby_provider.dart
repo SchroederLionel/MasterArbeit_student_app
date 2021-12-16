@@ -22,13 +22,12 @@ class QuizLobbyProvider extends ChangeNotifier {
   String _lectureName = '';
   String get lectureName => _lectureName;
 
-  /// Function which sets up the quiz lobby, by making a post request with the username.
-  /// username the lecture id and name.
-  /// Stores in shared preferences if the user leaves app and goes back to it.
-  ///
-  void set(String lectureId, String userName, String lectureName) async {
+  /// Function which allows to join a lobby.
+  /// Parameters: lectureId (String) and the userName(String)
+  ///  In case of  failure or success a snackbar will be showed.
+  void joinLobby(String lectureId, String userName, String lectureName) async {
     ApiService api = ApiService();
-
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     var result = await Task(() => api.joinLobby(lectureId, userName))
         .attempt()
         .map(
@@ -41,25 +40,30 @@ class QuizLobbyProvider extends ChangeNotifier {
           }),
         )
         .run();
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    Map<String, dynamic> lobby = {
-      'username': userName,
-      'lectureId': lectureId,
-      'lectureName': lectureName
-    };
-    prefs.setString('currentlyInLobby', jsonEncode(lobby));
-    _lectureName = lectureName;
-    _lectureId = lectureId;
-    _userName = userName;
-    CustomSnackbar(
-            text: 'entered-waiting-room',
-            saftyString: 'You entered the waiting room',
-            isError: false,
-            context: context)
-        .showSnackBar();
-
-    setState(NotifierState.loading);
+    result.fold(
+        (failure) => CustomSnackbar(
+              text: failure.code,
+              isError: true,
+              context: context,
+              saftyString: 'Failed to join lobby',
+            ).showSnackBar(), (sucess) {
+      Map<String, dynamic> lobby = {
+        'username': userName,
+        'lectureId': lectureId,
+        'lectureName': lectureName
+      };
+      prefs.setString('currentlyInLobby', jsonEncode(lobby));
+      _lectureName = lectureName;
+      _lectureId = lectureId;
+      _userName = userName;
+      CustomSnackbar(
+        text: 'join-lobby-success',
+        isError: false,
+        context: context,
+        saftyString: 'Successfully joined lobby',
+      ).showSnackBar();
+      setState(NotifierState.loading);
+    });
   }
 
   /// Function which initializes the quiz lobby.
@@ -88,7 +92,7 @@ class QuizLobbyProvider extends ChangeNotifier {
   /// Function which allows to reset the game lobby.
   /// Removes the values in shared preferences that the user is in a lobby.
   /// And sets the state to initial (User isn't waiting for the start of a quiz).
-  void reset() async {
+  void leaveLobby() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('currentlyInLobby');
     if (_lectureId != '' && _lectureName != '') {
@@ -106,7 +110,7 @@ class QuizLobbyProvider extends ChangeNotifier {
       if (schedules[i].lectureId == _lectureId) {
         var userName = _userName;
         var lectureId = _lectureId;
-        reset();
+        leaveLobby();
         Navigator.pushNamed(context, '/quiz',
             arguments: QuizOptions(
                 userName: userName,

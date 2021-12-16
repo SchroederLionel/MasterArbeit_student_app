@@ -25,7 +25,7 @@ class QuizLobbyIndicator extends StatelessWidget {
                           textCode: 'leave-quiz-lobby'));
                 }).then((value) {
               if (value == true) {
-                provider.reset();
+                provider.leaveLobby();
               }
             });
           },

@@ -62,7 +62,8 @@ class Schedule extends StatelessWidget {
                           return const QuizLogin();
                         }).then((value) {
                       if (value is String) {
-                        provider.set(schedule.lectureId, value, schedule.title);
+                        provider.joinLobby(
+                            schedule.lectureId, value, schedule.title);
                       }
                     });
                   } else {
