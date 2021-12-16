@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Transform hours and seconds of the day for the lecture dates.
 class CustomTimeOfDay extends TimeOfDay {
   const CustomTimeOfDay({hour, minute})
       : super(

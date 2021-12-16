@@ -1,6 +1,9 @@
+/// Class which allows to store a user response from the user. (During the quiz process)
+/// Has the ability to transform from json and into json.
 class Response {
-  late String response;
-  late bool isResponseRight;
+  /// Rresponse is the question
+  String response;
+  bool isResponseRight;
   Response({required this.response, required this.isResponseRight});
 
   String get getResponse => response;

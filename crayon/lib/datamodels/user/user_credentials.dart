@@ -1,5 +1,7 @@
 import 'package:validators/validators.dart';
 
+/// UserBasics used for login and creation of the account.
+/// Contains function for validations.
 class UserBasics {
   String email;
   String password;
@@ -17,6 +19,8 @@ class UserBasics {
     return null;
   }
 
+  ///function which checks if the email and the password is valid.
+  ///Returns true if valid else false;
   bool isValidLogin() {
     if (isEmail(email) && isPasswordValid(password)) {
       return true;
@@ -24,6 +28,9 @@ class UserBasics {
     return false;
   }
 
+  /// Funciton which checks if the password is Valid.
+  /// length of the password has to be above 8.
+  /// returns true if password is valid else false.
   bool isPasswordValid(String password) {
     password = password.trim();
     if (password.isEmpty) {

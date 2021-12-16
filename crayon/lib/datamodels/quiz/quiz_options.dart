@@ -1,5 +1,6 @@
 import 'package:crayon/datamodels/quiz/quiz.dart';
 
+/// QuizOptions used for the quiz display screen.
 class QuizOptions {
   String userName;
   String lectureId;

@@ -1,9 +1,15 @@
 import 'package:crayon/datamodels/lecture/custom_time_of_day.dart';
 
+/// When does the lecture happen.
+/// Has the ability to transform into json and from json.
 class LectureDate {
   String room;
   String day;
+
+  /// when does the lecture start.
   CustomTimeOfDay startingTime;
+
+  /// When does the lecture stop.
   CustomTimeOfDay endingTime;
   String type;
 

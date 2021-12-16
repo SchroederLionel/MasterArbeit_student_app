@@ -1,5 +1,7 @@
 import 'package:crayon/datamodels/quiz/response.dart';
 
+/// A quiz contains questions and the corresponding responses.
+/// Has the ability to be transformed into json and json into object of type question.
 class Question {
   String question;
   List<Response> responses;

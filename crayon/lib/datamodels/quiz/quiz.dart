@@ -1,9 +1,18 @@
 import 'package:crayon/datamodels/quiz/questions.dart';
 
+/// Class which describes the quiz.
+/// Has the ability to transform into json and from json.
 class Quiz {
+  /// How mutch time is availble for the quiz.
   int? seconds;
+
+  /// The quiz id.
   String id;
+
+  /// Quiz title
   String title;
+
+  /// Quiz questions containing also the response options. (List<Question>)
   List<Question> questions;
 
   Quiz(

@@ -1,6 +1,8 @@
 import 'package:crayon/datamodels/quiz/quiz.dart';
 
+/// Lecture schedule is used by the dashboard.
 class LectureSchedule {
+  /// Lecture type (Lecture,Exercise or other)
   final String type;
   final Quiz? quiz;
   final String lectureId;

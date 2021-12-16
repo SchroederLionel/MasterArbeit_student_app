@@ -24,6 +24,8 @@ const String login = '/login';
 const String dashboard = '/dashboard';
 const String score = '/score';
 const String quiz = '/quiz';
+
+/// Function which is in charge of routing.
 Route<dynamic> controller(RouteSettings routerSettings) {
   resetView();
   switch (routerSettings.name) {

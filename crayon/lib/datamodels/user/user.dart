@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+/// User class contains the user id , email and enrolled lectures.
+/// Funnction/Constructor which allow to transform the data into json or from json into object of type user.
 class User {
   String uid;
   String email;

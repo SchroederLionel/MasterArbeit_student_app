@@ -1,22 +1,27 @@
-import 'package:crayon/l10n/app_localizations.dart';
+import 'package:crayon/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
+/// Class which allows to show a snackbar.
+/// Is used for translation purposes.
 class CustomSnackbar extends SnackBar {
   final BuildContext context;
-  final String text;
+
+  /// text is the code which should be used for translation.
+  final String? text;
   final String saftyString;
   final bool isError;
   CustomSnackbar(
       {Key? key,
-      required this.text,
+      this.text,
       required this.saftyString,
       required this.isError,
       required this.context})
       : super(
             key: key,
             backgroundColor: isError ? Colors.redAccent : Colors.greenAccent,
-            content: Text(
-              AppLocalizations.of(context)!.translate(text) ?? saftyString,
+            content: CustomText(
+              safetyText: saftyString,
+              textCode: text,
               style: const TextStyle(
                   color: Colors.white,
                   fontSize: 16,
