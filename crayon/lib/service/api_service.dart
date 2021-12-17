@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crayon/datamodels/failure.dart';
 import 'package:crayon/datamodels/lecture/lecture.dart';
+import 'package:crayon/datamodels/lecture/lecture_schedule.dart';
 import 'package:crayon/datamodels/quiz/quiz_result.dart';
 import 'package:crayon/datamodels/user/user.dart' as myuser;
 import 'package:firebase_auth/firebase_auth.dart';
@@ -105,15 +106,19 @@ class ApiService {
 
   /// Function which allows to get the actual lectures based on the lecture ids where the user is enrolled in.
   /// returns a list of lectures (Stream). Which allows to detect if the room or something else changes.
-  Stream<List<Lecture>> getMyLectures(List<String> lecturesToListen) {
+  Stream<List<LectureSchedule>> getMyLectures(List<String> lecturesToListen) {
     try {
       return FirebaseFirestore.instance
           .collection('lectures')
           .where('id', whereIn: lecturesToListen)
           .snapshots(includeMetadataChanges: false)
-          .map((snapshot) => snapshot.docs.map((document) {
-                return Lecture.fromJson(document.data());
-              }).toList());
+          .map((snapshot) {
+        List<LectureSchedule> schedules = [];
+        for (var document in snapshot.docs) {
+          schedules.addAll(Lecture.fromJson(document.data()).transform());
+        }
+        return schedules;
+      });
     } on FirebaseException catch (_) {
       throw Failure(code: 'firebase-exception');
     } on SocketException {

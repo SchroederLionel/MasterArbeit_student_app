@@ -1,11 +1,8 @@
-import 'package:crayon/datamodels/lecture/lecture.dart';
-import 'package:crayon/datamodels/lecture/lecture_date.dart';
 import 'package:crayon/datamodels/lecture/lecture_schedule.dart';
 import 'package:crayon/providers/navigation/navigation_provider.dart';
 import 'package:crayon/providers/quiz/quiz_lobby_provider.dart';
 import 'package:crayon/providers/user/user_provider.dart';
 import 'package:crayon/screens/dashboard/components/body/components/lecture/schedule.dart';
-
 import 'package:crayon/service/api_service.dart';
 import 'package:crayon/widgets/custom_text.dart';
 import 'package:crayon/widgets/error_text.dart';
@@ -43,7 +40,7 @@ class _LectureStreamState extends State<LectureStream> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<Lecture>>(
+    return StreamBuilder<List<LectureSchedule>>(
         stream: ApiService().getMyLectures(
             Provider.of<UserProvider>(context, listen: false)
                 .user!
@@ -57,6 +54,10 @@ class _LectureStreamState extends State<LectureStream> {
               error: 'Failure',
             );
           } else {
+            WidgetsBinding.instance!.addPostFrameCallback((_) async {
+              Provider.of<QuizLobbyProvider>(context, listen: false)
+                  .canJoin(snapshot.data ?? []);
+            });
             return Expanded(
               child: PageView.builder(
                   controller: _controller,
@@ -88,36 +89,24 @@ class _LectureStreamState extends State<LectureStream> {
         });
   }
 
-  List<LectureSchedule> getSchedules(List<Lecture> lectures, int day) {
+  List<LectureSchedule> getSchedules(List<LectureSchedule> schedules, int day) {
     List<LectureSchedule> lectureSchedules = [];
-    List<String> containsQuiz = [];
-    for (int i = 0; i < lectures.length; i++) {
-      List<LectureDate> dates = lectures[i].lectureDates;
-      if (lectures[i].quiz != null) {
-        containsQuiz.add(lectures[i].id);
-      }
-      for (int j = 0; j < dates.length; j++) {
-        if (getDayIndex(dates[j].day) == day) {
-          LectureSchedule schedule = LectureSchedule(
-              type: dates[j].type,
-              quiz: lectures[i].quiz,
-              lectureId: lectures[i].id,
-              title: lectures[i].title,
-              isLobbyOpen: lectures[i].isLobbyOpen,
-              day: dates[j].day,
-              room: dates[j].room,
-              startingTime: dates[j].startingTime.toString(),
-              endingTime: dates[j].endingTime.toString());
-          lectureSchedules.add(schedule);
-        }
+    for (LectureSchedule schedule in schedules) {
+      if (getDayIndex(schedule.day) == day) {
+        LectureSchedule nSchedule = LectureSchedule(
+            type: schedule.type,
+            quiz: schedule.quiz,
+            lectureId: schedule.lectureId,
+            title: schedule.title,
+            isLobbyOpen: schedule.isLobbyOpen,
+            day: schedule.day,
+            room: schedule.room,
+            startingTime: schedule.startingTime,
+            endingTime: schedule.endingTime);
+        lectureSchedules.add(nSchedule);
       }
     }
-
     lectureSchedules.sort((a, b) => a.startingTime.compareTo(b.startingTime));
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
-      Provider.of<QuizLobbyProvider>(context, listen: false)
-          .canJoin(lectureSchedules);
-    });
     return lectureSchedules;
   }
 

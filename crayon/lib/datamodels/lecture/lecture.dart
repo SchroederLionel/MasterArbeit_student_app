@@ -1,4 +1,5 @@
 import 'package:crayon/datamodels/lecture/lecture_date.dart';
+import 'package:crayon/datamodels/lecture/lecture_schedule.dart';
 import 'package:crayon/datamodels/lecture/slide.dart';
 import 'package:crayon/datamodels/quiz/quiz.dart';
 
@@ -52,12 +53,21 @@ class Lecture {
     return lecture;
   }
 
-  bool getLectureForDay(String day) {
-    for (int i = 0; i < lectureDates.length; i++) {
-      if (lectureDates[i].day == day) {
-        return true;
-      }
+  List<LectureSchedule> transform() {
+    List<LectureSchedule> schedules = [];
+    for (LectureDate date in lectureDates) {
+      schedules.add(LectureSchedule(
+          quiz: quiz,
+          type: date.type,
+          lectureId: id,
+          title: title,
+          day: date.day,
+          isLobbyOpen: isLobbyOpen,
+          room: date.room,
+          startingTime: date.startingTime.toString(),
+          endingTime: date.endingTime.toString()));
     }
-    return false;
+
+    return schedules;
   }
 }
