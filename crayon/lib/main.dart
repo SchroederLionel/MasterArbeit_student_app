@@ -1,4 +1,3 @@
-import 'package:crayon/constants/constants.dart';
 import 'package:crayon/l10n/app_localizations.dart';
 import 'package:crayon/l10n/app_localizations_delegate.dart';
 import 'package:crayon/providers/login/login_provider.dart';
@@ -15,7 +14,6 @@ import 'route/route.dart' as route;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
   SharedPreferences prefs = await SharedPreferences.getInstance();
   runApp(MultiProvider(
     providers: [

@@ -4,6 +4,7 @@ import 'package:crayon/widgets/custom_button.dart';
 import 'package:crayon/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:crayon/route/route.dart' as route;
 
 /// Shows the score of the player after a quiz.
 class Score extends StatefulWidget {

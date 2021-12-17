@@ -11,7 +11,6 @@ class LoginSmallMobile extends StatelessWidget {
       children: const [
         OptionsRow(),
         SizedBox(height: 5),
-        // AppTitle(),
         Expanded(child: Center(child: Body())),
       ],
     );

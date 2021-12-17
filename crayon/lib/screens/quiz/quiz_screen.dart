@@ -9,19 +9,21 @@ class QuizScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: const [
-          TopBar(),
-          SizedBox(height: 5),
-          QuizLengthIndicator(),
-          Divider(
-            color: Colors.orangeAccent,
-            thickness: 1.5,
-            indent: 50,
-            endIndent: 50,
-          ),
-          Body()
-        ],
+      body: SafeArea(
+        child: Column(
+          children: const [
+            TopBar(),
+            SizedBox(height: 5),
+            QuizLengthIndicator(),
+            Divider(
+              color: Colors.orangeAccent,
+              thickness: 1.5,
+              indent: 50,
+              endIndent: 50,
+            ),
+            Body()
+          ],
+        ),
       ),
     );
   }

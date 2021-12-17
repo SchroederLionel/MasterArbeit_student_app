@@ -110,6 +110,8 @@ class QuizLobbyProvider extends ChangeNotifier {
     setState(NotifierState.initial);
   }
 
+  /// Function which allows a user to join a lobby where he is already registered.
+  /// Used if the user leaves the app and repons it.
   void canJoin(List<LectureSchedule> schedules) {
     for (int i = 0; i < schedules.length; i++) {
       if (schedules[i].lectureId == _lectureId) {
@@ -122,6 +124,7 @@ class QuizLobbyProvider extends ChangeNotifier {
                   userName: userName,
                   lectureId: lectureId,
                   quiz: schedules[i].quiz!));
+          break;
         }
       }
     }

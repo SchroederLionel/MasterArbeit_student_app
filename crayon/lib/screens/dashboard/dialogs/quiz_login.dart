@@ -23,9 +23,6 @@ class _QuizLoginState extends State<QuizLogin> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-    ]);
     return AlertDialog(
       scrollable: true,
       shape: RoundedRectangleBorder(
