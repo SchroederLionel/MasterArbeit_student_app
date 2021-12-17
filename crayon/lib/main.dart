@@ -2,10 +2,8 @@ import 'package:crayon/constants/constants.dart';
 import 'package:crayon/l10n/app_localizations.dart';
 import 'package:crayon/l10n/app_localizations_delegate.dart';
 import 'package:crayon/providers/login/login_provider.dart';
-
 import 'package:crayon/providers/util/locale_provider.dart';
 import 'package:crayon/providers/util/theme.dart';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -17,13 +15,13 @@ import 'route/route.dart' as route;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  resetView();
+
   SharedPreferences prefs = await SharedPreferences.getInstance();
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider<LoginProvider>(create: (_) => LoginProvider()),
       ChangeNotifierProvider<ThemeProvider>(
-          create: (BuildContext context) =>
+          create: (_) =>
               ThemeProvider(isDarkMode: prefs.getBool('themeDark') ?? false)),
       ChangeNotifierProvider<LocaleProvider>(
           create: (_) => LocaleProvider(prefs.getString('language'))),

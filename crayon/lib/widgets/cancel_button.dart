@@ -1,4 +1,3 @@
-import 'package:crayon/constants/constants.dart';
 import 'package:crayon/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +11,6 @@ class CancelButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(primary: Colors.grey[500]),
         onPressed: () {
           Navigator.pop(context, false);
-          resetView();
         },
         child: const CustomText(safetyText: 'Cancel', textCode: 'cancel'));
   }

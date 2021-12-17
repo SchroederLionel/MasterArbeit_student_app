@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Theme provider is used for managing the theme changed.
@@ -113,16 +114,59 @@ class ThemeProvider extends ChangeNotifier {
   /// Parameter is a bool true if dark theme should be used and white for white theme.
   ThemeProvider({required bool isDarkMode}) {
     _mode = isDarkMode ? ThemeMode.dark : ThemeMode.light;
+    if (_mode == ThemeMode.dark) {
+      changeSystemBarDark();
+    } else {
+      changeSystemBarLight();
+    }
   }
 
   ThemeMode get mode => _mode;
   late ThemeMode _mode;
 
+  /// Function which allows to change the systen status bar color. (Light)
+  void changeSystemBarLight() {
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [
+        SystemUiOverlay.top,
+        SystemUiOverlay.bottom,
+      ],
+    );
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+        statusBarBrightness: Brightness.dark,
+        statusBarIconBrightness: Brightness.dark,
+        statusBarColor: Colors.transparent));
+    _mode = ThemeMode.light;
+  }
+
+  /// Function which allows to change the systen status bar color. (Black)
+  void changeSystemBarDark() {
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [
+        SystemUiOverlay.top,
+        SystemUiOverlay.bottom,
+      ],
+    );
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+        statusBarBrightness: Brightness.light,
+        statusBarIconBrightness: Brightness.light,
+        statusBarColor: Colors.transparent));
+
+    _mode = ThemeMode.dark;
+  }
+
   /// Function which allows to swap the theme from dark to white or the other way depending on the current theme mode.
   /// On swap the  change of will be stored in the shared preferences.
   void swapTheme() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    _mode = _mode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
+    if (_mode == ThemeMode.dark) {
+      changeSystemBarLight();
+    } else {
+      changeSystemBarDark();
+    }
+
     prefs.setBool('themeDark', _mode == ThemeMode.dark ? true : false);
     notifyListeners();
   }

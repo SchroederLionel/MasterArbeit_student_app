@@ -1,5 +1,1 @@
-import 'package:flutter/services.dart';
-
-void resetView() {
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive, overlays: []);
-}
+import 'package:flutter/material.dart';

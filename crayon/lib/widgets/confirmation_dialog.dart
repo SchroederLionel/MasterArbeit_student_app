@@ -1,4 +1,3 @@
-import 'package:crayon/constants/constants.dart';
 import 'package:crayon/datamodels/confirmation_dialog_data.dart';
 import 'package:crayon/widgets/cancel_button.dart';
 import 'package:crayon/widgets/custom_text.dart';
@@ -42,7 +41,6 @@ class ConfirmationDialog extends StatelessWidget {
         ElevatedButton(
             onPressed: () {
               Navigator.of(context, rootNavigator: true).pop(true);
-              resetView();
             },
             child: const CustomText(textCode: 'yes', safetyText: 'Yes'))
       ],

@@ -18,51 +18,54 @@ class Navigation extends StatelessWidget {
     return Container(
       width: 50,
       color: const Color(0xff1a1c26),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 16.0),
-            child: IconButton(
-                onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: (_) {
-                        return const QrCode();
-                      }).then((value) async {
-                    if (value is String) {
-                      provider.addLecture(value);
-                    }
-                  });
-                },
-                icon: const Icon(Icons.qr_code_scanner)),
-          ),
-          const DayNavigation(),
-          ListView(
-            shrinkWrap: true,
-            children: [
-              IconButton(
-                  onPressed: () => showDialog(
-                      context: context, builder: (_) => const SettingsDialog()),
-                  icon: const Icon(Icons.settings)),
-              IconButton(
+      child: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: IconButton(
                   onPressed: () {
                     showDialog(
                         context: context,
-                        builder: (_) => ConfirmationDialog(
-                            confirmationDialogData: ConfirmationDialogData(
-                                acceptTitle: 'yes',
-                                safetyText: 'Are you sure to logout?',
-                                textCode: 'confirm-logout',
-                                itemTitle: ''))).then((value) => value == true
-                        ? Provider.of<LoginProvider>(context, listen: false)
-                            .signOut(context)
-                        : null);
+                        builder: (_) {
+                          return const QrCode();
+                        }).then((value) async {
+                      if (value is String) {
+                        provider.addLecture(value);
+                      }
+                    });
                   },
-                  icon: const Icon(Icons.power_settings_new)),
-            ],
-          )
-        ],
+                  icon: const Icon(Icons.qr_code_scanner)),
+            ),
+            const DayNavigation(),
+            ListView(
+              shrinkWrap: true,
+              children: [
+                IconButton(
+                    onPressed: () => showDialog(
+                        context: context,
+                        builder: (_) => const SettingsDialog()),
+                    icon: const Icon(Icons.settings)),
+                IconButton(
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (_) => ConfirmationDialog(
+                              confirmationDialogData: ConfirmationDialogData(
+                                  acceptTitle: 'yes',
+                                  safetyText: 'Are you sure to logout?',
+                                  textCode: 'confirm-logout',
+                                  itemTitle: ''))).then((value) => value == true
+                          ? Provider.of<LoginProvider>(context, listen: false)
+                              .signOut(context)
+                          : null);
+                    },
+                    icon: const Icon(Icons.power_settings_new)),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

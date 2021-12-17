@@ -28,7 +28,6 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive, overlays: []);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Row(
@@ -37,16 +36,19 @@ class _DashboardState extends State<Dashboard> {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: const [
-                  DayQuizIndicator(),
-                  SizedBox(height: 20),
-                  TitleDash(),
-                  Divider(color: Colors.grey),
-                  Body()
-                ],
+              child: SafeArea(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: const [
+                    DayQuizIndicator(),
+                    SizedBox(height: 10),
+                    TitleDash(),
+                    Divider(color: Colors.grey),
+                    SizedBox(height: 10),
+                    Body()
+                  ],
+                ),
               ),
             ),
           )

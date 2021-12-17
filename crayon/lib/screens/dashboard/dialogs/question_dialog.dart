@@ -1,4 +1,3 @@
-import 'package:crayon/constants/constants.dart';
 import 'package:crayon/service/validator_service.dart';
 import 'package:crayon/widgets/cancel_button.dart';
 import 'package:crayon/widgets/custom_text.dart';
@@ -47,7 +46,6 @@ class _QuestionDialogState extends State<QuestionDialog> {
         const CancelButton(),
         ElevatedButton(
             onPressed: () {
-              resetView();
               Navigator.pop(context, _questionController.text);
             },
             child: const CustomText(textCode: 'send', safetyText: 'Send'))
