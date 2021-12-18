@@ -1,4 +1,3 @@
-import 'package:connectivity/connectivity.dart';
 import 'package:crayon/l10n/app_localizations.dart';
 import 'package:crayon/l10n/app_localizations_delegate.dart';
 import 'package:crayon/providers/login/login_provider.dart';
@@ -18,7 +17,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   SharedPreferences prefs = await SharedPreferences.getInstance();
-
   runApp(MultiProvider(
     providers: [
       StreamProvider<ConnectivityStatus>(
@@ -40,7 +38,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context, listen: true);
