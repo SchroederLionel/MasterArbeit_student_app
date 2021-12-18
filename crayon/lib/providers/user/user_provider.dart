@@ -129,7 +129,8 @@ class UserProvider extends ChangeNotifier {
   /// Function which is used to automatically remove a lecture.
   /// This is used if an enrolled lecture does not exist anymore.
   /// (Can happen if in the management system the teacher removes the lecture.)
-  void autoRemove(List<LectureSchedule> schedules) async {
+  Future<void> autoRemove(List<LectureSchedule> schedules) async {
+    Set<String> _lecturesToDelete = <String>{};
     if (user != null) {
       for (String id in user!.enrolledLectures) {
         bool isNotIn = false;
@@ -140,7 +141,13 @@ class UserProvider extends ChangeNotifier {
           }
         }
         if (!isNotIn) {
-          var result = await dartz.Task(() => api.removeLecture(id))
+          _lecturesToDelete.add(id);
+        }
+      }
+    }
+    if (_lecturesToDelete.isNotEmpty) {
+      var result =
+          await dartz.Task(() => api.removeMultipleLectures(_lecturesToDelete))
               .attempt()
               .map(
                 (either) => either.leftMap((obj) {
@@ -152,22 +159,12 @@ class UserProvider extends ChangeNotifier {
                 }),
               )
               .run();
-          result.fold(
-              (failure) => CustomSnackbar(
-                    text: 'failed-to-automatically-remove-lecture',
-                    isError: true,
-                    context: context,
-                    saftyString: 'Failed to remove unexisting lecture',
-                  ).showSnackBar(),
-              (r) => CustomSnackbar(
-                    text: 'successfully-automatically-remove-lecture',
-                    isError: false,
-                    context: context,
-                    saftyString:
-                        'A lecture which does not exist anymore was deleted automatically',
-                  ).showSnackBar());
+
+      result.fold((failure) => null, (sucess) {
+        for (String id in _lecturesToDelete) {
+          user!.enrolledLectures.remove(id);
         }
-      }
+      });
     }
   }
 
@@ -196,7 +193,7 @@ class UserProvider extends ChangeNotifier {
               isError: true,
               context: context,
               saftyString: 'Failed to remove lecture',
-            ).showSnackBar(), (lectureId) {
+            ).showSnackBar(), (_) {
       CustomSnackbar(
         text: 'lecture-removed-sucess',
         isError: false,

@@ -44,17 +44,40 @@ class ApiService {
   /// Function which allows to remove a lecture where the user is enrolled in.
   /// returns a boolean if the deletion was successfull.
   /// Throws a Failure in case of an managed error.
-  Future<String> removeLecture(String lectureId) async {
+  Future<void> removeLecture(String lectureId) async {
     try {
       if (_auth.currentUser != null) {
-        await FirebaseFirestore.instance
+        return FirebaseFirestore.instance
             .collection('users')
             .doc(_auth.currentUser!.uid)
             .update({
           'enrolled-lectures': FieldValue.arrayRemove([lectureId])
         });
+      }
+      throw Failure(code: 'not-logged-in');
+    } on FirebaseException catch (_) {
+      throw Failure(code: 'firebase-exception');
+    } on SocketException {
+      throw Failure(code: 'no-internet');
+    } on HttpException {
+      throw Failure(code: 'not-found');
+    } on FormatException {
+      throw Failure(code: 'bad-format');
+    }
+  }
 
-        return lectureId;
+  /// Function which allows to remove a lecture where the user is enrolled in.
+  /// returns a boolean if the deletion was successfull.
+  /// Throws a Failure in case of an managed error.
+  Future<void> removeMultipleLectures(Set<String> lectureIds) async {
+    try {
+      if (_auth.currentUser != null) {
+        return FirebaseFirestore.instance
+            .collection('users')
+            .doc(_auth.currentUser!.uid)
+            .update({
+          'enrolled-lectures': FieldValue.arrayRemove(lectureIds.toList())
+        });
       }
       throw Failure(code: 'not-logged-in');
     } on FirebaseException catch (_) {

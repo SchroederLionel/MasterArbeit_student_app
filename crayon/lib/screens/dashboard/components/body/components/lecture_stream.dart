@@ -24,10 +24,6 @@ class _LectureStreamState extends State<LectureStream> {
   initState() {
     var day = Provider.of<NavigationProvider>(context, listen: false).day;
     _controller = PageController(initialPage: day);
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
-      Provider.of<NavigationProvider>(context, listen: false)
-          .setPageController(_controller);
-    });
 
     super.initState();
   }
@@ -45,7 +41,7 @@ class _LectureStreamState extends State<LectureStream> {
         .enrolledLectures;
     return StreamBuilder<List<LectureSchedule>>(
         stream: ApiService().getMyLectures(userEnrolledLectures),
-        initialData: const [],
+        initialData: null,
         builder: (BuildContext context, snapshot) {
           if (!snapshot.hasData) {
             return const LoadingWidget();
@@ -53,14 +49,24 @@ class _LectureStreamState extends State<LectureStream> {
             return const ErrorText(
               error: 'Failure',
             );
+          } else if (snapshot.data == null) {
+            return const Center(
+                child: CustomText(
+                    safetyText: "You aren't enrolled in any course",
+                    textCode: 'no-courses-enrolled'));
           } else {
             List<LectureSchedule> schedules = snapshot.data ?? [];
             WidgetsBinding.instance!.addPostFrameCallback((_) async {
-              Provider.of<QuizLobbyProvider>(context, listen: false)
-                  .canJoin(snapshot.data ?? []);
               Provider.of<UserProvider>(context, listen: false)
-                  .autoRemove(schedules);
+                  .autoRemove(schedules)
+                  .then((value) {
+                Provider.of<NavigationProvider>(context, listen: false)
+                    .setPageController(_controller);
+                Provider.of<QuizLobbyProvider>(context, listen: false)
+                    .canJoin(snapshot.data ?? []);
+              });
             });
+
             return Expanded(
               child: PageView.builder(
                   controller: _controller,
