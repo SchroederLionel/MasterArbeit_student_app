@@ -1,5 +1,6 @@
 import 'package:crayon/screens/dashboard/components/day_quiz_indicator/components/day_time.dart';
 import 'package:crayon/screens/dashboard/components/day_quiz_indicator/components/quiz_indicator.dart';
+import 'package:crayon/widgets/network_sensitive.dart';
 import 'package:flutter/material.dart';
 
 class DayQuizIndicator extends StatelessWidget {
@@ -13,7 +14,7 @@ class DayQuizIndicator extends StatelessWidget {
       children: const [
         QuizLobbyIndicator(),
         Spacer(),
-        DayTime(),
+        NetworkSensitive(child: DayTime())
       ],
     );
   }

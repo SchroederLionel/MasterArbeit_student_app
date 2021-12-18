@@ -1,8 +1,11 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:crayon/l10n/app_localizations.dart';
 import 'package:crayon/l10n/app_localizations_delegate.dart';
 import 'package:crayon/providers/login/login_provider.dart';
+import 'package:crayon/providers/util/connection_provider.dart';
 import 'package:crayon/providers/util/locale_provider.dart';
 import 'package:crayon/providers/util/theme.dart';
+import 'package:crayon/state/enum.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -15,8 +18,14 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   SharedPreferences prefs = await SharedPreferences.getInstance();
+
   runApp(MultiProvider(
     providers: [
+      StreamProvider<ConnectivityStatus>(
+        create: (context) =>
+            ConnectionProvider().connectionStatusController.stream,
+        initialData: ConnectivityStatus.offline,
+      ),
       ChangeNotifierProvider<LoginProvider>(create: (_) => LoginProvider()),
       ChangeNotifierProvider<ThemeProvider>(
           create: (_) =>
