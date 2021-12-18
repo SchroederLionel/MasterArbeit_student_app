@@ -205,7 +205,6 @@ class ApiService {
   /// Required parameter is the quizresult which contains the lecture id and the responses.
   /// Throws a failure in case of an error.
   Future<void> postResponse(QuizResult result) {
-    print('POST RESPONSE CALLED');
     try {
       return FirebaseFirestore.instance
           .collection('lectures')

@@ -123,6 +123,8 @@
     "lecture-added-sucess":"Cours ajoutée avec succès",
     "lecture-removed-sucess":"Cours supprimée avec succès",
     "quesiton-asked-sucess":"Question posée avec succès",
-    "join-lobby-success":"Cours joint avec succès"
+    "join-lobby-success":"Cours joint avec succès",
+    "failed-to-automatically-remove-lecture":"Échec de la suppression automatique d'un cours non existante",
+    "successfully-automatically-remove-lecture":"Un cours qui n'existe plus a été supprimé automatiquement"
     
 }

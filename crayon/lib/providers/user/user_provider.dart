@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:crayon/datamodels/custom_snackbar.dart';
 import 'package:crayon/datamodels/failure.dart';
+import 'package:crayon/datamodels/lecture/lecture_schedule.dart';
 import 'package:crayon/datamodels/user/user.dart';
 import 'package:crayon/service/api_service.dart';
 import 'package:crayon/state/enum.dart';
@@ -122,6 +123,51 @@ class UserProvider extends ChangeNotifier {
 
       /// Change state to loaded to make the failure or the updated user list available to the view.
       setState(NotifierState.loaded);
+    }
+  }
+
+  /// Function which is used to automatically remove a lecture.
+  /// This is used if an enrolled lecture does not exist anymore.
+  /// (Can happen if in the management system the teacher removes the lecture.)
+  void autoRemove(List<LectureSchedule> schedules) async {
+    if (user != null) {
+      for (String id in user!.enrolledLectures) {
+        bool isNotIn = false;
+        for (LectureSchedule schedule in schedules) {
+          if (schedule.lectureId == id) {
+            isNotIn = true;
+            break;
+          }
+        }
+        if (!isNotIn) {
+          var result = await dartz.Task(() => api.removeLecture(id))
+              .attempt()
+              .map(
+                (either) => either.leftMap((obj) {
+                  try {
+                    return obj as Failure;
+                  } catch (e) {
+                    throw obj;
+                  }
+                }),
+              )
+              .run();
+          result.fold(
+              (failure) => CustomSnackbar(
+                    text: 'failed-to-automatically-remove-lecture',
+                    isError: true,
+                    context: context,
+                    saftyString: 'Failed to remove unexisting lecture',
+                  ).showSnackBar(),
+              (r) => CustomSnackbar(
+                    text: 'successfully-automatically-remove-lecture',
+                    isError: false,
+                    context: context,
+                    saftyString:
+                        'A lecture which does not exist anymore was deleted automatically',
+                  ).showSnackBar());
+        }
+      }
     }
   }
 

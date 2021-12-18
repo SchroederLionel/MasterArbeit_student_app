@@ -40,11 +40,11 @@ class _LectureStreamState extends State<LectureStream> {
 
   @override
   Widget build(BuildContext context) {
+    var userEnrolledLectures = Provider.of<UserProvider>(context, listen: false)
+        .user!
+        .enrolledLectures;
     return StreamBuilder<List<LectureSchedule>>(
-        stream: ApiService().getMyLectures(
-            Provider.of<UserProvider>(context, listen: false)
-                .user!
-                .enrolledLectures),
+        stream: ApiService().getMyLectures(userEnrolledLectures),
         initialData: const [],
         builder: (BuildContext context, snapshot) {
           if (!snapshot.hasData) {
@@ -54,9 +54,12 @@ class _LectureStreamState extends State<LectureStream> {
               error: 'Failure',
             );
           } else {
+            List<LectureSchedule> schedules = snapshot.data ?? [];
             WidgetsBinding.instance!.addPostFrameCallback((_) async {
               Provider.of<QuizLobbyProvider>(context, listen: false)
                   .canJoin(snapshot.data ?? []);
+              Provider.of<UserProvider>(context, listen: false)
+                  .autoRemove(schedules);
             });
             return Expanded(
               child: PageView.builder(

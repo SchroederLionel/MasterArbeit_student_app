@@ -5,7 +5,6 @@ import 'package:crayon/screens/dashboard/components/day_quiz_indicator/day_quiz_
 import 'package:crayon/screens/dashboard/components/navigation/navigation.dart';
 import 'package:crayon/screens/dashboard/components/title/title_dash.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class Dashboard extends StatefulWidget {
