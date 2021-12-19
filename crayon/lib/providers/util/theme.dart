@@ -128,10 +128,7 @@ class ThemeProvider extends ChangeNotifier {
   void changeSystemBarLight() {
     SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.manual,
-      overlays: [
-        SystemUiOverlay.top,
-        SystemUiOverlay.bottom,
-      ],
+      overlays: [],
     );
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
         statusBarBrightness: Brightness.dark,
@@ -144,10 +141,7 @@ class ThemeProvider extends ChangeNotifier {
   void changeSystemBarDark() {
     SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.manual,
-      overlays: [
-        SystemUiOverlay.top,
-        SystemUiOverlay.bottom,
-      ],
+      overlays: [],
     );
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
         statusBarBrightness: Brightness.light,

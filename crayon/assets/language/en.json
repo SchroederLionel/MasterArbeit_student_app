@@ -99,5 +99,6 @@
     "quesiton-asked-sucess":"Successfully asked question",
     "join-lobby-success":"Successfully joined lecture",
     "failed-to-automatically-remove-lecture":"Failed to remove non existing lecture",
-    "successfully-automatically-remove-lecture":"A lecture which does not exist anymore was deleted automatically"
+    "successfully-automatically-remove-lecture":"A lecture which does not exist anymore was deleted automatically",
+    "confirm-logout":"Are you sure to logout?"
 }

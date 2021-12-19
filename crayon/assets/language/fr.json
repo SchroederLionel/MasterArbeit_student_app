@@ -99,5 +99,6 @@
     "quesiton-asked-sucess":"Question posée avec succès",
     "join-lobby-success":"Cours joint avec succès",
     "failed-to-automatically-remove-lecture":"Échec de la suppression automatique d'un cours non existante",
-    "successfully-automatically-remove-lecture":"Un cours qui n'existe plus a été supprimé automatiquement"
+    "successfully-automatically-remove-lecture":"Un cours qui n'existe plus a été supprimé automatiquement",
+    "confirm-logout":"Êtes-vous sûr de vous déconnecter ?"
 }

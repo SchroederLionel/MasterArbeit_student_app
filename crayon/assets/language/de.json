@@ -100,5 +100,6 @@
     "quesiton-asked-sucess":"Erfolgreich gestellte Frage",
     "join-lobby-success":"Vorlesung erfolgreich beigetreten",
     "failed-to-automatically-remove-lecture":"Fehler beim Entfernen nicht vorhandener Vorlesung",
-    "successfully-automatically-remove-lecture":"Eine nicht mehr existierende Vorlesung wurde automatisch gelöscht"
+    "successfully-automatically-remove-lecture":"Eine nicht mehr existierende Vorlesung wurde automatisch gelöscht",
+    "confirm-logout":"Möchten Sie sich wirklich abmelden?"
 }
