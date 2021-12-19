@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 /// Initialy the state is initial no day-time-navigation will be shown. (Options such as qr code scanning & settings & logout will be shown).
 /// If the user is enrolled in at least one lecture the day-time navifation will be shown and changes to the state loaded.
 class NavigationProvider extends ChangeNotifier {
+  BuildContext context;
+  NavigationProvider({required this.context});
   NotifierState _state = NotifierState.initial;
   NotifierState get state => _state;
 
@@ -53,7 +55,7 @@ class NavigationProvider extends ChangeNotifier {
 
   Color getButtonColor(int pageNumber) {
     if (_day == pageNumber) {
-      return Colors.orangeAccent;
+      return Theme.of(context).primaryColor;
     } else {
       return const Color(0xff1a1c26);
     }

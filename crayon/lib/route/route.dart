@@ -56,7 +56,7 @@ Route<dynamic> controller(RouteSettings routerSettings) {
                   ChangeNotifierProvider<UserProvider>(
                       create: (_) => UserProvider(context: context)),
                   ChangeNotifierProvider<NavigationProvider>(
-                      create: (_) => NavigationProvider()),
+                      create: (_) => NavigationProvider(context: context)),
                   ChangeNotifierProvider<QuizLobbyProvider>(
                       create: (_) => QuizLobbyProvider(context: context)),
                 ],
