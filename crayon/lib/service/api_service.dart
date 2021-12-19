@@ -30,7 +30,10 @@ class ApiService {
         return myuser.User.fromJson(userDocument.data());
       }
       throw Failure(code: 'not-logged-in');
-    } on FirebaseException catch (_) {
+    } on FirebaseException catch (e) {
+      if (e.code == 'network-request-failed') {
+        throw Failure(code: 'no-internet');
+      }
       throw Failure(code: 'firebase-exception');
     } on SocketException {
       throw Failure(code: 'no-internet');
@@ -55,7 +58,10 @@ class ApiService {
         });
       }
       throw Failure(code: 'not-logged-in');
-    } on FirebaseException catch (_) {
+    } on FirebaseException catch (e) {
+      if (e.code == 'network-request-failed') {
+        throw Failure(code: 'no-internet');
+      }
       throw Failure(code: 'firebase-exception');
     } on SocketException {
       throw Failure(code: 'no-internet');
@@ -80,7 +86,10 @@ class ApiService {
         });
       }
       throw Failure(code: 'not-logged-in');
-    } on FirebaseException catch (_) {
+    } on FirebaseException catch (e) {
+      if (e.code == 'network-request-failed') {
+        throw Failure(code: 'no-internet');
+      }
       throw Failure(code: 'firebase-exception');
     } on SocketException {
       throw Failure(code: 'no-internet');
@@ -116,7 +125,10 @@ class ApiService {
       }
 
       throw Failure(code: 'not-logged-in');
-    } on FirebaseException catch (_) {
+    } on FirebaseException catch (e) {
+      if (e.code == 'network-request-failed') {
+        throw Failure(code: 'no-internet');
+      }
       throw Failure(code: 'firebase-exception');
     } on SocketException {
       throw Failure(code: 'no-internet');
@@ -142,7 +154,10 @@ class ApiService {
         }
         return schedules;
       });
-    } on FirebaseException catch (_) {
+    } on FirebaseException catch (e) {
+      if (e.code == 'network-request-failed') {
+        throw Failure(code: 'no-internet');
+      }
       throw Failure(code: 'firebase-exception');
     } on SocketException {
       throw Failure(code: 'no-internet');
@@ -166,7 +181,10 @@ class ApiService {
           .set({
         'questions': FieldValue.arrayUnion([question])
       });
-    } on FirebaseException catch (_) {
+    } on FirebaseException catch (e) {
+      if (e.code == 'network-request-failed') {
+        throw Failure(code: 'no-internet');
+      }
       throw Failure(code: 'firebase-exception');
     } on SocketException {
       throw Failure(code: 'no-internet');
@@ -189,7 +207,10 @@ class ApiService {
           .set({
         'participants': FieldValue.arrayUnion([userName]),
       }, SetOptions(merge: true));
-    } on FirebaseException catch (_) {
+    } on FirebaseException catch (e) {
+      if (e.code == 'network-request-failed') {
+        throw Failure(code: 'no-internet');
+      }
       throw Failure(code: 'firebase-exception');
     } on SocketException {
       throw Failure(code: 'no-internet');
@@ -213,7 +234,10 @@ class ApiService {
           .set({
         'participants': FieldValue.arrayRemove([userName]),
       }, SetOptions(merge: true));
-    } on FirebaseException catch (_) {
+    } on FirebaseException catch (e) {
+      if (e.code == 'network-request-failed') {
+        throw Failure(code: 'no-internet');
+      }
       throw Failure(code: 'firebase-exception');
     } on SocketException {
       throw Failure(code: 'no-internet');
@@ -237,7 +261,10 @@ class ApiService {
           .set({
         'responses': FieldValue.arrayUnion([result.toJson()]),
       }, SetOptions(merge: true));
-    } on FirebaseException catch (_) {
+    } on FirebaseException catch (e) {
+      if (e.code == 'network-request-failed') {
+        throw Failure(code: 'no-internet');
+      }
       throw Failure(code: 'firebase-exception');
     } on SocketException {
       throw Failure(code: 'no-internet');

@@ -5,7 +5,7 @@ import 'package:crayon/widgets/cancel_button.dart';
 import 'package:crayon/widgets/custom_text.dart';
 import 'package:crayon/widgets/custom_text_form_field.dart';
 import 'package:crayon/widgets/error_text.dart';
-
+import 'package:crayon/route/route.dart' as route;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -59,11 +59,8 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
                               isLoading = false;
                             });
                           }, (userCredential) {
-                            Navigator.of(context).pop();
-
-                            WidgetsBinding.instance!.addPostFrameCallback((_) {
-                              Navigator.of(context).pushNamed('dashboard');
-                            });
+                            Navigator.of(context)
+                                .popAndPushNamed(route.dashboard);
                           }));
                 },
                 child:

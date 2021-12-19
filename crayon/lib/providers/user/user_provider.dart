@@ -53,7 +53,7 @@ class UserProvider extends ChangeNotifier {
                 try {
                   return obj as Failure;
                 } catch (e) {
-                  throw obj;
+                  throw Failure(code: 'something-went-wrong');
                 }
               }),
             )

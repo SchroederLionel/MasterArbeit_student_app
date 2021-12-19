@@ -10,7 +10,7 @@ class UserBasics {
   String? isValid(String verificationPassod) {
     if (!isEmail(email)) {
       return 'invalidEmail';
-    } else if (isPasswordValid(password)) {
+    } else if (!isPasswordValid(password)) {
       return 'passwordCheck';
     } else if (password != verificationPassod) {
       return 'passwordMatch';
@@ -32,7 +32,6 @@ class UserBasics {
   /// length of the password has to be above 8.
   /// returns true if password is valid else false.
   bool isPasswordValid(String password) {
-    password = password.trim();
     if (password.isEmpty) {
       return false;
     } else if (password.length < 8) {

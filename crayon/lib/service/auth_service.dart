@@ -22,6 +22,7 @@ class AuthService {
       if (error != null) {
         throw Failure(code: error);
       }
+
       UserCredential userCredential =
           await _auth.createUserWithEmailAndPassword(
         email: user.email,
@@ -48,7 +49,10 @@ class AuthService {
         throw Failure(code: 'email-already-exists');
       } else if (e.code == 'user-disabled') {
         throw Failure(code: 'user-disabled');
+      } else if (e.code == 'network-request-failed') {
+        throw Failure(code: 'no-internet');
       }
+
       throw Failure(code: 'firebase-exception');
     } on SocketException {
       throw Failure(code: 'no-internet');
@@ -68,7 +72,18 @@ class AuthService {
       await _auth.sendPasswordResetEmail(email: email);
       return true;
     } on FirebaseAuthException catch (e) {
-      throw Failure(code: e.code);
+      if (e.code == 'user-not-found') {
+        throw Failure(code: 'no-user-found');
+      } else if (e.code == 'network-request-failed') {
+        throw Failure(code: 'no-internet');
+      }
+      throw Failure(code: 'firebase-exception');
+    } on SocketException {
+      throw Failure(code: 'no-internet');
+    } on HttpException {
+      throw Failure(code: 'not-found');
+    } on FormatException {
+      throw Failure(code: 'bad-format');
     }
   }
 
@@ -90,6 +105,8 @@ class AuthService {
         throw Failure(code: 'no-user-found');
       } else if (e.code == 'wrong-password') {
         throw Failure(code: 'wrong-password');
+      } else if (e.code == 'network-request-failed') {
+        throw Failure(code: 'no-internet');
       }
       throw Failure(code: 'firebase-exception');
     } on SocketException {

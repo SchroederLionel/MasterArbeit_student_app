@@ -23,9 +23,6 @@ class User {
     return User(enrolledLectures, uid: uid, email: email);
   }
 
-  Map<String, dynamic> toJson() => {
-        'uid': uid,
-        'email': email,
-        'enrolled-lectures': jsonEncode(enrolledLectures)
-      };
+  Map<String, dynamic> toJson() =>
+      {'uid': uid, 'email': email, 'enrolled-lectures': enrolledLectures};
 }

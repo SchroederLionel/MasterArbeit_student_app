@@ -1,5 +1,6 @@
 import 'package:crayon/providers/util/theme.dart';
 import 'package:crayon/widgets/language_widget.dart';
+import 'package:crayon/widgets/network_sensitive.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,6 +19,8 @@ class OptionsRow extends StatelessWidget {
           color: Colors.orangeAccent,
         ),
       ),
+      const Spacer(),
+      const NetworkSensitive(child: SizedBox())
     ]);
   }
 }
