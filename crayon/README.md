@@ -1,16 +1,13 @@
-# crayon
+# Crayon Student Application
 
-A new Flutter project.
+Flutter application for students. The application allows to join ask questions to the teacher which uses the crayon master application.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+This project uses Firebase as a backend for data retrieval and also uses these following packages:
+- Provider for statemanagement
+- Timeline tile is used to show times on a line.
+- Sharedpreferences to store user preferences such as language and darl/light theme
+- Validators for validating inputs
+- QR_Code_Scanner: To easily scan QR codes from the lectures.
+- Connectivity: Which is used to check if the user has an internet connection or not
